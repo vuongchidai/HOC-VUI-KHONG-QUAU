@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .qr-code img {
+            width: 200px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .verification label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .notification-box{
+            background-color: rgb(231, 227, 227);
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            color: red;
+        }
+        .notification-box.hidden{
+            display: none;
+        }
+        .verification input {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .verification button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .verification button:hover{
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Thanh Toán</h1>
+        <p>Vui lòng thanh toán trong vòng <span id="countdown">10:00</span> phút.</p>
+
+        <div class="qr-code">
+            <img src="https://img.vietqr.io/image/NAB-0988574939-print.png?amount=1200000&addInfo=&accountName=VUONGCHIDAI" alt="QR Code">
+            <p>Quét mã QR để thanh toán.</p>
+        </div>
+
+        <div class="verification">
+            <label for="verificationCode">Mã xác thực (6 số):</label>
+            <input type="text" id="verificationCode" maxlength="6">
+            <button id="verifyButton">Xác nhận</button>
+            <div id="notification" class="notification-box hidden"></div>
+        </div>
+    </div>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+            const countdownDisplay = document.getElementById('countdown');
+            const verificationInput = document.getElementById('verificationCode');
+            const verifyButton = document.getElementById('verifyButton');
+            const notificationBox = document.getElementById('notification');
+            let timeLeft = 600; // 10 phút = 600 giây
+
+            function updateCountdown() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                countdownDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownDisplay.textContent = "Hết thời gian!";
+                } else {
+                    timeLeft--;
+                }
+            }
+
+            updateCountdown();
+            const countdownInterval = setInterval(updateCountdown, 1000);
+
+            verifyButton.addEventListener('click', function() {
+                const enteredCode = verificationInput.value;
+                const correctCode = "123456"; // Mã xác thực đúng
+                if (enteredCode === correctCode) {
+                     window.location.href = "vaohoc.html";
+                } else {
+                    notificationBox.textContent = "Mã xác thực không đúng!";
+                    notificationBox.classList.remove('hidden');
+                
+                    setTimeout(function() {
+                        notificationBox.classList.add('hidden');
+                    }, 2000);
+
+                }
+
+            });
+        });
+    </script>
+</body>
+</html>

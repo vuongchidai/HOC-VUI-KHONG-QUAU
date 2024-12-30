@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vào Học</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+             padding: 0.5rem 1rem;
+             background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         }
+          .profile-header {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            background-color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+             transition: background-color 0.3s;
+        }
+        .profile-header i {
+            color: #3498db;
+        }
+         .profile-header:hover {
+             background-color: #e0f7f5;
+        }
+         .profile-header:hover i {
+            color: #2980b9;
+        }
+        .profile-popup {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            padding: 15px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+            border-radius: 5px;
+        }
+        .profile-popup.active {
+            display: block;
+        }
+        .profile-popup ul {
+            list-style: none;
+            padding: 0;
+        }
+        .profile-popup li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .profile-popup li:hover {
+            background-color: #f8f9fa;
+        }
+        .profile-popup li:last-child {
+            border-bottom: none;
+        }
+        .course-list-container {
+            margin-top: 20px;
+            position: relative;
+             padding: 20px;
+        }
+        .no-courses-message {
+             text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            background: white;
+            border-radius: 10px;
+             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .course-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+             display: flex;
+              flex-wrap: wrap;
+          
+             transition: transform 0.2s, box-shadow 0.2s;
+           
+        }
+         .course-card:hover {
+             transform: translateY(-5px);
+             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .course-image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+        }
+         .course-info {
+            flex: 1; /* Cho phép phần thông tin chiếm không gian còn lại */
+             padding: 15px;
+        }
+        .course-info h3 {
+            margin-bottom: 10px;
+             font-size: 1.3rem;
+        }
+        .course-info ul {
+            list-style: none;
+            padding: 0;
+        }
+         .course-info li {
+             margin-bottom: 5px;
+        }
+        .course-action-container {
+            width: 100%;
+           padding: 15px;
+        
+           
+             text-align: center;
+        }
+        .btn-purchase, .btn-activate, .btn-enter-course {
+            background-color: #3498db;
+             color: white;
+             border: none;
+            padding: 10px 16px;
+           border-radius: 5px;
+             cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 5px;
+            white-space: nowrap;
+        }
+          .btn-purchase:hover, .btn-activate:hover, .btn-enter-course:hover  {
+             background-color: #2980b9;
+        }
+          .nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: space-around; /* Đặt các liên kết đều nhau */
+             flex-wrap: wrap; /* Cho phép xuống dòng khi màn hình nhỏ */
+        }
+         .nav-links a {
+            display: flex;
+             flex-direction: column; /* Stack icon và text dọc */
+            align-items: center;
+           color: #333;
+            text-decoration: none;
+            margin-right: 10px; /* Giảm margin phải */
+            margin-bottom: 5px; /* Thêm margin dưới cho responsive */
+             padding: 8px 12px;
+            border-radius: 5px;
+             transition: background-color 0.3s;
+             text-align: center; /* Center text */
+        }
+         .nav-links a:hover {
+             background-color: #e0f7f5;
+        }
+        .nav-links i {
+            margin-bottom: 5px; /* Thêm margin dưới cho icon */
+            font-size: 1.5em; /* Lớn hơn một chút cho dễ nhìn */
+             transition: color 0.3s; /* Thêm hiệu ứng chuyển màu */
+        }
+        .nav-links a:hover i {
+             color: #2980b9;
+        }
+        @media (min-width: 768px) {
+          .nav-links {
+                justify-content: flex-start; /* Các liên kết sang trái trên màn hình lớn hơn */
+            }
+             .nav-links a {
+               flex-direction: row;
+                margin-right: 20px;
+                text-align: left;
+               align-items: center;
+            }
+             .nav-links i{
+               margin-right: 5px;
+               margin-bottom: 0;
+               font-size: 1em;
+            }
+        }
+       .popup {
+            position: fixed;
+            top: 50%;
+             left: 50%;
+            transform: translate(-50%, -50%);
+             background: white;
+             padding: 20px;
+             border: 1px solid #ccc;
+             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+             z-index: 1001;
+             display: none;
+             max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 10px;
+             width: 600px;
+        }
+          .popup.active {
+            display: block;
+        }
+         .popup .btn-close {
+            position: absolute;
+             top: 10px;
+             right: 10px;
+           background-image: url('https://media.istockphoto.com/id/1131230925/vi/vec-to/d%E1%BA%A5u-ki%E1%BB%83m-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-ch%E1%BB%AF-th%E1%BA%ADp-%C4%91%E1%BB%8F-%C4%91%C6%A1n-gi%E1%BA%A3n-vector.jpg?s=612x612&w=0&k=20&c=Zl4pvbt2-7JoQCohB1JdIf2JKS-BoHbhQGNhmhwaiSA=');
+            background-size: contain;
+             width: 24px;
+            height: 24px;
+            cursor: pointer;
+            border: 0;
+             background-repeat: no-repeat;
+         }
+        .popup-content {
+             padding: 20px;
+        }
+        .popup-content h3{
+            margin-bottom: 20px;
+        }
+       
+        .form-group {
+             margin-bottom: 15px;
+        }
+         .form-group label {
+             display: block;
+           margin-bottom: 5px;
+             font-weight: bold;
+         }
+         .form-group input {
+            width: 100%;
+            padding: 10px;
+             border: 1px solid #ccc;
+             border-radius: 5px;
+        }
+        .form-group button {
+             background-color: #3498db;
+            color: white;
+           border: none;
+           padding: 10px 16px;
+             border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+          
+        }
+        .form-group button:hover {
+            background-color: #2980b9;
+        }
+        .payment-message {
+            text-align: center;
+           padding: 20px;
+           margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         }
+        #buy-more-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+             background-color: #3498db;
+             color: white;
+             border: none;
+           padding: 10px 16px;
+            border-radius: 5px;
+             cursor: pointer;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+          #buy-more-btn:hover {
+             background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+          <div class="header-container">
+             <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+            <div class="nav-links">
+               <a href="vaohoc.html">
+                    <i class="fas fa-book" style="color: #3498db;"></i> <span>Vào học</span>
+                </a>
+               <a href="luyenthi.html">
+                    <i class="fas fa-pencil-alt" style="color: #e67e22;"></i> <span>Luyện thi</span>
+                </a>
+                 <a href="dautruong.html">
+                    <i class="fas fa-gamepad" style="color: #9b59b6;"></i> <span>Đấu trường</span>
+                </a>
+                 <a href="trangcanhan.html">
+                  <i class="fas fa-trophy" style="color: #27ae60;"></i> <span>Vào thi</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+             <div class="d-flex align-items-center">
+                 <div class="profile-header">
+                     <i class="fa fa-user-circle me-2"></i> <span id="header-fullname"></span>
+                    <div class="profile-popup">
+                         <ul class="profile-popup-menu">
+                             <li id="info-menu">Thông tin cá nhân</li>
+                             <li id="change-password-menu">Đổi mật khẩu</li>
+                            <li id="logout-menu">Đăng xuất</li>
+                         </ul>
+                     </div>
+                 </div>
+             </div>
+          </div>
+          <div class="course-list-container">
+              <div id="no-courses-message" class="no-courses-message" style="display: none">
+                    KHÔNG CÓ DỮ LIỆU
+               </div>
+                <div id="course-list" style="display: none">
+                </div>
+                  <button id="buy-more-btn">Mua thêm khóa học</button>
+          </div>
+      </div>
+         <div id="purchase-popup" class="popup">
+            <div class="popup-content">
+                  <button type="button" class="btn-close" aria-label="Close"></button>
+                <h3>Mua Khóa Học</h3>
+                 <div class="form-group">
+                     <p>Chọn một khóa học:</p>
+                         <select id="course-select" class="form-control">
+                                    <option value="vui-tieng-viet">Vui tiếng việt - 300.000Đ</option>
+                                     <option value="toan-hoc-online">Toán học online - 300.000Đ</option>
+                                     <option value="trang-su-thoi-ki">Trạng sử thời kì - 300.000Đ</option>
+                                    <option value="dia-li-vui-nhon">Địa lí vui nhộn - 300.000Đ</option>
+                                    <option value="tieng-anh-hoc-vui">Tiếng Anh học vui - 300.000Đ</option>
+                             </select>
+                 </div>
+                <div class="form-group">
+                     <button id="buy-now-btn">Thanh Toán Online</button>
+                 </div>
+            
+                 <div class="form-group">
+                     <label for="activation-code">Nhập mã kích hoạt</label>
+                      <input type="text" id="activation-code" placeholder="Nhập mã kích hoạt">
+                     <button id="activate-btn">Kích Hoạt</button>
+                  </div>
+            </div>
+         </div>
+           <div id="payment-popup" class="popup">
+              <div class="popup-content">
+                     <button type="button" class="btn-close" aria-label="Close"></button>
+                  <div id="payment-message" class="payment-message"></div>
+             </div>
+         </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const profileHeader = document.querySelector('.profile-header');
+    const profilePopup = document.querySelector('.profile-popup');
+    const infoPopup = document.getElementById('info-popup');
+    const changePasswordPopup = document.getElementById('change-password-popup');
+    const logoutMenu = document.getElementById('logout-menu');
+    const courseListContainer = document.querySelector('#course-list');
+     const noCoursesMessage = document.querySelector('#no-courses-message');
+    const purchasePopup = document.querySelector('#purchase-popup');
+     const buyNowButton = document.querySelector('#buy-now-btn');
+     const activationCodeInput = document.querySelector('#activation-code');
+      const activateButton = document.querySelector('#activate-btn');
+        const headerFullname = document.querySelector('#header-fullname');
+        const paymentPopup = document.getElementById('payment-popup');
+         const paymentMessage = document.getElementById('payment-message');
+           const courseSelect = document.getElementById('course-select');
+        const buyMoreButton = document.querySelector('#buy-more-btn');
+      
+       const loginTime = localStorage.getItem('loginTime');
+        const currentTime = new Date().getTime();
+        if (!loginTime || (currentTime - parseInt(loginTime)) > 24 * 60 * 60 * 1000) {
+           localStorage.removeItem('user');
+             localStorage.removeItem('loginTime');
+             window.location.href = 'dangnhap.html';
+          }
+        const storedUser = localStorage.getItem('user');
+         let user;
+        if (storedUser) {
+             user = JSON.parse(storedUser);
+         } else {
+            window.location.href = 'dangnhap.html';
+         }
+      
+      headerFullname.textContent = user.fullname;
+         function closeAllPopup() {
+        purchasePopup.classList.remove('active');
+         paymentPopup.classList.remove('active');
+         }
+      document.querySelectorAll('.popup .btn-close').forEach(closeButton => {
+        closeButton.addEventListener('click', closeAllPopup);
+        });
+         function toggleProfilePopup() {
+        profilePopup.classList.toggle('active');
+        if(profilePopup.classList.contains('active')){
+            document.addEventListener('click',function(event){
+            if (!profileHeader.contains(event.target)) {
+                 profilePopup.classList.remove('active');
+                 document.removeEventListener('click', arguments.callee);
+            }
+           });
+         }
+       
+    }
+      profileHeader.addEventListener('click', toggleProfilePopup);
+      // Xử lý nút đăng xuất
+    logoutMenu.addEventListener('click', function () {
+        profilePopup.classList.remove('active');
+        localStorage.removeItem('user');
+        localStorage.removeItem('loginTime');
+        window.location.href = 'dangnhap.html';
+    });
+      const courseData = {
+            'vui-tieng-viet': {
+                name: 'Vui tiếng việt',
+                lessons: ['Âm và vần', 'Từ ngữ', 'Ngữ pháp cơ bản'],
+                image: 'https://minio.trangnguyen.edu.vn/thumbnail/package_thumbnail_5.0/lach_cach.png',
+                 activationCodes: ['MKHDJAK', 'MKHDJAH', 'MKHDJAT', 'MKHDJAR', 'MKHDJFQ', 'MKHDJAKO', 'MKHDJAB', 'MKHDJAM', 'MKHDJAKW']
+                },
+            'toan-hoc-online': {
+                name: 'Toán học online',
+                lessons: ['Số học cơ bản', 'Hình học không gian', 'Đại số nâng cao'],
+                image: 'https://minio.trangnguyen.edu.vn/thumbnail/package_thumbnail_5.0/nguoi_ban_tot.png',
+                 activationCodes: ['MKHDJFK', 'MKHDJFH', 'MKHDJFT', 'MKHDJFR', 'MKHDJFQ', 'MKHDJAFO', 'MKHDJFB', 'MKHDJFM', 'MKHDJAFW']
+              },
+          'trang-su-thoi-ki': {
+               name: 'Trạng sử thời kì',
+               lessons: ['Lịch sử Việt Nam', 'Lịch sử Thế Giới', 'Các triều đại phong kiến'],
+               image: 'https://minio.trangnguyen.edu.vn/thumbnail/package_thumbnail_5.0/khoc_chu_khoc_nhac.png',
+               activationCodes: ['MKHAJFK', 'MKHAJFH', 'MKHAJFT', 'MKHAJFR', 'MKHAJFQ', 'MKHAJAFO', 'MKHAJFB', 'MKHAJFM']
+           },
+            'dia-li-vui-nhon': {
+                 name: 'Địa lí vui nhộn',
+                lessons: ['Địa lý Việt Nam', 'Địa lý Thế Giới', 'Các nền văn hóa'],
+                image: 'https://minio.trangnguyen.edu.vn/thumbnail/package_thumbnail_5.0/doi_mat_meo.png',
+                 activationCodes: ['MAHAJFK', 'MAHAJFH', 'MAHAJFT', 'MAHAJFR', 'MAHAJFQ', 'MAHAJAFO', 'MAHAJFB', 'MAHAJFM']
+              },
+              'tieng-anh-hoc-vui': {
+                  name: 'Tiếng Anh học vui',
+                   lessons: ['Từ vựng cơ bản', 'Ngữ pháp nâng cao', 'Luyện phát âm'],
+                  image: 'https://minio.trangnguyen.edu.vn/thumbnail/package_thumbnail_5.0/giai_dieu_rung_xanh.png',
+                   activationCodes: ['MAHAJFK', 'MAHAJFH', 'MAHAJFT', 'MAHAJFR', 'MAHAJFQ', 'MAHAJAFO', 'MAHAJFB', 'MAHAJFM', 'MAHAJAFW']
+                }
+           };
+        function renderCourseList() {
+              const courseList = user.courses || [];
+              if (courseList.length > 0) {
+                noCoursesMessage.style.display = 'none';
+                courseListContainer.style.display = 'block';
+                  courseListContainer.innerHTML = '';
+                  courseList.forEach(courseId => {
+                     const course = courseData[courseId];
+                      const courseCard = document.createElement('div');
+                    courseCard.classList.add('course-card');
+                    courseCard.innerHTML = `
+                      <img src="${course.image}" alt="${course.name}" class="course-image">
+                       <div class="course-info">
+                            <h3>${course.name}</h3>
+                           <ul>
+                                 ${course.lessons.map(lesson => `<li>${lesson}</li>`).join('')}
+                              </ul>
+                         </div>
+                        <div class="course-action-container">
+                          <button class="btn btn-enter-course" data-course-id="${courseId}">Vào học</button>
+                          </div>
+                     `;
+                      courseListContainer.appendChild(courseCard);
+                  });
+            }else{
+                 noCoursesMessage.style.display = 'block';
+                 courseListContainer.style.display = 'none';
+                  courseListContainer.innerHTML = '';
+             }
+               document.querySelectorAll('.btn-enter-course').forEach(button => {
+                     button.addEventListener('click', function(){
+                     const courseId = this.getAttribute('data-course-id');
+                      window.location.href = courseId + '.html';
+                   });
+                });
+        }
+         renderCourseList();
+        buyNowButton.addEventListener('click', () => {
+            window.location.href = 'thanhtoan.html';
+        });
+          activateButton.addEventListener('click', () => {
+           const activationCode = activationCodeInput.value;
+           const selectedCourse = courseSelect.value;
+             let courseActivated = false;
+             for (const courseId in courseData) {
+             const course = courseData[courseId];
+                 if(course.activationCodes.includes(activationCode) && courseId === selectedCourse){
+                  if (!user.courses) {
+                         user.courses = [];
+                  }
+                 const index = user.courses.indexOf(courseId);
+                  if (index === -1) {
+                    user.courses.push(courseId);
+                     localStorage.setItem('user', JSON.stringify(user));
+                       courseActivated = true;
+                       break;
+                    }
+                 }
+              }
+             if (courseActivated) {
+             paymentMessage.textContent = 'Kích hoạt thành công';
+              }else{
+               paymentMessage.textContent = 'Kích hoạt thất bại. Vui lòng kiểm tra lại!';
+              }
+                paymentPopup.classList.add('active');
+            setTimeout(()=>{
+                paymentPopup.classList.remove('active');
+               renderCourseList();
+                 activationCodeInput.value = '';
+                 purchasePopup.classList.remove('active');
+            }, 2000);
+        });
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentStatus = urlParams.get('status');
+        if (paymentStatus === 'success') {
+            paymentMessage.textContent = 'Thanh toán thành công!';
+              paymentPopup.classList.add('active');
+                 setTimeout(()=>{
+                paymentPopup.classList.remove('active');
+            }, 2000);
+        } else if (paymentStatus === 'failed') {
+            paymentMessage.textContent = 'Thanh toán thất bại!';
+             paymentPopup.classList.add('active');
+                  setTimeout(()=>{
+                paymentPopup.classList.remove('active');
+            }, 2000);
+        }
+        buyMoreButton.addEventListener('click', () => {
+            purchasePopup.classList.add('active');
+        });
+    </script>
+</body>
+</html>

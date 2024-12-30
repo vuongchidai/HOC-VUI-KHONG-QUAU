@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điền Từ Còn Thiếu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: #4caf50;
+        }
+        .game-container {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        .instructions {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .question {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .missing-word {
+            display: inline-block;
+            width: 150px;
+            height: 40px;
+            border: 1px solid #000;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 16px;
+            background-color: #fff;
+            margin: 0 5px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .score-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .score-container p {
+            font-size: 90px;
+            font-weight: bold;
+        }
+        .score-container .passed {
+            color: #4caf50;
+        }
+        .score-container .failed {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="title">Game Điền Từ Còn Thiếu</h1>
+    <div id="instructions" class="instructions">
+        <p>Chào mừng bạn đến với trò chơi "Điền Từ Còn Thiếu"!</p>
+        <p>Hướng dẫn chơi:</p>
+        <p>Mỗi câu sẽ thiếu một từ, hãy nhập từ đúng vào ô trống.</p>
+        <p>Mỗi câu trả lời đúng được +10 điểm. Chúc bạn may mắn!</p>
+        <button onclick="startGame()">Bắt Đầu</button>
+    </div>
+    <div class="game-container" id="game-container">
+        <div id="questions"></div>
+        <button onclick="nextQuestion()" id="nextButton">Tiếp Tục</button>
+        <div id="result" class="result"></div>
+    </div>
+    <div class="score-container" id="score-container" style="display:none;"></div>
+
+    <script>
+        const caDao = [
+            "Trâu ơi ta bảo trâu này, trâu ra ngoài ruộng trâu (..) với cày",
+            "Công cha như núi (..), nghĩa mẹ như nước ở ngoài biển Đông",
+            "Bầu ơi thương lấy bí cùng, tuy rằng khác (..) nhưng chung một giàn",
+            "Đường vô xứ Huế quanh quanh, non xanh nước biếc như tranh (..)",
+            "Ai ơi chớ bỏ ruộng (..), bao nhiêu tấc đất tấc vàng bấy nhiêu",
+            "Nhiễu điều phủ lấy giá (..), người trong một nước phải thương nhau cùng",
+            "Chim khôn kêu tiếng rảnh rang, người khôn nói tiếng dịu (..)",
+            "Người ta là hoa đất, ngựa chạy có bầy, chim bay có (..)",
+            "Cá không ăn muối cá ươn, con cãi cha mẹ trăm đường con (..)",
+            "Tay bưng dĩa muối chấm (..), gừng cay muối mặn xin đừng quên nhau"
+        ];
+
+        const missingWords = ["với", "Thái Sơn", "giống", "vẽ", "hoang", "cột", "dàng", "đàn", "hư", "gừng"];
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function startGame() {
+            document.getElementById('instructions').style.display = 'none';
+            document.getElementById('title').style.display = 'none';
+            document.getElementById('game-container').style.display = 'block';
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const container = document.getElementById('questions');
+            const result = document.getElementById('result');
+            container.innerHTML = "";
+            result.innerHTML = "";
+
+            const cau = caDao[currentQuestionIndex];
+            const answer = missingWords[currentQuestionIndex];
+
+            const questionHTML = cau.replace("(..)", 
+                `<input type='text' class='missing-word' data-answer='${answer}' placeholder='......' />`
+            );
+
+            container.innerHTML = `<div class="question"><p>${questionHTML}</p></div>`;
+        }
+
+        function checkAnswer() {
+            const input = document.querySelector('.missing-word');
+            const userAnswer = input.value.trim().toLowerCase();
+            const correctAnswer = input.dataset.answer.toLowerCase();
+            const result = document.getElementById('result');
+
+            if (userAnswer === correctAnswer) {
+                score += 10;
+                result.innerHTML = "<span style='color: green;'>Đúng!</span>";
+            } else {
+                result.innerHTML = "<span style='color: red;'>Sai! Đáp án đúng là: " + input.dataset.answer + "</span>";
+            }
+        }
+
+        function nextQuestion() {
+            checkAnswer();
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < caDao.length) {
+                setTimeout(() => renderQuestion(), 2000);
+            } else {
+                setTimeout(() => finishGame(), 2000);
+            }
+        }
+
+        function finishGame() {
+            const gameContainer = document.getElementById('game-container');
+            const scoreContainer = document.getElementById('score-container');
+
+            gameContainer.style.display = 'none';
+            scoreContainer.style.display = 'block';
+
+            const scoreText = score >= 50 
+                ? `<p class='passed'>${score} điểm</p>`
+                : `<p class='failed'>${score} điểm. Hãy cố gắng hơn lần sau!</p>`;
+
+            scoreContainer.innerHTML = scoreText;
+        }
+
+        // Initialize game
+    </script>
+</body>
+</html>

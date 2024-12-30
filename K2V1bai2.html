@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Thi Trắc Nghiệm Lớp 6</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .test-info {
+            text-align: right;
+        }
+
+        .quiz-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .quiz-questions {
+            flex: 7;
+            padding-right: 20px;
+            border-right: 1px solid #eee;
+        }
+
+        .sidebar {
+            flex: 3;
+            padding-left: 20px;
+        }
+
+        .sidebar h2 {
+          margin-bottom: 10px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+           flex-wrap: wrap; /* Allow items to wrap */
+           gap: 5px;
+        }
+
+        .sidebar li {
+           display: flex;
+             align-items: center;
+              justify-content: center;
+             width: 30px;
+             height: 30px;
+              border: 1px solid #ddd;
+              border-radius: 50%; /* Make it circular */
+              cursor: pointer;
+              font-size: 1.1em;
+        }
+
+        .sidebar li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar li.answered {
+          background-color: #b3e5fc;
+           color: black;
+        }
+
+        .sidebar li.unanswered {
+          background-color: #ffcdd2;
+           color: black;
+        }
+         .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #eee;
+             font-size: 1.1em; /* Increased font size for question content */
+        }
+        .question p {
+          margin-bottom: 10px;
+        }
+
+         .question input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: auto;
+            display: inline-block;
+        }
+
+       .question label {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .question label:hover {
+             background-color: #e0e0e0;
+         }
+
+         .question label.selected {
+            background-color: #b3e5fc;
+        }
+        .question input[type="radio"], .question input[type="checkbox"] {
+            display: none;
+        }
+       .matching-container {
+           display: flex;
+             flex-direction: row; /* Arrange columns side-by-side */
+            gap: 20px;
+            margin-top: 10px;
+             margin-bottom: 10px;
+        }
+
+        .matching-column {
+            flex: 1; /* Equal column widths */
+             border: 1px solid #ccc;
+             padding: 10px;
+            border-radius: 4px;
+             display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+         .matching-item {
+            padding: 8px;
+             background-color: #e0e0e0;
+            border: 1px solid #ccc;
+             border-radius: 4px;
+            user-select: none;
+             cursor: pointer;
+         }
+
+        .matching-line {
+            position: absolute;
+            border: 1px solid #007bff;
+            pointer-events: none;
+        }
+          .sortable-list {
+           list-style-type: none;
+            padding: 0;
+             margin-bottom: 10px;
+        }
+         .sortable-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            background-color: #e0e0e0;
+           border: 1px solid #ccc;
+             border-radius: 4px;
+           cursor: move;
+        }
+        .sortable-item.dragging {
+            opacity: 0.5;
+        }
+         .select-fill-container {
+             display: flex;
+            gap: 10px;
+             align-items: center;
+             margin-bottom: 10px;
+        }
+          .select-fill-dropdown {
+              padding: 8px;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+              font-size: 1rem;
+              cursor: pointer;
+          }
+
+          .result-container {
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                text-align: center; /* Center content in result container */
+           }
+            .result-score {
+              font-size: 100px;
+              color: #28a745; /* Example color for the score */
+              font-weight: bold;
+               margin: 20px 0;
+            }
+
+            .result-text {
+                font-size: 1.5em;
+                 color: #007bff; /* Example color for the text */
+                 margin-bottom: 10px;
+            }
+         .result-container ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+           display: none; /* Hide list in result container */
+         }
+
+        .result-container li {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-container li:last-child {
+            border-bottom: none;
+        }
+
+        .result-container button {
+              padding: 10px 15px;
+              background-color: #5cb85c;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 1rem;
+             margin-top: 20px;
+        }
+          footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        button {
+              padding: 10px 15px;
+              background-color: #007bff;
+              color: white;
+              border: none;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+         .correct-answer {
+            color: green;
+            font-weight: bold;
+        }
+
+        .wrong-answer {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Bài Thi Trắc Nghiệm Lớp 6</h1>
+            <div class="test-info">
+                <p>Vòng thi: <span id="round-number">1</span></p>
+                <p>Thời gian: <span id="timer">30:00</span></p>
+            </div>
+        </header>
+        <main>
+            <div class="quiz-container">
+                <div class="quiz-questions">
+                  <form id="quiz-form">
+                    <!-- Các câu hỏi sẽ được thêm vào đây bằng JavaScript -->
+                  </form>
+                </div>
+                <div class="sidebar">
+                    <h2>Danh sách câu hỏi</h2>
+                    <ul id="question-list">
+                        <!-- Danh sách các câu hỏi ở đây, cũng được tạo bằng JS -->
+                    </ul>
+                     <button id="submit-sidebar-button" style="margin-top: 10px">Nộp bài</button>
+                </div>
+            </div>
+             <div class="result-container" style="display: none;">
+                 <p class="result-text">Điểm số của bạn:</p>
+                <div class="result-score" id="score"></div>
+                <ul id="result-question-list">
+                    <!-- Danh sách câu hỏi và kết quả -->
+                </ul>
+                <button onclick="restartQuiz()">Làm lại</button>
+            </div>
+        </main>
+        <footer>
+            <button id="submit-button">Nộp bài</button>
+        </footer>
+    </div>
+     <script>
+          const quizForm = document.getElementById('quiz-form');
+        const questionList = document.getElementById('question-list');
+        const timerDisplay = document.getElementById('timer');
+        const submitButton = document.getElementById('submit-button');
+         const submitSidebarButton = document.getElementById('submit-sidebar-button');
+        const resultContainer = document.querySelector('.result-container');
+        const scoreDisplay = document.getElementById('score');
+        const resultQuestionList = document.getElementById('result-question-list');
+        const roundNumberDisplay = document.getElementById('round-number');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        let timeLeft = 30 * 60; // 30 phút * 60 giây
+          const questions = [
+                {
+                type: "single",
+                question: "Số nào là số nguyên tố?",
+                answers: ["4", "6", "7", "9"],
+                correctAnswer: "7",
+             },
+            {
+                type: "fill",
+                question: "Nhiễu điều phủ lấy (..) gương.",
+                correctAnswer: "giá",
+            },
+            {
+                type: "matching",
+                 question: "Nối các phép tính ở cột A với kết quả ở cột B:",
+                 pairs: {
+                     "2 + 3": "5",
+                     "10 - 4": "6",
+                     "2 x 4": "8",
+                     "12 / 3": "4"
+                 }
+            },
+              {
+                type: "sort",
+                question: "Sắp xếp các tháng theo thứ tự trong năm:",
+                items: ["Tháng Ba", "Tháng Một", "Tháng Hai", "Tháng Tư"],
+                correctOrder: ["Tháng Một", "Tháng Hai", "Tháng Ba", "Tháng Tư"]
+            },
+              {
+                type: "select-fill",
+                 question: "Chọn từ thích hợp để điền vào chỗ trống: Mặt trời mọc ở hướng (..).",
+                options: ["Đông", "Tây", "Nam", "Bắc"],
+                correctAnswer: "Đông",
+            },
+            {
+                type: "multiple",
+                question: "Các số nào chia hết cho 3?",
+                answers: ["5", "6", "9", "10", "12"],
+                correctAnswer: ["6", "9", "12"],
+            },
+           {
+                type: "single",
+                question: "Đại lượng nào đo chiều dài?",
+                answers: ["mét", "kilogram", "lít", "giây"],
+                correctAnswer: "mét",
+            },
+           {
+                type: "multiple",
+                question: "Các loại hình học nào có cạnh?",
+                answers: ["hình tròn", "hình vuông", "hình tam giác", "hình cầu", "hình chữ nhật"],
+                correctAnswer: ["hình vuông", "hình tam giác", "hình chữ nhật"],
+            },
+           {
+                type: "fill",
+                question: "1 giờ có (..) phút",
+                correctAnswer: "60",
+            },
+           {
+                type: "single",
+                question: "Con vật nào sau đây biết bay?",
+                answers: ["chó", "mèo", "chim", "cá"],
+                correctAnswer: "chim",
+            },
+           {
+                type: "multiple",
+                question: "Các loại quả nào có màu vàng?",
+                answers: ["chuối", "táo", "chanh", "dưa hấu", "xoài"],
+                correctAnswer: ["chuối", "chanh", "xoài"],
+            },
+             {
+                type: "fill",
+                question: "Việt Nam có (..) tỉnh, thành phố trực thuộc trung ương",
+                correctAnswer: "63",
+            },
+            {
+                type: "single",
+                question: "Thủ đô của Việt Nam là gì?",
+                answers: ["Hà Nội", "Huế", "Đà Nẵng", "Hồ Chí Minh"],
+                correctAnswer: "Hà Nội",
+            },
+            {
+                type: "multiple",
+                question: "Các môn thể thao nào dùng tay?",
+                answers: ["bóng đá", "bóng chuyền", "bóng rổ", "bơi lội", "cầu lông"],
+                correctAnswer: ["bóng chuyền", "bóng rổ", "cầu lông"],
+            },
+             {
+                 type: "fill",
+                question: "Tháng Hai có (..) ngày trong năm không nhuận",
+                 correctAnswer: "28",
+            },
+             {
+                type: "single",
+                question: "Ai là người phát minh ra bóng đèn?",
+                 answers: ["Thomas Edison", "Albert Einstein", "Isaac Newton", "Marie Curie"],
+                 correctAnswer: "Thomas Edison",
+             },
+             {
+                 type: "multiple",
+                question: "Các chất nào là kim loại?",
+                answers: ["sắt", "gỗ", "nhôm", "vàng", "nhựa"],
+                 correctAnswer: ["sắt", "nhôm", "vàng"],
+            },
+            {
+                type: "fill",
+               question: "Một năm có (..) tháng",
+                correctAnswer: "12",
+            },
+            {
+                type: "single",
+                question: "Mặt trời mọc ở hướng nào?",
+                 answers: ["Đông", "Tây", "Nam", "Bắc"],
+                correctAnswer: "Đông",
+            },
+           {
+                 type: "multiple",
+                question: "Các loại rau củ nào có màu đỏ?",
+                answers: ["cà rốt", "cải xanh", "cà chua", "củ dền", "bắp cải"],
+                 correctAnswer: ["cà rốt", "cà chua", "củ dền"],
+            },
+           {
+                type: "fill",
+                question: "Tên quốc gia có hình chữ S là (..)",
+                correctAnswer: "Việt Nam",
+            },
+            {
+                 type: "single",
+                question: "Nốt nhạc nào đứng đầu trong 7 nốt nhạc cơ bản?",
+                 answers: ["Đô", "Rê", "Mi", "Fa"],
+                 correctAnswer: "Đô",
+            },
+            {
+                type: "multiple",
+                question: "Các quốc gia nào ở Châu Á?",
+                answers: ["Việt Nam", "Mỹ", "Nhật Bản", "Úc", "Hàn Quốc"],
+                correctAnswer: ["Việt Nam", "Nhật Bản", "Hàn Quốc"],
+             },
+        ];
+
+        function generateQuestionHTML(question, index) {
+             let questionHTML = `<div class="question" id="question-${index}">
+                                  <p><strong>Câu ${index + 1}:</strong> ${question.question}</p>`;
+
+             if (question.type === "single") {
+                 question.answers.forEach((answer, answerIndex) => {
+                     questionHTML += `<label onclick="selectSingleAnswer(this, ${index})">
+                                             <input type="radio" name="question-${index}" value="${answer}"> ${answer}
+                                        </label>`;
+                });
+             } else if (question.type === "multiple") {
+                 question.answers.forEach((answer, answerIndex) => {
+                    questionHTML += `<label onclick="selectMultipleAnswer(this, ${index})">
+                                            <input type="checkbox" name="question-${index}" value="${answer}"> ${answer}
+                                         </label>`;
+                  });
+            } else if (question.type === "fill") {
+                 questionHTML += `<input type="text" name="question-${index}" style="width: 150px; border: 1px solid #ccc; border-radius: 4px; padding: 5px; display: inline-block">`;
+            } else if (question.type === "matching") {
+                questionHTML += `<div class="matching-container">`;
+                const pairs = Object.entries(question.pairs);
+                const columnA = pairs.map(([left, right]) => `<div class="matching-item" data-match="${left}">${left}</div>`).join("");
+                 const columnB = pairs.map(([left, right]) => `<div class="matching-item" data-match="${right}" >${right}</div>`).join("");
+                 questionHTML += `<div class="matching-column column-a">${columnA}</div><div class="matching-column column-b">${columnB}</div>`
+                  questionHTML += `</div>`;
+             }  else if (question.type === "sort") {
+                questionHTML += `<ul class="sortable-list">`
+                  question.items.forEach((item, itemIndex) => {
+                    questionHTML += `<li class="sortable-item" draggable="true" data-item="${item}">${item}</li>`
+                 });
+                questionHTML += `</ul>`
+            } else if (question.type === "select-fill") {
+                 questionHTML += `<div class="select-fill-container">
+                <span style="font-weight: bold;">Mặt trời mọc ở hướng: </span>
+                 <select class="select-fill-dropdown" name="question-${index}">
+                     <option value="" disabled selected>Chọn đáp án</option>`;
+                question.options.forEach((option) => {
+                  questionHTML += `<option value="${option}">${option}</option>`;
+                 });
+                questionHTML += `</select>
+                 </div>`;
+             }
+            questionHTML += '</div>';
+           return questionHTML;
+       }
+         function selectSingleAnswer(label, questionIndex) {
+            const selectedRadio = label.querySelector('input[type="radio"]');
+             const labels = document.querySelectorAll(`#question-${questionIndex} label`);
+           labels.forEach(l => {
+               l.classList.remove('selected');
+             });
+            label.classList.add('selected');
+             selectedRadio.checked = true;
+        }
+
+        function selectMultipleAnswer(label, questionIndex) {
+            const selectedCheckbox = label.querySelector('input[type="checkbox"]');
+           label.classList.toggle('selected');
+           selectedCheckbox.checked = !selectedCheckbox.checked;
+        }
+        function generateQuestionListItems() {
+            questionList.innerHTML = "";
+            questions.forEach((question, index) => {
+               const listItem = document.createElement("li");
+                 listItem.textContent = `${index + 1}`;
+               listItem.setAttribute('data-question-index', index);
+              listItem.addEventListener('click', () => {
+                    scrollToQuestion(index);
+               });
+               questionList.appendChild(listItem);
+            });
+        }
+
+         function scrollToQuestion(index) {
+           const questionElement = document.getElementById(`question-${index}`);
+            if (questionElement) {
+               questionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+           }
+        }
+
+         function loadQuestions() {
+             quizForm.innerHTML = "";
+             questions.forEach((question, index) => {
+                quizForm.innerHTML += generateQuestionHTML(question, index);
+           });
+           generateQuestionListItems();
+            setupMatchingQuestions();
+            setupSortableQuestions();
+       }
+        function setupMatchingQuestions() {
+            const matchingContainers = document.querySelectorAll('.matching-container');
+             matchingContainers.forEach(container => {
+              const columnAItems = container.querySelectorAll('.column-a .matching-item');
+              const columnBItems = container.querySelectorAll('.column-b .matching-item');
+               columnAItems.forEach(itemA => {
+                    itemA.addEventListener('click', () => {
+                        if(itemA.classList.contains("selected")) {
+                             itemA.classList.remove('selected')
+                            removeLine(itemA);
+                        } else {
+                              if(container.querySelectorAll(".column-a .matching-item.selected").length > 0) {
+                                  container.querySelectorAll(".column-a .matching-item.selected").forEach(element => {
+                                      removeLine(element);
+                                      element.classList.remove("selected")
+                                   })
+                              }
+                             itemA.classList.add('selected')
+                         }
+                    });
+                 });
+                columnBItems.forEach(itemB => {
+                    itemB.addEventListener('click', () => {
+                         const selectedItemA = container.querySelector(".column-a .matching-item.selected")
+                       if(selectedItemA) {
+                          if(itemB.classList.contains("selected")) {
+                              removeLine(selectedItemA);
+                                itemB.classList.remove('selected')
+                           } else {
+                              itemB.classList.add('selected')
+                              drawLine(selectedItemA, itemB, container);
+                             selectedItemA.classList.remove("selected")
+                            }
+                        }
+                  });
+               });
+            });
+        }
+        function drawLine(itemA, itemB, container) {
+            const rectA = itemA.getBoundingClientRect();
+            const rectB = itemB.getBoundingClientRect();
+            const line = document.createElement('div');
+
+            line.classList.add('matching-line');
+
+            const x1 = rectA.right;
+           const y1 = rectA.top + rectA.height / 2;
+          const x2 = rectB.left;
+           const y2 = rectB.top + rectB.height / 2;
+
+          const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+          const angle = Math.atan2(y2 - y1, x2 - x1) * (180 / Math.PI);
+
+           line.style.width = `${length}px`;
+           line.style.left = `${x1}px`;
+          line.style.top = `${y1}px`;
+          line.style.transform = `rotate(${angle}deg)`;
+          container.appendChild(line);
+
+             itemA.dataset.lineId =  line.uniqueId = Math.random();
+           itemB.dataset.lineId = line.uniqueId;
+        }
+
+        function removeLine(itemA) {
+            document.querySelectorAll('.matching-line').forEach(line => {
+                if(line.uniqueId == itemA.dataset.lineId) {
+                  line.remove();
+               }
+          });
+       }
+         function setupSortableQuestions() {
+            const sortableItems = document.querySelectorAll('.sortable-item');
+             let draggedItem = null;
+            sortableItems.forEach(item => {
+               item.addEventListener('dragstart', (e) => {
+                    e.dataTransfer.setData('text/plain', item.dataset.item);
+                    item.classList.add('dragging');
+                   draggedItem = item;
+                 });
+               item.addEventListener('dragend', () => {
+                    item.classList.remove('dragging');
+                });
+            });
+            const sortableList = document.querySelector('.sortable-list');
+
+             if(sortableList) {
+                sortableList.addEventListener('dragover', (e) => {
+                   e.preventDefault();
+                  const afterElement = getDragAfterElement(sortableList, e.clientY);
+                 if(!afterElement || afterElement !== draggedItem) {
+                       sortableList.insertBefore(draggedItem, afterElement);
+                 }
+              });
+
+             function getDragAfterElement(list, y) {
+                    const draggableElements = [...list.querySelectorAll('.sortable-item:not(.dragging)')];
+                      return draggableElements.reduce((closest, child) => {
+                          const box = child.getBoundingClientRect();
+                        const offset = y - box.top - box.height / 2;
+                        if(offset < 0 && offset > closest.offset) {
+                              return { offset: offset, element: child}
+                        } else {
+                              return closest;
+                        }
+                    }, { offset: Number.NEGATIVE_INFINITY }).element;
+                }
+           }
+        }
+       function checkAnswers() {
+            score = 0;
+             const questionListItems = document.querySelectorAll("#question-list li");
+             questions.forEach((question, index) => {
+                 let userAnswer;
+                 let isCorrect;
+               if (question.type === "single") {
+                    const selectedRadio = document.querySelector(`input[name="question-${index}"]:checked`);
+                     userAnswer = selectedRadio ? selectedRadio.value : null;
+                     isCorrect = userAnswer === question.correctAnswer;
+                } else if (question.type === "multiple") {
+                     const selectedCheckboxes = document.querySelectorAll(`input[name="question-${index}"]:checked`);
+                     userAnswer = Array.from(selectedCheckboxes).map(checkbox => checkbox.value);
+                    isCorrect = JSON.stringify(userAnswer.sort()) === JSON.stringify(question.correctAnswer.sort());
+                 } else if (question.type === "fill") {
+                    const filledInput = document.querySelector(`input[name="question-${index}"]`);
+                     userAnswer = filledInput ? filledInput.value.trim() : null;
+                    isCorrect = userAnswer === question.correctAnswer;
+                 }  else if (question.type === "matching") {
+                      const matchingLines = document.querySelectorAll(`#question-${index} .matching-line`);
+                     const pairs = Object.entries(question.pairs);
+                     userAnswer = Array.from(matchingLines).map(line => {
+                       let itemA,itemB
+                       pairs.forEach(([left, right]) => {
+                          if(line.uniqueId == document.querySelector(`.matching-item[data-match="${left}"]`)?.dataset.lineId) {
+                            itemA = left
+                           }
+                         if(line.uniqueId == document.querySelector(`.matching-item[data-match="${right}"]`)?.dataset.lineId) {
+                             itemB = right
+                          }
+                         });
+                         return  `${itemA}-${itemB}`
+                       });
+                    const correctAnswers = pairs.map(([left, right]) => `${left}-${right}`);
+                     isCorrect = JSON.stringify(userAnswer.sort()) === JSON.stringify(correctAnswers.sort());
+                 }  else if (question.type === "sort") {
+                        const sortableItems = document.querySelectorAll(`#question-${index} .sortable-item`);
+                         userAnswer = Array.from(sortableItems).map(item => item.dataset.item);
+                        isCorrect = JSON.stringify(userAnswer) === JSON.stringify(question.correctOrder);
+                } else if (question.type === "select-fill") {
+                    const selectFill = document.querySelector(`select[name="question-${index}"]`);
+                   userAnswer = selectFill ? selectFill.value : null;
+                    isCorrect = userAnswer === question.correctAnswer;
+                 }
+                 const questionItem = questionListItems[index];
+                  if (isCorrect) {
+                     score+=10;
+                    questionItem.classList.add("answered");
+               } else {
+                    questionItem.classList.add("unanswered");
+              }
+            });
+            scoreDisplay.textContent = `${score}/200`;
+           resultContainer.style.display = "block";
+            quizForm.style.display = "none";
+           document.querySelector('footer').style.display = 'none';
+            document.querySelector('.sidebar').style.display = 'none';
+        }
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+             const seconds = timeLeft % 60;
+           timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+            if (timeLeft <= 0) {
+                 clearInterval(timer);
+                checkAnswers();
+             } else {
+               timeLeft--;
+            }
+        }
+
+         function startTimer() {
+            timer = setInterval(updateTimer, 1000);
+        }
+
+        function restartQuiz() {
+             currentQuestionIndex = 0;
+            score = 0;
+             timeLeft = 30 * 60;
+            resultContainer.style.display = 'none';
+            quizForm.style.display = 'block';
+             document.querySelector('footer').style.display = 'block';
+            document.querySelector('.sidebar').style.display = 'block';
+             loadQuestions();
+           startTimer();
+        }
+         // Initialize
+         loadQuestions();
+        startTimer();
+         submitButton.addEventListener('click', () => {
+             clearInterval(timer);
+            checkAnswers();
+         });
+       submitSidebarButton.addEventListener('click', () => {
+            clearInterval(timer);
+            checkAnswers();
+        });
+    </script>
+</body>
+</html>

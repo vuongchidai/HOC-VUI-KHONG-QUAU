@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điểm số của bạn</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            color: #28a745;
+        }
+        .score {
+            font-size: 30px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Điểm số của bạn là:</h1>
+    <div class="score" id="score"></div>
+
+    <script>
+        const score = localStorage.getItem("score");
+        document.getElementById("score").innerText = `${score} / 10`;
+    </script>
+</body>
+</html>

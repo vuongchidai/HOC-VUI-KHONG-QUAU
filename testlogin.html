@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập / Đăng Ký</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .toast-container {
+            z-index: 9999;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        #profile-popup .popup-content p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 11"></div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login">Đăng Nhập</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="register-tab" data-bs-toggle="tab" href="#register">Đăng Ký</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="login">
+                                <form id="login-form">
+                                    <div class="mb-3">
+                                        <label for="login-username" class="form-label">Tên đăng nhập</label>
+                                        <input type="text" class="form-control" id="login-username" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="login-password" class="form-label">Mật khẩu</label>
+                                        <input type="password" class="form-control" id="login-password" required>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-primary">Đăng Nhập</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade" id="register">
+                                <form id="register-form">
+                                    <div class="mb-3">
+                                        <label for="register-fullname" class="form-label">Họ và tên</label>
+                                        <input type="text" class="form-control" id="register-fullname" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-username" class="form-label">Tên đăng nhập</label>
+                                        <input type="text" class="form-control" id="register-username" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-password" class="form-label">Mật khẩu</label>
+                                        <input type="password" class="form-control" id="register-password" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-confirm-password" class="form-label">Nhập lại mật
+                                            khẩu</label>
+                                        <input type="password" class="form-control" id="register-confirm-password"
+                                            required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="register-email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-phone" class="form-label">Số điện thoại</label>
+                                        <input type="tel" class="form-control" id="register-phone" required>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Địa chỉ</label>
+                                        <div>
+                                            <select class="form-select form-select-sm mb-3" id="city"
+                                                aria-label=".form-select-sm">
+                                                <option value="" selected>Chọn tỉnh thành</option>
+                                            </select>
+
+                                            <select class="form-select form-select-sm mb-3" id="district"
+                                                aria-label=".form-select-sm">
+                                                <option value="" selected>Chọn quận huyện</option>
+                                            </select>
+
+                                            <select class="form-select form-select-sm mb-3" id="ward"
+                                                aria-label=".form-select-sm">
+                                                <option value="" selected>Chọn phường xã</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                     <div class="mb-3">
+                                        <label class="form-label">Trường học</label>
+                                          <div>
+                                            <select class="form-select form-select-sm mb-3" id="school-city"
+                                                aria-label=".form-select-sm">
+                                                <option value="" selected>Chọn tỉnh thành</option>
+                                            </select>
+
+                                            <select class="form-select form-select-sm mb-3" id="school-district"
+                                                aria-label=".form-select-sm">
+                                                <option value="" selected>Chọn quận huyện</option>
+                                            </select>
+
+                                            <select class="form-select form-select-sm mb-3" id="school-ward"
+                                                aria-label=".form-select-sm">
+                                                <option value="" selected>Chọn phường xã</option>
+                                            </select>
+                                              <select class="form-select form-select-sm" id="school"
+                                                aria-label=".form-select-sm">
+                                                <option value="" selected>Chọn trường THCS</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-grade" class="form-label">Khối</label>
+                                        <select class="form-select" id="register-grade" required>
+                                            <option value="" selected>Chọn khối</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-class" class="form-label">Lớp</label>
+                                        <input type="text" class="form-control" id="register-class" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="register-dob" class="form-label">Ngày sinh</label>
+                                        <input type="date" class="form-control" id="register-dob" required>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-success">Đăng Ký</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+       <script>
+          const toastContainer = document.getElementById('toast-container');
+
+           function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.classList.add('toast', 'fade', 'show');
+             toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+            toast.style.backgroundColor = type === 'success' ? '#28a745' : '#dc3545';
+            toast.style.color = 'white';
+            toast.style.marginTop = '10px';
+
+            toast.innerHTML = `
+            <div class="d-flex">
+               <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+           </div>
+           `;
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+               toast.remove();
+          }, 5000);
+          }
+            document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const loginUsername = document.getElementById('login-username').value;
+        const loginPassword = document.getElementById('login-password').value;
+
+         const storedUsers = localStorage.getItem('users');
+        if (storedUsers) {
+            const users = JSON.parse(storedUsers);
+            const user = users.find(user => user.username === loginUsername && user.password === loginPassword);
+             if (user) {
+                if(user.lockUntil){
+                    const lockUntilDate = new Date(user.lockUntil);
+                    const today = new Date();
+                     if(lockUntilDate > today){
+                          const daysRemaining = Math.ceil((lockUntilDate - today) / (1000 * 60 * 60 * 24));
+                       showToast(`Tài khoản của bạn đã bị khóa, vui lòng thử lại sau ${daysRemaining} ngày`, 'error');
+                        return;
+                    }
+
+                }
+                showToast('Đăng nhập thành công!', 'success');
+                const currentTime = new Date().getTime();
+                 localStorage.setItem('loginTime', currentTime);
+                 localStorage.setItem('user', JSON.stringify(user));
+                window.location.href = 'trangcanhan.html';
+            } else {
+                 showToast('Đăng nhập thất bại. Vui lòng kiểm tra lại tên đăng nhập hoặc mật khẩu.', 'error');
+            }
+        }else{
+             showToast('Đăng nhập thất bại. Bạn chưa có tài khoản.', 'error');
+        }
+
+    });
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+              const registerFullname = document.getElementById('register-fullname').value;
+            const registerUsername = document.getElementById('register-username').value;
+            const registerPassword = document.getElementById('register-password').value;
+            const registerConfirmPassword = document.getElementById('register-confirm-password').value;
+            const registerEmail = document.getElementById('register-email').value;
+            const registerPhone = document.getElementById('register-phone').value;
+            const city = document.getElementById('city').options[document.getElementById('city').selectedIndex].text;
+            const district = document.getElementById('district').options[document.getElementById('district').selectedIndex].text;
+            const ward = document.getElementById('ward').options[document.getElementById('ward').selectedIndex].text;
+            const schoolCity = document.getElementById('school-city').options[document.getElementById('school-city').selectedIndex].text;
+            const schoolDistrict = document.getElementById('school-district').options[document.getElementById('school-district').selectedIndex].text;
+            const schoolWard = document.getElementById('school-ward').options[document.getElementById('school-ward').selectedIndex].text;
+            const school = document.getElementById('school').options[document.getElementById('school').selectedIndex].text;
+             const registerGrade = document.getElementById('register-grade').value;
+            const registerClass = document.getElementById('register-class').value;
+            const registerDob = document.getElementById('register-dob').value;
+
+
+            if(registerPassword !== registerConfirmPassword){
+                 showToast('Mật khẩu và nhập lại mật khẩu không trùng khớp.', 'error');
+                return;
+            }
+
+           const newUser = {
+               fullname: registerFullname,
+                username: registerUsername,
+                password: registerPassword,
+                email: registerEmail,
+                phone: registerPhone,
+                city: city,
+                district: district,
+                ward: ward,
+               schoolCity: schoolCity,
+              schoolDistrict: schoolDistrict,
+              schoolWard: schoolWard,
+               school: school,
+                grade: registerGrade,
+                class: registerClass,
+                dob: registerDob,
+            };
+
+             let users = JSON.parse(localStorage.getItem('users') || '[]');
+             users.push(newUser);
+           localStorage.setItem('users', JSON.stringify(users));
+
+           showToast('Đăng ký thành công!', 'success');
+            var loginTab = new bootstrap.Tab(document.getElementById('login-tab'));
+           loginTab.show();
+       });
+           var citis = document.getElementById("city");
+           var districts = document.getElementById("district");
+           var wards = document.getElementById("ward");
+            var Parameter = {
+              url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+              method: "GET",
+              responseType: "application/json",
+           };
+            var promise = axios(Parameter);
+             promise.then(function (result) {
+             renderCity(result.data);
+           });
+            function renderCity(data) {
+             for (const x of data) {
+               citis.options[citis.options.length] = new Option(x.Name, x.Id);
+           }
+           citis.onchange = function () {
+                district.length = 1;
+                ward.length = 1;
+              if(this.value != ""){
+                  const result = data.filter(n => n.Id === this.value);
+               for (const k of result[0].Districts) {
+                     district.options[district.options.length] = new Option(k.Name, k.Id);
+                  }
+               }
+            };
+           district.onchange = function () {
+              ward.length = 1;
+               const dataCity = data.filter((n) => n.Id === citis.value);
+             if (this.value != "") {
+                    const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                   for (const w of dataWards) {
+                        wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                   }
+              }
+            };
+          }
+           var schoolCitis = document.getElementById("school-city");
+           var schoolDistricts = document.getElementById("school-district");
+            var schoolWards = document.getElementById("school-ward");
+           var schools = document.getElementById("school");
+           var schoolParameter = {
+              url: "https://raw.githubusercontent.com/minhquan4003/data/main/thcs.json",
+              method: "GET",
+             responseType: "application/json",
+           };
+          var schoolPromise = axios(schoolParameter);
+            schoolPromise.then(function (result) {
+             renderSchoolCity(result.data);
+           });
+
+            function renderSchoolCity(data) {
+              for (const x of data) {
+                  schoolCitis.options[schoolCitis.options.length] = new Option(x.name, x.id);
+              }
+              schoolCitis.onchange = function () {
+                  schoolDistricts.length = 1;
+                 schoolWards.length = 1;
+                   schools.length = 1;
+                  if(this.value != ""){
+                    const result = data.filter(n => n.id === this.value);
+                     for (const k of result[0].districts) {
+                       schoolDistricts.options[schoolDistricts.options.length] = new Option(k.name, k.id);
+                  }
+                 }
+              };
+               schoolDistricts.onchange = function () {
+                   schoolWards.length = 1;
+                   schools.length = 1;
+                    const dataCity = data.filter((n) => n.id === schoolCitis.value);
+                   if (this.value != "") {
+                       const dataWards = dataCity[0].districts.filter(n => n.id === this.value)[0].wards;
+                       for (const w of dataWards) {
+                           schoolWards.options[schoolWards.options.length] = new Option(w.name, w.id);
+                      }
+                   }
+                };
+               schoolWards.onchange = function() {
+                  schools.length = 1;
+                   const dataCity = data.filter((n) => n.id === schoolCitis.value);
+                    if(this.value != ""){
+                     const dataWards = dataCity[0].districts.filter(n => n.id === schoolDistricts.value)[0].wards;
+                        const dataSchools = dataWards.filter(n=> n.id === this.value)[0].schools;
+                        for (const s of dataSchools) {
+                          schools.options[schools.options.length] = new Option(s.name, s.id);
+                     }
+                   }
+                }
+            }
+        </script>
+</body>
+</html>

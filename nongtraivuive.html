@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nông Trại Vui Vẻ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+         body {
+            background-color: #f0e68c; /* Light goldenrod background */
+            margin: 0;
+            overflow: hidden;
+               -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+             padding: 0.5rem 1rem;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         }
+        .profile-header {
+            cursor: pointer;
+            position: relative;
+            display: inline-block;
+            background-color: white;
+             padding: 8px 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+             transition: background-color 0.3s;
+        }
+        .profile-header i {
+           color: #3498db;
+         }
+        .profile-header:hover {
+            background-color: #e0f7f5;
+        }
+         .profile-header:hover i {
+           color: #2980b9;
+       }
+        .profile-popup {
+            position: absolute;
+           top: 100%;
+            right: 0;
+            background: white;
+            padding: 15px;
+            border: 1px solid #ccc;
+           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+            border-radius: 5px;
+        }
+         .profile-popup.active {
+           display: block;
+        }
+        .profile-popup ul {
+           list-style: none;
+            padding: 0;
+        }
+       .profile-popup li {
+            padding: 8px 0;
+           border-bottom: 1px solid #eee;
+            cursor: pointer;
+           transition: background-color 0.3s;
+        }
+        .profile-popup li:hover {
+           background-color: #f8f9fa;
+        }
+      .profile-popup li:last-child {
+           border-bottom: none;
+        }
+        .farm-container {
+          display: flex;
+           flex-wrap: wrap;
+           justify-content: center;
+             padding: 20px;
+            width: 330px;
+            margin: 0 auto;
+               position: absolute;
+              bottom: 20px;
+              left: 23%;
+                border: 2px solid green;
+           border-radius: 20px;
+        }
+        .plot {
+            width: 100px;
+           height: 100px;
+            background: url('https://placehold.co/100x100/8B4513/fff') center/cover no-repeat;
+            border: 1px solid #8B4513;
+            margin: 5px;
+           cursor: pointer;
+           display: flex;
+            align-items: center;
+             justify-content: center;
+              position: relative;
+                border-radius: 10px;
+              transition: transform 0.2s, box-shadow 0.2s;
+        }
+         .plot:hover {
+             transform: translateY(-3px);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+         .plot .plant-img{
+           max-width: 80%;
+           max-height: 80%;
+            object-fit: contain;
+             position: absolute;
+           top: 50%;
+           left: 50%;
+           transform: translate(-50%,-50%);
+         }
+         .plot::before {
+              content: "";
+              position: absolute;
+             top: 0;
+              left: 0;
+            width: 100px;
+            height: 100%;
+               background: url('https://png.pngtree.com/png-clipart/20230526/ourmid/pngtree-cute-farmer-png-image_7109565.png') center/contain no-repeat;
+            transform: translateX(-15px);
+               opacity: 0;
+               transition: opacity 0.3s, transform 0.3s;
+         }
+        .plot.correct::before {
+             opacity: 1;
+             transform: translateX(-10px) scale(1.2);
+          cursor: pointer;
+      }
+       .plot.incorrect::before {
+            opacity: 1;
+             transform: translateX(-10px);
+            filter: invert(35%) sepia(99%) saturate(7063%) hue-rotate(359deg) brightness(99%) contrast(115%);
+           cursor: pointer;
+        }
+         .plot.has-plant:hover{
+           background: url('https://placehold.co/100x100/006400/fff') center/cover no-repeat;
+       }
+        .plant-menu {
+           position: absolute;
+           bottom: 10px;
+           left: 50%;
+           transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+             padding: 10px;
+          border-radius: 5px;
+           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          display: none;
+           z-index: 1;
+      }
+       .plant-menu button {
+            margin: 5px;
+            background-color: #27ae60;
+             color: white;
+            border: none;
+             padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+         .plant-menu button:hover {
+           background-color: #23824f;
+         }
+        .plot.selected .plant-menu {
+           display: block;
+         }
+        .question-popup {
+            position: fixed;
+             top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+              padding: 20px;
+              border: 1px solid #ccc;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+              display: none;
+              max-height: 90vh;
+             overflow-y: auto;
+              border-radius: 10px;
+           width: 600px;
+       }
+        .question-popup.active {
+            display: block;
+         }
+       .question-popup .popup-content{
+             padding: 20px;
+        }
+       .question-popup .popup-content h3{
+          margin-bottom: 20px;
+       }
+      .question-popup .popup-content p {
+            margin-bottom: 20px;
+       }
+        .question-popup .popup-content .answer-options button{
+          margin: 5px;
+             background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+             border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+       }
+         .question-popup .popup-content .answer-options button:hover {
+           background-color: #2980b9;
+         }
+       .question-popup .btn-close {
+           position: absolute;
+            top: 10px;
+            right: 10px;
+             background-image: url('https://media.istockphoto.com/id/1131230925/vi/vec-to/d%E1%BA%A5u-ki%E1%BB%83m-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-ch%E1%BB%AF-th%E1%BA%ADp-%C4%91%E1%BB%8F-%C4%91%C6%A1n-gi%E1%BA%A3n-vector.jpg?s=612x612&w=0&k=20&c=Zl4pvbt2-7JoQCohB1JdIf2JKS-BoHbhQGNhmhwaiSA=');
+             background-size: contain;
+           width: 24px;
+            height: 24px;
+            cursor: pointer;
+             border: 0;
+              background-repeat: no-repeat;
+         }
+       .game-info {
+           position: absolute;
+           top: 10px;
+            left: 10px;
+           background: rgba(255,255,255,0.8);
+           padding: 10px;
+           border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+           display: none; /* Initially hidden */
+       }
+      .toast-message {
+           position: fixed;
+            top: 20px;
+           left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 0, 0, 0.8);
+             color: white;
+             padding: 10px 20px;
+            border-radius: 5px;
+           opacity: 0;
+           transition: opacity 0.5s;
+            z-index: 9999;
+      }
+      .toast-message.show {
+         opacity: 1;
+      }
+         .toast-message.success {
+            background-color: rgba(0, 128, 0, 0.8);
+        }
+        #start-game-btn {
+           position: absolute;
+              top: 50%;
+             left: 50%;
+             transform: translate(-50%, -50%);
+              background-color: #3498db;
+             color: white;
+             border: none;
+           padding: 15px 30px;
+            border-radius: 10px;
+             cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1.5rem;
+            z-index: 1002;
+       }
+          #start-game-btn:hover {
+             background-color: #2980b9;
+        }
+      #end-message {
+           position: fixed;
+             top: 50%;
+            left: 50%;
+             transform: translate(-50%, -50%);
+            background: white;
+              padding: 20px;
+           border: 1px solid #ccc;
+             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+             display: none;
+             border-radius: 10px;
+             text-align: center;
+        }
+        #end-message.active {
+           display: block;
+        }
+         #end-message h2 {
+           margin-bottom: 20px;
+         }
+        #end-message button{
+            background-color: #3498db;
+            color: white;
+             border: none;
+             padding: 10px 16px;
+             border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+       }
+         #end-message button:hover {
+           background-color: #2980b9;
+        }
+        .nav-links {
+        display: flex;
+         align-items: center;
+         justify-content: space-around; /* Đặt các liên kết đều nhau */
+         flex-wrap: wrap; /* Cho phép xuống dòng khi màn hình nhỏ */
+   }
+    .nav-links a {
+      display: flex;
+        flex-direction: column; /* Stack icon và text dọc */
+         align-items: center;
+        color: #333;
+        text-decoration: none;
+        margin-right: 10px; /* Giảm margin phải */
+        margin-bottom: 5px; /* Thêm margin dưới cho responsive */
+         padding: 8px 12px;
+         border-radius: 5px;
+          transition: background-color 0.3s;
+         text-align: center; /* Center text */
+     }
+    .nav-links a:hover {
+         background-color: #e0f7f5;
+    }
+   .nav-links i {
+       margin-bottom: 5px; /* Thêm margin dưới cho icon */
+        font-size: 1.5em; /* Lớn hơn một chút cho dễ nhìn */
+        transition: color 0.3s; /* Thêm hiệu ứng chuyển màu */
+     }
+     .nav-links a:hover i {
+           color: #2980b9;
+     }
+    @media (min-width: 768px) {
+        .nav-links {
+           justify-content: flex-start; /* Các liên kết sang trái trên màn hình lớn hơn */
+         }
+        .nav-links a {
+            flex-direction: row;
+             margin-right: 20px;
+             text-align: left;
+            align-items: center;
+       }
+       .nav-links i{
+            margin-right: 5px;
+            margin-bottom: 0;
+            font-size: 1em;
+       }
+  }
+    </style>
+</head>
+<body>
+     <div id="end-message">
+          <h2 id="end-message-text"></h2>
+          <button id="restart-game-btn">Bắt đầu lại</button>
+    </div>
+   <div class="container-fluid">
+         <div class="header-container">
+             <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+             <div class="nav-links">
+                 <a href="vaohoc.html">
+                     <i class="fas fa-book" style="color: #3498db;"></i> <span>Vào học</span>
+                </a>
+               <a href="luyenthi.html">
+                     <i class="fas fa-pencil-alt" style="color: #e67e22;"></i> <span>Luyện thi</span>
+                </a>
+                <a href="dautruong.html">
+                     <i class="fas fa-gamepad" style="color: #9b59b6;"></i> <span>Đấu trường</span>
+                 </a>
+                <a href="trangcanhan.html">
+                  <i class="fas fa-trophy" style="color: #27ae60;"></i> <span>Vào thi</span>
+                 </a>
+             </div>
+        </div>
+    </nav>
+            <div class="d-flex align-items-center">
+                 <div class="profile-header">
+                     <i class="fa fa-user-circle me-2"></i> <span id="header-fullname"></span>
+                     <div class="profile-popup">
+                         <ul class="profile-popup-menu">
+                            <li id="info-menu">Thông tin cá nhân</li>
+                             <li id="change-password-menu">Đổi mật khẩu</li>
+                           <li id="logout-menu">Đăng xuất</li>
+                      </ul>
+                     </div>
+                </div>
+            </div>
+        </div>
+          <div class="game-info" style = "display:none">
+             <p>Điểm: <span id="score">0</span></p>
+           <p>Thời gian: <span id="timer">10:00</span></p>
+      </div>
+         <div class="farm-container" id="farm" style="display: none">
+           <!-- Các ô đất sẽ được tạo bằng JS -->
+       </div>
+        <button id="start-game-btn">Bắt Đầu</button>
+    </div>
+   <div id="question-popup" class="question-popup">
+        <div class="popup-content">
+              <button type="button" class="btn-close" aria-label="Close"></button>
+              <h3 id="question-title"></h3>
+             <p id="question-text"></p>
+             <div class="answer-options" id="answer-options">
+          </div>
+       </div>
+ </div>
+ <div id="toast-message" class="toast-message"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+        const profileHeader = document.querySelector('.profile-header');
+       const profilePopup = document.querySelector('.profile-popup');
+        const logoutMenu = document.getElementById('logout-menu');
+        const headerFullname = document.querySelector('#header-fullname');
+        const farmContainer = document.getElementById('farm');
+        const questionPopup = document.getElementById('question-popup');
+          const questionTitle = document.getElementById('question-title');
+         const questionText = document.getElementById('question-text');
+         const answerOptions = document.getElementById('answer-options');
+         const scoreDisplay = document.getElementById('score');
+         const timerDisplay = document.getElementById('timer');
+          const toastMessage = document.getElementById('toast-message')
+          const startGameButton = document.getElementById('start-game-btn');
+         const endMessage = document.getElementById('end-message');
+         const endMessageText = document.getElementById('end-message-text');
+         const restartGameButton = document.getElementById('restart-game-btn');
+           const gameInfo = document.querySelector('.game-info');
+           let currentPlot;
+          let plots = [];
+          let score = 0;
+           let timeLeft = 600;
+           let gameTimer;
+            let isGameRunning = false;
+           let incorrectAnswers = 0;
+         const loginTime = localStorage.getItem('loginTime');
+         const currentTime = new Date().getTime();
+       if (!loginTime || (currentTime - parseInt(loginTime)) > 24 * 60 * 60 * 1000) {
+          localStorage.removeItem('user');
+            localStorage.removeItem('loginTime');
+          window.location.href = 'dangnhap.html';
+         }
+         const storedUser = localStorage.getItem('user');
+          let user;
+        if (storedUser) {
+             user = JSON.parse(storedUser);
+        } else {
+             window.location.href = 'dangnhap.html';
+          }
+       headerFullname.textContent = user.fullname;
+         function closeAllPopup() {
+          questionPopup.classList.remove('active');
+        }
+      document.querySelectorAll('.question-popup .btn-close').forEach(closeButton => {
+         closeButton.addEventListener('click', closeAllPopup);
+      });
+         function toggleProfilePopup() {
+         profilePopup.classList.toggle('active');
+         if(profilePopup.classList.contains('active')){
+            document.addEventListener('click',function(event){
+               if (!profileHeader.contains(event.target)) {
+                 profilePopup.classList.remove('active');
+                 document.removeEventListener('click', arguments.callee);
+                 }
+             });
+         }
+      
+    }
+     profileHeader.addEventListener('click', toggleProfilePopup);
+      // Xử lý nút đăng xuất
+    logoutMenu.addEventListener('click', function () {
+        profilePopup.classList.remove('active');
+         localStorage.removeItem('user');
+         localStorage.removeItem('loginTime');
+        window.location.href = 'dangnhap.html';
+   });
+       document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+      });
+        document.addEventListener('keydown', function(e){
+          if ((e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 'a'|| e.key === 'x')) || e.key === 'F12') {
+                e.preventDefault();
+           }
+      });
+     function updateScore(points){
+          score += points;
+           scoreDisplay.textContent = score;
+     }
+      function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        }
+       function updateTimer(){
+            timerDisplay.textContent = formatTime(timeLeft);
+             if (timeLeft <= 0) {
+               endGame();
+           } else {
+              timeLeft--;
+            }
+      }
+        const questions = [
+          
+   {
+                  title: 'Trồng cây',
+                 text: 'Hà Nội là thủ đô của nước nào?',
+                 options: ['Việt Nam', 'Trung Quốc', 'Nhật Bản', 'Hàn Quốc'],
+                 answer: 'Việt Nam',
+                 type: 'plant'
+            },
+             {
+                 title: 'Trồng cây',
+                 text: 'Con vật nào được coi là chúa tể rừng xanh?',
+                 options: ['Voi', 'Sư tử', 'Hổ', 'Báo đốm'],
+                 answer: 'Sư tử',
+                 type: 'plant'
+             },
+             {
+                title: 'Trồng cây',
+                text: 'Màu gì là màu của bầu trời?',
+                options: ['Đỏ', 'Xanh lá', 'Xanh dương', 'Vàng'],
+                 answer: 'Xanh dương',
+                  type: 'plant'
+            },
+            {
+               title: 'Trồng cây',
+                 text: 'Đại dương nào lớn nhất thế giới?',
+                   options: ['Đại Tây Dương', 'Ấn Độ Dương', 'Bắc Băng Dương', 'Thái Bình Dương'],
+                   answer: 'Thái Bình Dương',
+                   type: 'plant'
+              },
+              {
+                title: 'Trồng cây',
+                text: 'Tác phẩm "Truyện Kiều" của ai?',
+                  options: ['Nguyễn Trãi', 'Nguyễn Du', 'Hồ Xuân Hương', 'Nguyễn Bỉnh Khiêm'],
+                   answer: 'Nguyễn Du',
+                     type: 'plant'
+              },
+                {
+                    title: 'Trồng cây',
+                    text: 'Năm 2023 là năm con gì?',
+                     options: ['Trâu', 'Hổ', 'Mèo', 'Thỏ'],
+                     answer: 'Mèo',
+                      type: 'plant'
+                },
+                {
+                    title: 'Trồng cây',
+                    text: 'Ngày quốc khánh của Việt Nam là ngày nào?',
+                     options: ['2/9', '30/4', '1/5', '20/11'],
+                     answer: '2/9',
+                      type: 'plant'
+              },
+               {
+                  title: 'Trồng cây',
+                   text: 'Việt Nam có bao nhiêu tỉnh thành?',
+                     options: ['59', '60','62','63'],
+                      answer: '63',
+                       type: 'plant'
+              },
+              {
+                  title: 'Trồng cây',
+                   text: 'Thành phố nào là trung tâm kinh tế lớn nhất Việt Nam?',
+                     options: ['Hà Nội', 'Đà Nẵng', 'Cần Thơ', 'TP.HCM'],
+                      answer: 'TP.HCM',
+                        type: 'plant'
+              },
+                {
+                    title: 'Trồng cây',
+                    text: 'Đâu là tên một loài hoa đặc trưng của Việt Nam?',
+                     options: ['Hoa hồng', 'Hoa lan', 'Hoa sen', 'Hoa cúc'],
+                     answer: 'Hoa sen',
+                       type: 'plant'
+                },
+               {
+                   title: 'Trồng cây',
+                  text: 'Ai là người sáng lập ra nước Việt Nam Dân Chủ Cộng Hòa?',
+                    options: ['Lê Lợi', 'Quang Trung', 'Hồ Chí Minh', 'Trần Hưng Đạo'],
+                      answer: 'Hồ Chí Minh',
+                       type: 'plant'
+             },
+                {
+                    title: 'Trồng cây',
+                    text: 'Ngọn núi nào cao nhất Việt Nam?',
+                      options: ['Phan Xi Păng', 'Bà Nà', 'Langbiang', 'Mẫu Sơn'],
+                     answer: 'Phan Xi Păng',
+                       type: 'plant'
+               },
+             {
+                 title: 'Trồng cây',
+                   text: 'Văn Miếu - Quốc Tử Giám nằm ở đâu?',
+                    options: ['Hà Nội', 'Huế', 'Hội An', 'Đà Nẵng'],
+                      answer: 'Hà Nội',
+                      type: 'plant'
+             },
+               {
+                  title: 'Trồng cây',
+                 text: 'Bài hát nào sau đây được xem là quốc ca của Việt Nam?',
+                    options: ['Tiến Quân Ca', 'Như Có Bác Hồ Trong Ngày Vui Đại Thắng', 'Nối Vòng Tay Lớn', 'Đất Nước'],
+                     answer: 'Tiến Quân Ca',
+                       type: 'plant'
+             },
+               {
+                title: 'Trồng cây',
+                  text: 'Hội An là một địa danh nổi tiếng ở tỉnh nào?',
+                   options: ['Thừa Thiên Huế', 'Quảng Nam', 'Quảng Ninh', 'Đà Nẵng'],
+                    answer: 'Quảng Nam',
+                      type: 'plant'
+             },
+                {
+                   title: 'Trồng cây',
+                   text: 'Đỉnh Everest nằm ở dãy núi nào?',
+                    options: ['Himalaya', 'Rocky', 'Andes', 'Alps'],
+                     answer: 'Himalaya',
+                       type: 'plant'
+             },
+           {
+                 title: 'Trồng cây',
+                 text: 'Sông nào được coi là "con sông Mẹ" của Việt Nam?',
+                   options: ['Sông Hồng', 'Sông Mekong', 'Sông Đà', 'Sông Mã'],
+                   answer: 'Sông Hồng',
+                    type: 'plant'
+             },
+           {
+               title: 'Thu hoạch',
+                  text: 'Động Phong Nha nằm ở tỉnh nào của Việt Nam?',
+                   options: ['Quảng Bình', 'Quảng Ninh', 'Quảng Trị', 'Quảng Nam'],
+                     answer: 'Quảng Bình',
+                      type: 'harvest'
+            },
+             {
+                   title: 'Thu hoạch',
+                     text: 'Thành phố nào của Việt Nam được biết đến với biệt danh "Thành phố ngàn hoa"?',
+                     options: ['Đà Lạt', 'Hà Nội', 'Đà Nẵng', 'Huế'],
+                       answer: 'Đà Lạt',
+                     type: 'harvest'
+              },
+             {
+                  title: 'Thu hoạch',
+                 text: 'Con vật nào sau đây có thể bay được?',
+                    options: ['Gà', 'Voi', 'Cá', 'Chim'],
+                      answer: 'Chim',
+                       type: 'harvest'
+            },
+             {
+                   title: 'Thu hoạch',
+                  text: 'Hành tinh nào sau đây được gọi là "Hành tinh đỏ"?',
+                   options: ['Sao Kim', 'Sao Hỏa', 'Sao Mộc', 'Sao Thủy'],
+                    answer: 'Sao Hỏa',
+                      type: 'harvest'
+             },
+              {
+                    title: 'Thu hoạch',
+                   text: 'Vạn Lý Trường Thành thuộc quốc gia nào?',
+                     options: ['Nhật Bản', 'Hàn Quốc', 'Trung Quốc', 'Thái Lan'],
+                    answer: 'Trung Quốc',
+                       type: 'harvest'
+               },
+                 {
+                     title: 'Thu hoạch',
+                    text: 'Đâu là tên một kỳ quan thiên nhiên thế giới tại Việt Nam?',
+                      options: ['Hồ Gươm', 'Vịnh Hạ Long', 'Chợ Bến Thành', 'Sông Hương'],
+                       answer: 'Vịnh Hạ Long',
+                        type: 'harvest'
+                },
+                {
+                   title: 'Thu hoạch',
+                     text: 'Tháp Eiffel nằm ở thành phố nào?',
+                     options: ['New York', 'Paris', 'London', 'Rome'],
+                       answer: 'Paris',
+                         type: 'harvest'
+                 },
+                 {
+                     title: 'Thu hoạch',
+                    text: 'Nước nào là quê hương của Sumo?',
+                      options: ['Trung Quốc', 'Hàn Quốc', 'Nhật Bản', 'Thái Lan'],
+                       answer: 'Nhật Bản',
+                        type: 'harvest'
+               },
+           {
+                  title: 'Thu hoạch',
+                 text: 'Cầu Cần Thơ bắc qua con sông nào?',
+                    options: ['Sông Tiền', 'Sông Hậu', 'Sông Đà', 'Sông Cửu Long'],
+                      answer: 'Sông Hậu',
+                     type: 'harvest'
+              },
+                {
+                    title: 'Thu hoạch',
+                    text: 'Ai là người đã chế tạo ra bom nguyên tử?',
+                      options: ['Newton', 'Albert Einstein', 'Oppenheimer', 'Marie Curie'],
+                      answer: 'Oppenheimer',
+                        type: 'harvest'
+                } ,
+           {
+                 title: 'Thu hoạch',
+                   text: 'Ai là người đầu tiên bay lên vũ trụ?',
+                   options: ['Neil Armstrong', 'Yuri Gagarin', 'Buzz Aldrin', 'Valentina Tereshkova'],
+                     answer: 'Yuri Gagarin',
+                      type: 'harvest'
+           },
+              {
+                 title: 'Trồng cây',
+                  text: 'Ngôn ngữ nào được dùng nhiều nhất trên thế giới?',
+                    options: ['Tiếng Anh', 'Tiếng Tây Ban Nha', 'Tiếng Hoa', 'Tiếng Hindi'],
+                   answer: 'Tiếng Hoa',
+                      type: 'plant'
+              },
+                 {
+                    title: 'Trồng cây',
+                    text: ' Kim Tự Tháp Ai Cập nằm ở đâu?',
+                     options: ['Cairo', 'Alexandria', 'Luxor', 'Giza'],
+                      answer: 'Giza',
+                     type: 'plant'
+                },
+                {
+                  title: 'Trồng cây',
+                     text: 'Cái gì có mặt mà không có đầu?',
+                     options: ['Đồng hồ', 'Đồng xu', 'Bản đồ', 'Mặt trời'],
+                      answer: 'Đồng hồ',
+                      type: 'plant'
+               },
+              {
+                   title: 'Trồng cây',
+                  text: 'Cái gì có cổ mà không có đầu?',
+                   options: ['Cái áo', 'Cái chai', 'Cái ly', 'Cái bình'],
+                    answer: 'Cái chai',
+                      type: 'plant'
+            },
+               {
+                     title: 'Trồng cây',
+                    text: 'Cái gì luôn đến nhưng không bao giờ đến?',
+                   options: ['Quá khứ', 'Tương lai', 'Hiện tại', 'Kỷ niệm'],
+                     answer: 'Tương lai',
+                       type: 'plant'
+             },
+                {
+                   title: 'Trồng cây',
+                 text: 'Cái gì càng lớn càng nhẹ?',
+                   options: ['Con voi', 'Con gà', 'Quả bóng', 'Cục xốp'],
+                     answer: 'Cục xốp',
+                       type: 'plant'
+                },
+                 {
+                     title: 'Trồng cây',
+                    text: 'Cái gì khi mua nó thì nó màu đen, khi dùng nó lại màu đỏ?',
+                     options: ['Cục tẩy', 'Bút chì', 'Than', 'Nến'],
+                     answer: 'Than',
+                       type: 'plant'
+               },
+                {
+                    title: 'Trồng cây',
+                   text: 'Con đường nào không bao giờ đi được?',
+                     options: ['Con đường trên trời', 'Con đường trên biển', 'Con đường trên núi', 'Con đường đất'],
+                     answer: 'Con đường trên biển',
+                       type: 'plant'
+                },
+           
+                   {
+                      title: 'Thu hoạch',
+                       text: 'Ai là tác giả của bài thơ "Lượm"?',
+                      options: ['Tố Hữu', 'Huy Cận', 'Xuân Diệu', 'Nguyễn Bính'],
+                      answer: 'Tố Hữu',
+                        type: 'harvest'
+                  },
+               {
+                     title: 'Thu hoạch',
+                     text: 'Ai là người được mệnh danh là "Vua nhạc Pop"?',
+                       options: ['Michael Jackson', 'Elvis Presley', 'Freddie Mercury', 'Prince'],
+                       answer: 'Michael Jackson',
+                       type: 'harvest'
+                },
+               {
+                    title: 'Thu hoạch',
+                   text: 'Trái tim của con người có bao nhiêu ngăn?',
+                     options: ['2', '3', '4', '5'],
+                      answer: '4',
+                        type: 'harvest'
+                },
+              {
+                title: 'Thu hoạch',
+                  text: 'Môn thể thao nào được chơi với bóng hình bầu dục?',
+                     options: ['Bóng đá', 'Bóng rổ', 'Bóng bầu dục', 'Bóng chuyền'],
+                     answer: 'Bóng bầu dục',
+                      type: 'harvest'
+             },
+                 {
+                    title: 'Thu hoạch',
+                    text: 'Ngôi đền Angkor Wat nằm ở quốc gia nào?',
+                    options: ['Thái Lan', 'Myanmar', 'Lào', 'Campuchia'],
+                      answer: 'Campuchia',
+                        type: 'harvest'
+                 },
+                {
+                     title: 'Thu hoạch',
+                     text: 'Hệ mặt trời của chúng ta thuộc thiên hà nào?',
+                      options: ['Andromeda', 'Sombrero', 'Milky Way', 'Whirlpool'],
+                       answer: 'Milky Way',
+                        type: 'harvest'
+              },
+                {
+                    title: 'Thu hoạch',
+                  text: 'Nhạc sĩ nào được biết đến với biệt danh "Ông hoàng nhạc Rock & Roll"?',
+                      options: ['Elvis Presley', 'Chuck Berry', 'Little Richard', 'Buddy Holly'],
+                       answer: 'Elvis Presley',
+                        type: 'harvest'
+                },
+              {
+                   title: 'Thu hoạch',
+                     text: 'Lục địa nào sau đây là lớn nhất thế giới?',
+                     options: ['Châu Âu', 'Châu Phi', 'Châu Á', 'Châu Mỹ'],
+                    answer: 'Châu Á',
+                       type: 'harvest'
+                }
+         ];
+          const fruits = [
+            'https://khothietke.net/wp-content/uploads/2021/04/PNGKhovector.net-02144.png',
+              'https://png.pngtree.com/png-clipart/20220721/ourmid/pngtree-vector-red-apple-fruit-png-image_6021121.png',
+            'https://khothietke.net/wp-content/uploads/2021/04/PNGKhovector.net-02142.png',
+              'https://khothietke.net/wp-content/uploads/2021/04/PNGKhovector.net-02151.png'
+             ];
+     function showToast(message, type) {
+            toastMessage.textContent = message;
+            toastMessage.classList.add('show');
+            if(type === 'success') toastMessage.classList.add('success')
+            setTimeout(() => {
+               toastMessage.classList.remove('show');
+              toastMessage.classList.remove('success')
+           }, 2000);
+         }
+         function showQuestion(type, plot) {
+              const randomQuestion = questions.filter(item => item.type === type)
+                const question = randomQuestion[Math.floor(Math.random() * randomQuestion.length)]
+                 questionText.textContent = question.text;
+                questionTitle.textContent = question.title;
+                  answerOptions.innerHTML = '';
+                  question.options.forEach(option => {
+                      const button = document.createElement('button');
+                      button.textContent = option;
+                    button.addEventListener('click', () => {
+                         if (option === question.answer) {
+                              plot.classList.add('correct');
+                                setTimeout(()=>{
+                                  plot.classList.remove('correct')
+                           },500)
+                            if(type === 'plant'){
+                            if (!plot.classList.contains('has-plant')) {
+                                  plot.classList.add('has-plant');
+                                   const plantImage = document.createElement('img');
+                                  plantImage.src = 'https://png.pngtree.com/png-clipart/20230221/original/pngtree-sprout-icon-png-image_8961595.png';
+                                      plantImage.alt = 'Mầm cây';
+                                    plantImage.classList.add('plant-img')
+                                  plot.appendChild(plantImage);
+                                }
+                           }else if(type === 'harvest' ){
+                                 const plantImage = plot.querySelector('.plant-img');
+                                   if(plantImage)
+                                  {
+                                        const fruitImage =  document.createElement('img');
+                                        const randomFruit = fruits[Math.floor(Math.random() * fruits.length)];
+                                       fruitImage.src = randomFruit;
+                                      fruitImage.style.maxWidth = '50%';
+                                       fruitImage.style.maxHeight = '50%';
+                                      fruitImage.alt = 'Fruit';
+                                      plot.appendChild(fruitImage);
+                                     const fruitRect = fruitImage.getBoundingClientRect();
+                                      const scoreRect = scoreDisplay.parentElement.getBoundingClientRect();
+                                       const dx = scoreRect.left + scoreRect.width/2 - fruitRect.left - fruitRect.width/2;
+                                         const dy = scoreRect.top  + scoreRect.height/2 - fruitRect.top  - fruitRect.height/2;
+                                          fruitImage.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                                        fruitImage.style.transform = `translate(${dx}px, ${dy}px) scale(0.1)`;
+                                         fruitImage.style.opacity = 0;
+                                       setTimeout(()=>{
+                                             if(plantImage.alt === 'Mầm cây')
+                                             {
+                                                  updateScore(5);
+                                                   plantImage.src = 'https://cdn.creazilla.com/cliparts/4493/avocado-sprout-clipart-original.png';
+                                                     plantImage.alt = 'Cây phát triển';
+                                               }
+                                              else if(plantImage.alt === 'Cây phát triển'){
+                                                  updateScore(10);
+                                                   plantImage.src = 'https://png.pngtree.com/png-clipart/20230901/original/pngtree-tree-topic-image-8-branch-plant-growing-vector-picture-image_10076265.png';
+                                                    plantImage.alt = 'Cây trưởng thành'
+                                                 }
+                                                 else if(plantImage.alt === 'Cây trưởng thành'){
+                                                     updateScore(25);
+                                                       plantImage.src = 'https://png.pngtree.com/png-clipart/20230802/original/pngtree-apple-tree-leaf-drawing-art-vector-picture-image_9238209.png';
+                                                      plantImage.alt = 'Cây ra quả'
+                                                  }
+                                               else if(plantImage.alt === 'Cây ra quả'){
+                                                   updateScore(40);
+                                                       plot.classList.remove('has-plant');
+                                                       plantImage.remove();
+                                                    }
+                                        }, 500);
+                                          setTimeout(()=>{
+                                              fruitImage.remove();
+                                         },1000);
+                                  }
+                             }
+                            showToast('Chính xác', 'success');
+                              }else{
+                                  plot.classList.add('incorrect');
+                                   setTimeout(()=>{
+                                        plot.classList.remove('incorrect')
+                                   },500)
+                                 showToast('Sai rồi!', 'error');
+                                 incorrectAnswers++;
+                                if (incorrectAnswers >= 5) {
+                                   endGame();
+                                   }
+                           }
+                             questionPopup.classList.remove('active');
+                              plot.classList.remove('selected');
+                    });
+                   answerOptions.appendChild(button);
+              });
+               currentPlot = plot;
+               questionPopup.classList.add('active');
+        }
+         function resetGame(){
+             score = 0;
+              scoreDisplay.textContent = score;
+             timeLeft = 600;
+             timerDisplay.textContent = formatTime(timeLeft);
+                plots.forEach(plot => {
+                   plot.classList.remove('has-plant');
+                   const plantImage = plot.querySelector('.plant-img')
+                     if(plantImage)
+                       {
+                            plantImage.remove();
+                     }
+                });
+         }
+        function endGame(){
+             clearInterval(gameTimer);
+             endMessage.classList.add('active');
+            if(score > 50) {
+                 endMessageText.textContent = 'Bạn đã thắng! Điểm của bạn là: '+score
+            }else {
+                endMessageText.textContent = 'Bạn đã thua! Điểm của bạn là: '+score
+            }
+             isGameRunning = false;
+        }
+      restartGameButton.addEventListener('click', () => {
+            resetGame();
+            endMessage.classList.remove('active');
+          startGame();
+       });
+      startGameButton.addEventListener('click', startGame);
+        function startGame(){
+            resetGame();
+            isGameRunning = true;
+            incorrectAnswers = 0;
+            gameTimer = setInterval(updateTimer, 1000);
+           startGameButton.style.display = 'none';
+            gameInfo.style.display = 'block';
+            farmContainer.style.display = 'flex';
+       }
+         for (let i = 0; i < 9; i++) {
+            const plot = document.createElement('div');
+            plot.classList.add('plot');
+           const plantMenu = document.createElement('div');
+            plantMenu.classList.add('plant-menu');
+            plot.addEventListener('click', function () {
+             if (isGameRunning) {
+                  plots.forEach(p => {
+                     if(p !== plot) p.classList.remove('selected');
+                 });
+                 plot.classList.toggle('selected');
+                }
+             });
+           const plantButton = document.createElement('button');
+           plantButton.textContent = 'Trồng cây';
+           plantButton.addEventListener('click', () => {
+              if (isGameRunning) {
+                 showQuestion('plant', plot);
+              }
+            });
+            const harvestButton = document.createElement('button');
+           harvestButton.textContent = 'Thu hoạch';
+            harvestButton.addEventListener('click', () => {
+                if (isGameRunning && plot.classList.contains('has-plant')) {
+                     showQuestion('harvest',plot)
+              }
+           });
+
+                plantMenu.appendChild(plantButton);
+               plantMenu.appendChild(harvestButton);
+             plot.appendChild(plantMenu);
+            farmContainer.appendChild(plot);
+             plots.push(plot);
+     }
+       function updateTimer(){
+           timerDisplay.textContent = formatTime(timeLeft);
+           if (timeLeft <= 0) {
+                endGame();
+            } else {
+              timeLeft--;
+            }
+       }
+ </script>
+</body>
+</html>
