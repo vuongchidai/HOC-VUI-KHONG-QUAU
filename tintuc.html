@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - Cuộc thi Lịch Sử ARTC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e0b0ff, #d8a0ff);
+            color: #343a40;
+            line-height: 1.7;
+        }
+
+        header {
+            background-color: #f8f0ff;
+            padding: 25px 0;
+            color: #2c3e50;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 100;
+        }
+
+        header nav {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .logo {
+            max-height: 60px;
+            position: relative;
+            z-index: 101;
+        }
+
+        header nav a {
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 12px 28px;
+            margin: 0 15px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 101;
+        }
+
+        header nav a:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+            color: #7e57c2;
+        }
+
+        header nav a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #7e57c2;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        header nav a:hover::before {
+            width: 80%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        .news-section {
+            display: flex;
+            gap: 30px;
+        }
+
+        .news-column {
+            flex: 1;
+        }
+
+        .news-title {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+         .news-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #7e57c2;
+            border-radius: 2px;
+        }
+         .news-list {
+             list-style: none;
+             padding: 0;
+        }
+
+        .news-item {
+            background-color: #f0ecf8;
+             padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+             align-items: center;
+            gap: 10px;
+        }
+         .news-item img {
+            max-width: 100px;
+            height: auto;
+             border-radius: 5px;
+        }
+
+
+        .news-item:hover {
+            background-color: #e0d8f0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+         .modal-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+             color: #2c3e50;
+             font-weight: 600;
+        }
+
+        .modal-content p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
+         }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 15px;
+             gap: 10px;
+        }
+        .tab {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .tab.active {
+            background-color: #7e57c2;
+            color: white;
+        }
+
+        .tab:hover {
+            background-color: #e0e0e0;
+        }
+
+       footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 1rem;
+            margin: 0;
+            line-height: normal;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <img src="https://companieslogo.com/img/orig/CMS-2b72b642.png?t=1720244491" alt="Logo ARTC" class="logo">
+            <div>
+                 <a href="cuocthi.html"><i class="fas fa-home"></i> Trang chủ</a>
+                 <a href="tintuc.html"><i class="fas fa-newspaper"></i> Tin tức</a>
+                 <a href="dangnhap.html"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
+             </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="news-section">
+            <div class="news-column">
+                <h2 class="news-title">Thông báo quan trọng</h2>
+                <div class="tabs" id="thongbaoTabs"></div>
+                <ul class="news-list" id="thongbaoList">
+                </ul>
+            </div>
+
+            <div class="news-column">
+                <h2 class="news-title">Tin từ ban tổ chức</h2>
+                 <div class="tabs" id="bantochucTabs"></div>
+                <ul class="news-list" id="bantochucList">
+                </ul>
+            </div>
+        </div>
+         <div id="newsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">×</span>
+                <h2 id="modalTitle"></h2>
+                <p id="modalContent"></p>
+            </div>
+        </div>
+    </div>
+
+
+     <footer>
+        <p>© 2024 ARTC. All rights reserved.</p>
+    </footer>
+
+
+   <script>
+        const modal = document.getElementById("newsModal");
+        const closeBtn = document.querySelector(".close");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalContent = document.getElementById("modalContent");
+        const thongbaoList = document.getElementById('thongbaoList');
+       const bantochucList = document.getElementById('bantochucList');
+        const thongbaoTabs = document.getElementById('thongbaoTabs');
+        const bantochucTabs = document.getElementById('bantochucTabs');
+         let currentPage = 1;
+         let currentCategory = null;
+        const itemsPerPage = 10;
+         let allNews = [];
+       function displayNews(category, page) {
+           currentCategory = category;
+            let list;
+           let tabContainer;
+            if (category === 'thongbao') {
+                list = thongbaoList;
+              tabContainer = thongbaoTabs;
+            } else if (category === 'bantochuc') {
+                list = bantochucList;
+              tabContainer = bantochucTabs;
+            }
+            list.innerHTML = '';
+           const startIndex = (page - 1) * itemsPerPage;
+           const endIndex = startIndex + itemsPerPage;
+           const currentNews = allNews
+                .filter(news => news.category === category)
+               .slice(startIndex, endIndex);
+           currentNews.forEach(newsItem => {
+               const li = document.createElement('li');
+                li.classList.add('news-item');
+              let imageHTML = '';
+                if(newsItem.imageUrl) {
+                   imageHTML = `<img src="${newsItem.imageUrl}" alt="Ảnh tin tức" />`;
+              }
+               li.innerHTML = imageHTML + newsItem.title;
+               li.addEventListener('click', () => openModal(newsItem));
+                list.appendChild(li);
+           });
+            // Render Tabs
+            const totalPages = Math.ceil(allNews.filter(news => news.category === category).length / itemsPerPage);
+           tabContainer.innerHTML = '';
+           for(let i = 1; i <= totalPages; i++) {
+               const tab = document.createElement('span');
+               tab.classList.add('tab');
+                tab.textContent = i;
+                 if (i === page) {
+                    tab.classList.add('active');
+               }
+                 tab.addEventListener('click', () => {
+                   currentPage = i;
+                   displayNews(category, i);
+                });
+                tabContainer.appendChild(tab);
+           }
+        }
+        function openModal(news) {
+             modalTitle.textContent = news.title;
+            modalContent.innerHTML = news.content;
+           modal.style.display = "block";
+        }
+         closeBtn.addEventListener('click', () => {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener('click', (event) => {
+            if(event.target === modal) {
+                modal.style.display = "none";
+           }
+       });
+        function fetchNews() {
+            allNews = JSON.parse(localStorage.getItem('artcNews')) || [];
+            allNews.sort((a,b) => a.order - b.order);
+            displayNews('thongbao', currentPage);
+             displayNews('bantochuc', currentPage);
+       }
+        fetchNews();
+   </script>
+</body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng Năm Mới 2025</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            margin: 0;
+             overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            background-image: url('https://img.freepik.com/free-vector/golden-chinese-new-year-background_52683-18839.jpg?size=626&ext=jpg&ga=GA1.1.1046847211.1713831295&semt=ais'); /* Tết background */
+             background-size: cover;
+              background-repeat: no-repeat;
+        }
+         #fireworks-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1001;
+         }
+         .firework {
+                position: absolute;
+                border-radius: 50%;
+                opacity: 0.8;
+                pointer-events: none;
+                animation: explode 2s ease-out;
+                background: radial-gradient(circle, yellow, orange); /* Default colors */
+         }
+          @keyframes explode {
+                0% {
+                     transform: translate(0, 0);
+                      width: 5px;
+                    height: 5px;
+                     opacity: 0;
+                  }
+                50% {
+                   opacity: 1;
+                    width: 40px;
+                     height: 40px;
+                 }
+                100% {
+                    transform: translate(20px, -100px); /* Change the value based on your design */
+                   width: 1px;
+                    height: 1px;
+                    opacity: 0;
+                }
+        }
+         .greeting {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: white;
+            text-shadow: 2px 2px 4px #000000;
+            font-weight: bold;
+           z-index: 1000;
+        }
+         .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1002;
+            display: none;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 10px;
+            width: 600px; /* Adjusted width for better appearance */
+            text-align: center;
+               transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+          .popup.active {
+            display: block;
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+         .popup-content img {
+            max-width: 80%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+           
+            animation: zoom-in-out 1.5s ease-in-out infinite alternate; /* Zoom in/out animation */
+         }
+        .popup-content h3 {
+              margin-bottom: 20px;
+            }
+         .popup-content button {
+                background-color: #e74c3c;
+                color: white;
+                padding: 10px 20px;
+                 border-radius: 5px;
+                cursor: pointer;
+                border: none;
+                font-size: 1.1em;
+                transition: background-color 0.3s;
+            }
+         .popup-content button:hover {
+                 background-color: #c0392b;
+            }
+         .popup-content ul {
+                list-style: none;
+                padding: 0;
+        }
+         .popup-content ul li {
+            padding: 10px;
+             border-bottom: 1px solid #eee;
+               cursor: pointer;
+           transition: background-color 0.3s;
+            }
+         .popup-content ul li:hover {
+               background-color: #f8f9fa;
+             }
+        .popup-content ul li:last-child {
+            border-bottom: none;
+        }
+        @keyframes zoom-in-out {
+            from {
+                transform: scale(0.8);
+            }
+            to {
+                transform: scale(1.1);
+            }
+        }
+         .btn-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+         background-image: url('https://media.istockphoto.com/id/1131230925/vi/vec-to/d%E1%BA%A5u-ki%E1%BB%83m-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-ch%E1%BB%AF-th%E1%BA%ADp-%C4%91%E1%BB%8F-%C4%91%C6%A1n-gi%E1%BA%A3n-vector.jpg?s=612x612&w=0&k=20&c=Zl4pvbt2-7JoQCohB1JdIf2JKS-BoHbhQGNhmhwaiSA=');
+            background-size: contain;
+           width: 24px;
+          height: 24px;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            border: 0;
+      }
+    </style>
+</head>
+<body>
+  <div id="fireworks-container"></div>
+    <div class="greeting">CHÚC MỪNG NĂM MỚI 2025</div>
+      <div id="gift-popup" class="popup">
+          <div class="popup-content">
+               <button type="button" class="btn-close" aria-label="Close"></button>
+              <h3>Chúc Mừng Năm Mới!</h3>
+              <img src="https://png.pngtree.com/png-clipart/20230122/original/pngtree-realistic-style-spring-festival-red-envelope-png-image_8926140.png" alt="Red Envelope" style="animation: none;">
+                <p>Bạn nhận được một món quà may mắn:</p>
+                 <ul id="gift-list"></ul>
+          </div>
+      </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const fireworksContainer = document.getElementById('fireworks-container');
+    const greetingText = document.querySelector('.greeting');
+    const giftPopup = document.getElementById('gift-popup');
+    const giftList = document.getElementById('gift-list');
+     const closeButton = giftPopup.querySelector('.btn-close');
+
+    function createFirework() {
+        const firework = document.createElement('div');
+        firework.classList.add('firework');
+
+        const colors = ['yellow', 'orange', 'red', 'pink', 'purple', 'cyan', 'green'];
+         const randomColor = colors[Math.floor(Math.random() * colors.length)];
+         firework.style.background = `radial-gradient(circle, ${randomColor}, ${randomColor})`;
+        firework.style.left = `${Math.random() * 100}%`;
+        firework.style.top = `${Math.random() * 100}%`;
+
+        fireworksContainer.appendChild(firework);
+        setTimeout(() => firework.remove(), 2000);
+     }
+        function createMultipleFirework() {
+            for (let i = 0; i < 30; i++) { // Adjust the number of fireworks
+                createFirework();
+            }
+        }
+        createMultipleFirework();
+        setInterval(createMultipleFirework, 2000);
+
+    setTimeout(() => {
+         giftPopup.classList.add('active');
+         greetingText.style.display = 'none';
+
+        const gifts = ['Voucher 30%', 'Voucher 50%', 'Voucher 100%', 'Đồng hồ thông minh', 'Máy tính bảng'];
+            const user = localStorage.getItem('user');
+            let receivedGift = localStorage.getItem('receivedGift');
+           if (!user) {
+               giftList.innerHTML = '<li style="text-align: center;">Vui lòng đăng nhập để nhận quà.</li>';
+              return;
+           }
+           if(receivedGift){
+                giftList.innerHTML = `<li>Bạn đã nhận: ${receivedGift}</li>`;
+             return;
+          }
+         const randomIndex = Math.floor(Math.random() * gifts.length);
+             const selectedGift = gifts[randomIndex];
+           localStorage.setItem('receivedGift', selectedGift);
+            giftList.innerHTML = `<li>Bạn nhận được: <strong>${selectedGift}</strong></li>`;
+    }, Math.random() * 2000 + 1000);
+    function closePopup() {
+       giftPopup.classList.remove('active');
+    }
+    closeButton.addEventListener('click', closePopup);
+</script>
+</body>
+</html>

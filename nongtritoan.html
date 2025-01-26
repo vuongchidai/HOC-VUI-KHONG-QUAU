@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>macOS Simulator</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+
+        .desktop {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('images/background.jpg');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+
+        .menu-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 25px;
+            background-color: rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .menu-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .menu-items li a {
+            display: block;
+            padding: 0 10px;
+            text-decoration: none;
+            color: black;
+            font-size: 14px;
+        }
+
+        .menu-time {
+            padding-right: 10px;
+            font-size: 14px;
+        }
+
+        .dock {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 10px;
+             border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 99;
+        }
+
+        .dock-items {
+            display: flex;
+            gap: 10px;
+        }
+
+        .dock-item {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+          .dock-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .dock-item img {
+             width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+         .dock-item span {
+             display: none;
+             position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 101;
+             margin-bottom: 5px;
+
+        }
+
+        .dock-item:hover span {
+          display: block;
+        }
+
+
+        .window {
+            position: absolute;
+            border-radius: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .window.app-window {
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            display: block;
+        }
+
+        .window-header {
+            background-color: #f0f0f0;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .window-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .window-controls div {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .window-close {
+            background-color: #ff5f56;
+        }
+
+        .window-minimize {
+            background-color: #ffbd2e;
+        }
+
+        .window-maximize {
+            background-color: #27c93f;
+        }
+
+        .window-title {
+            font-weight: bold;
+        }
+
+        .window-content {
+            padding: 20px;
+        }
+
+        .launchpad {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(20px);
+        }
+
+        .launchpad.show {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+
+        .launchpad-header {
+            background-color: #f0f0f0;
+            padding: 20px;
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+        .launchpad-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .launchpad-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 20px;
+            max-width: 80%;
+        }
+
+        .launchpad-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .launchpad-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        .launchpad-item p {
+            margin-top: 5px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .power-button {
+            position: fixed;
+            top: 10px; /* Điều chỉnh vị trí theo ý muốn */
+            right: 10px; /* Điều chỉnh vị trí theo ý muốn */
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 102;
+            transition: background-color 0.2s ease;
+        }
+
+        .power-button:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+         .shutdown-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+             align-items: center;
+             justify-content: center;
+            color: white;
+            font-size: 2em;
+            text-align: center;
+            z-index: 9999;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop">
+        <div class="menu-bar">
+            <ul class="menu-items">
+                <li><a href="#"></a></li>
+                <li><a href="#">Finder</a></li>
+                <li><a href="#">File</a></li>
+                <li><a href="#">Edit</a></li>
+                <li><a href="#">View</a></li>
+                <li><a href="#">Go</a></li>
+                <li><a href="#">Window</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+            <div class="menu-time">
+                10:30 AM
+            </div>
+        </div>
+        <div class="dock">
+            <div class="dock-items">
+                <div class="dock-item">
+                    <img src="images/finder.png" alt="Finder">
+                    <span>Finder</span>
+                </div>
+                  <div class="dock-item">
+                   <img src="images/launchpad.png" alt="Launchpad">
+                     <span>Launchpad</span>
+                </div>
+                 <div class="dock-item">
+                   <img src="images/safari.png" alt="Safari">
+                     <span>Safari</span>
+                    
+                </div>
+                 <div class="dock-item">
+                   <img src="images/mail.png" alt="Mail">
+                    <span>Mail</span>
+                   
+                </div>
+                 <div class="dock-item">
+                   <img src="images/notes.png" alt="Notes">
+                     <span>Notes</span>
+                </div>
+                 <div class="dock-item">
+                   <img src="images/vscode.png" alt="VSCode">
+                      <span>VSCode</span>
+                </div>
+                  <div class="dock-item">
+                   <img src="images/terminal.png" alt="Terminal">
+                     <span>Terminal</span>
+                </div>
+            </div>
+        </div>
+          <div class="power-button" id="powerButton">
+            Tắt máy
+        </div>
+        <div class="window app-window" id="finder-window" >
+             <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-close"></div>
+                    <div class="window-minimize"></div>
+                    <div class="window-maximize"></div>
+                </div>
+                <div class="window-title">Finder</div>
+            </div>
+            <div class="window-content">
+              <p>This is the Finder window content.</p>
+            </div>
+        </div>
+        <div class="launchpad" id="launchpad" style="display: none;">
+             <div class="launchpad-header">
+                <div class="launchpad-title">Launchpad</div>
+            </div>
+            <div class="launchpad-content">
+                <div class="launchpad-item">
+                    <img src="images/safari.png" alt="Safari" >
+                    <p>Safari</p>
+                </div>
+                <div class="launchpad-item">
+                    <img src="images/mail.png" alt="Mail">
+                     <p>Mail</p>
+                </div>
+                  <div class="launchpad-item">
+                    <img src="images/notes.png" alt="Notes" >
+                    <p>Notes</p>
+                </div>
+                   <div class="launchpad-item">
+                    <img src="images/calculator.png" alt="Calculator" >
+                     <p>Calculator</p>
+                </div>
+                <div class="launchpad-item">
+                    <img src="images/contacts.png" alt="Contacts" >
+                    <p>Contacts</p>
+                </div>
+                  <div class="launchpad-item">
+                     <img src="images/calendar.png" alt="Calendar">
+                     <p>Calendar</p>
+                </div>
+                  <div class="launchpad-item">
+                     <img src="images/vscode.png" alt="VSCode">
+                     <p>VSCode</p>
+                </div>
+                  <div class="launchpad-item">
+                     <img src="images/terminal.png" alt="Terminal">
+                     <p>Terminal</p>
+                </div>
+            </div>
+        </div>
+          <div class="shutdown-screen" id="shutdownScreen">
+            <p>Tắt máy...</p>
+        </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+            const launchpad = document.getElementById('launchpad');
+            const launchpadIcon = document.querySelector('.dock-item img[alt="Launchpad"]');
+             const powerButton = document.getElementById('powerButton');
+             const shutdownScreen = document.getElementById('shutdownScreen');
+
+            launchpadIcon.addEventListener('click', function() {
+                launchpad.classList.toggle('show');
+            });
+           powerButton.addEventListener('click',function(){
+              shutdownScreen.style.display = 'flex';
+            setTimeout(function(){
+                 shutdownScreen.style.display = 'none';
+               },1000); // Hiển thị màn hình trong 1 giây rồi tắt
+           })
+        });
+    </script>
+</body>
+</html>

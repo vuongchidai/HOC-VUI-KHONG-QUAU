@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sàn Đấu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+         body {
+            background-color: #e3f2fd; /* Light Blue Background */
+            margin: 0;
+            overflow-x: hidden;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+       .main-container {
+            display: flex;
+            padding: 20px;
+            margin-top: 50px;
+           max-width: 1200px;
+           margin-left: auto;
+            margin-right: auto;
+        }
+        .left-side, .right-side{
+           padding: 20px;
+           border-radius: 10px;
+           background-color: #fff;
+           box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+       .left-side {
+            flex: 0.3;
+             margin-right: 15px;
+        }
+       .right-side {
+            flex: 0.7;
+        }
+        .account-info {
+            text-align: center;
+           border-bottom: 1px solid #ddd;
+           padding-bottom: 15px;
+        }
+        .account-info img {
+           width: 80px;
+            height: 80px;
+            border-radius: 50%;
+           margin-bottom: 10px;
+           object-fit: cover;
+            border: 2px solid #3498db;
+           transition: transform 0.3s ease-in-out;
+       }
+         .account-info img:hover{
+             transform: scale(1.1);
+         }
+         .account-info h4{
+           font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+         .account-info .rank {
+             color: #777;
+            font-size: 0.9em;
+        }
+        .personal-info{
+           text-align: center;
+           margin-bottom: 15px;
+            padding: 10px;
+          border-bottom: 1px solid #eee;
+       }
+         .personal-info p{
+           margin-bottom: 8px;
+           color: #555;
+        }
+         .premium-upgrade {
+             text-align: center;
+           padding: 10px;
+       }
+         .premium-upgrade p {
+           margin-bottom: 10px;
+            color: #555;
+          font-size: 0.9em;
+        }
+         .premium-upgrade button {
+          background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+           border-radius: 5px;
+            cursor: pointer;
+             transition: background-color 0.3s ease;
+        }
+         .premium-upgrade button:hover {
+          background-color: #27ae60;
+       }
+        .btn-play, .rank-board {
+            padding: 15px;
+            text-align: center;
+       }
+        .btn-play button {
+           background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+           border-radius: 8px;
+            cursor: pointer;
+             transition: background-color 0.3s ease;
+           font-size: 1rem;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+       }
+        .btn-play button:hover {
+            background-color: #2980b9;
+       }
+        .rank-board {
+            margin-top: 20px;
+        }
+         .rank-board h5{
+           font-size: 1.2em;
+            margin-bottom: 10px;
+          color: #2c3e50;
+          border-bottom: 1px solid #ddd;
+          padding-bottom: 5px;
+       }
+       .rank-board table {
+           width: 100%;
+            border-collapse: collapse;
+          animation: fadeIn 0.5s ease;
+       }
+        .rank-board th, .rank-board td {
+           padding: 12px;
+           border-bottom: 1px solid #eee;
+          text-align: center;
+           color: #555;
+        }
+        .rank-board th{
+          background: #ecf0f1;
+           color: #333;
+       }
+        .rank-board tbody tr:last-child td {
+          border-bottom: none;
+        }
+        .rank-board tbody tr:nth-child(even){
+          background-color: #f9f9f9;
+        }
+         .rank-board tbody tr:hover{
+           background-color: #f0f0f0;
+       }
+         .rank-board tbody tr:nth-child(1) td {
+           background-color: #FFD700;
+            color: #fff;
+        }
+        .rank-board tbody tr:nth-child(2) td{
+            background-color: #C0C0C0;
+           color: #fff;
+       }
+        .rank-board tbody tr:nth-child(3) td{
+          background-color: #CD7F32;
+            color: #fff;
+      }
+       .no-rank-data {
+          text-align: center;
+          padding: 20px;
+         color: #777;
+       }
+         @keyframes fadeIn {
+            from {
+              opacity: 0;
+            }
+             to {
+                opacity: 1;
+            }
+        }
+        @media (max-width: 992px) {
+           .main-container {
+              flex-direction: column;
+            }
+           .left-side, .right-side {
+              flex: 1;
+                margin-right: 0;
+             margin-bottom: 15px;
+           }
+       }
+    .nav-links {
+        display: flex;
+       align-items: center;
+       justify-content: space-around;
+       flex-wrap: wrap;
+    }
+     .nav-links a {
+        display: flex;
+       flex-direction: column;
+        align-items: center;
+       color: #333;
+       text-decoration: none;
+      margin-right: 10px;
+       margin-bottom: 5px;
+       padding: 8px 12px;
+      border-radius: 5px;
+       transition: background-color 0.3s;
+       text-align: center;
+    }
+    .nav-links a:hover {
+       background-color: #e0f7f5;
+    }
+     .nav-links i {
+        margin-bottom: 5px;
+       font-size: 1.5em;
+       transition: color 0.3s;
+    }
+    .nav-links a:hover i {
+        color: #2980b9;
+   }
+   @media (min-width: 768px) {
+       .nav-links {
+            justify-content: flex-start;
+      }
+        .nav-links a {
+         flex-direction: row;
+           margin-right: 20px;
+           text-align: left;
+           align-items: center;
+       }
+          .nav-links i{
+           margin-right: 5px;
+            margin-bottom: 0;
+         font-size: 1em;
+        }
+   }
+    .navbar {
+       display: flex;
+       justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        margin-bottom: 0;
+   }
+   .navbar .profile-header {
+        margin-left: auto;
+   }
+    .profile-header {
+        cursor: pointer;
+        position: relative;
+       display: inline-block;
+       background-color: white;
+        padding: 8px 15px;
+        border-radius: 5px;
+       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+   }
+   .profile-header i {
+        color: #3498db;
+  }
+    .profile-header:hover {
+         background-color: #e0f7f5;
+  }
+    .profile-header:hover i {
+        color: #2980b9;
+    }
+     .profile-popup {
+       position: absolute;
+        top: 100%;
+        right: 0;
+      background: white;
+       padding: 15px;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+       z-index: 1000;
+        display: none;
+      border-radius: 5px;
+    }
+     .profile-popup.active {
+        display: block;
+    }
+     .profile-popup ul {
+       list-style: none;
+        padding: 0;
+   }
+    .profile-popup li {
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+       transition: background-color 0.3s;
+   }
+    .profile-popup li:hover {
+        background-color: #f8f9fa;
+    }
+   .profile-popup li:last-child {
+       border-bottom: none;
+    }
+</style>
+</head>
+<body>
+     <div class="container-fluid">
+       <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="nav-links">
+               <a href="live.html">
+                    <i class="fas fa-book" style="color: #3498db;"></i> <span>LIVE/GET</span>
+                </a>
+               <a href="luyenthi.html">
+                    <i class="fas fa-pencil-alt" style="color: #e67e22;"></i> <span>Luyện thi</span>
+                </a>
+                 <a href="dautruong.html">
+                    <i class="fas fa-gamepad" style="color: #9b59b6;"></i> <span>Đấu trường</span>
+                </a>
+                 <a href="trangcanhan.html">
+                  <i class="fas fa-trophy" style="color: #27ae60;"></i> <span>Vào thi</span>
+                </a>
+            </div>
+            <div class="d-flex align-items-center">
+            <div class="profile-header">
+                <i class="fa fa-user-circle me-2"></i> <span id="header-fullname"></span>
+                <div class="profile-popup">
+                    <ul class="profile-popup-menu">
+                        <li id="info-menu">Thông tin cá nhân</li>
+                        <li id="change-password-menu">Đổi mật khẩu</li>
+                        <li id="logout-menu">Đăng xuất</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="main-container">
+        <div class="left-side">
+            <div class="account-info">
+                <img src="https://i.pinimg.com/736x/12/37/b3/1237b30268db9ee0c9cbe3a79b1ff8fa.jpg" alt="User Avatar">
+                <h4 id="account-name">Phan Thiên Di</h4>
+                <div class="rank"><i class="fas fa-medal"></i> Top 9 | 100 điểm</div>
+            </div>
+            <div class="personal-info">
+                <p><i class="fas fa-envelope"></i> Email: <span id="user-email"></span></p>
+                 <p><i class="fas fa-phone"></i> SĐT: <span id="user-phone"></span></p>
+                 <p><i class="fas fa-school"></i> Trường: <span id="user-school"></span></p>
+            </div>
+            <div class="premium-upgrade">
+                <p>Nâng cấp tài khoản lên tài khoản Premium để nhận được nhiều lượt thi đấu và các quyền lợi hấp dẫn khác.</p>
+                <a href="goi.html"><button>Nâng cấp ngay</button></a>
+            </div>
+        </div>
+        <div class="right-side">
+             <div class="btn-play">
+                <a href="thidau.html"><button> <i class="fas fa-bolt"></i>Thách đấu ngay</button></a>
+              </div>
+            <div class="rank-board">
+                <h5>Bảng xếp hạng</h5>
+                <table id="rank-table">
+                    <thead>
+                        <tr>
+                            <th>Top</th>
+                            <th>Học Sinh</th>
+                            <th>Điểm</th>
+                            <th>Thời Gian</th>
+                            <th>Số trận</th>
+                       </tr>
+                    </thead>
+                   <tbody id="rank-table-body">
+                        <tr><td colspan="5" class="no-rank-data">Chưa có dữ liệu bảng xếp hạng.</td></tr>
+                   </tbody>
+               </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const profileHeader = document.querySelector('.profile-header');
+    const profilePopup = document.querySelector('.profile-popup');
+    const infoMenu = document.getElementById('info-menu');
+    const changePasswordMenu = document.getElementById('change-password-menu');
+    const logoutMenu = document.getElementById('logout-menu');
+    const loginTime = localStorage.getItem('loginTime');
+    const currentTime = new Date().getTime();
+    if (!loginTime || (currentTime - parseInt(loginTime)) > 24 * 60 * 60 * 1000) {
+        localStorage.removeItem('user');
+       localStorage.removeItem('loginTime');
+        window.location.href = 'dangnhap.html';
+    }
+
+    // Lấy thông tin người dùng từ localStorage
+   const storedUser = localStorage.getItem('user');
+    let user;
+    if (storedUser) {
+        user = JSON.parse(storedUser);
+    } else {
+         window.location.href = 'dangnhap.html';
+    }
+
+   // Hiển thị thông tin người dùng trên header
+    document.getElementById('header-fullname').textContent = user.fullname;
+   document.getElementById('account-name').textContent = user.fullname;
+    document.getElementById('user-email').textContent = user.email;
+   const phone = user.phone;
+   const maskedPhone = phone.slice(0, 4) + '*'.repeat(phone.length - 4);
+    document.getElementById('user-phone').textContent = maskedPhone;
+   document.getElementById('user-school').textContent = user.school;
+
+  const rankTableBody = document.getElementById('rank-table-body');
+  const rankingData = [
+        { top: 1, user: 'Võ Ngọc Tường Vy', score: 800, time: '48:54', matches: 20 },
+        { top: 2, user: 'Dương Kiều Vy', score: 200, time: '17:06', matches: 5 },
+        { top: 3, user: 'Nguyễn Quang Phúc', score: 150, time: '09:20', matches: 3 },
+         { top: 4, user: 'Lâm Nguyễn Phúc Hưng', score: 150, time: '10:15', matches: 3 },
+       { top: 5, user: 'Đào Mai Chi', score: 150, time: '11:37', matches: 3 },
+       { top: 6, user: 'Lê Nguyễn Thiên Kim', score: 150, time: '15:02', matches: 5 },
+        { top: 7, user: 'đỗ ánh dương', score: 100, time: '06:40', matches: 3 },
+        { top: 8, user: 'Vũ Lê Minh Vương', score: 100, time: '07:29', matches: 2 },
+    ];
+
+  function updateRankTable() {
+        rankTableBody.innerHTML = '';
+      if (rankingData && rankingData.length > 0) {
+           rankingData.forEach(player => {
+               const row = document.createElement('tr');
+              row.innerHTML = `
+                       <td>${player.top}</td>
+                        <td>${player.user}</td>
+                        <td>${player.score}</td>
+                       <td>${player.time}</td>
+                       <td>${player.matches}</td>
+                   `;
+                rankTableBody.appendChild(row);
+           });
+       } else{
+           rankTableBody.innerHTML = '<tr><td colspan="5" class="no-rank-data">Chưa có dữ liệu bảng xếp hạng.</td></tr>';
+       }
+    }
+   updateRankTable();
+    function toggleProfilePopup() {
+        profilePopup.classList.toggle('active');
+        if(profilePopup.classList.contains('active')){
+            document.addEventListener('click',function(event){
+              if (!profileHeader.contains(event.target)) {
+                    profilePopup.classList.remove('active');
+                    document.removeEventListener('click', arguments.callee);
+                }
+            });
+       }
+    }
+  profileHeader.addEventListener('click', toggleProfilePopup);
+
+   function closeAllPopup() {
+        profilePopup.classList.remove('active');
+  }
+   logoutMenu.addEventListener('click', function () {
+       localStorage.removeItem('user');
+        localStorage.removeItem('loginTime');
+        window.location.href = 'dangnhap.html';
+   });
+
+ // Disable text selection
+   document.addEventListener('selectstart', function(e) {
+      e.preventDefault();
+  });
+   // Disable right-click
+  document.addEventListener('contextmenu', function(e) {
+       e.preventDefault();
+    });
+    // Disable keyboard shortcuts for copy and paste
+ document.addEventListener('keydown', function(e) {
+     if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'v' || e.key === 'x' || e.key === 'a' )) {
+         e.preventDefault();
+    }
+   });
+</script>
+</body>
+</html>

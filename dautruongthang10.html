@@ -3,194 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang Cá Nhân</title>
+    <title>Danh sách đấu trường</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
             background-color: #f8f9fa;
-            margin: 0;
         }
-       .profile-header {
-            cursor: pointer;
+         .profile-picture-container {
             position: relative;
             display: inline-block;
-            background-color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s;
-        }
-        .profile-header i {
-            color: #3498db;
-        }
-         .profile-header:hover {
-             background-color: #e0f7f5;
-        }
-         .profile-header:hover i {
-            color: #2980b9;
-        }
-        .profile-popup {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            padding: 15px;
-            border: 1px solid #ccc;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            display: none;
-            border-radius: 5px;
-        }
-        .profile-popup.active {
-            display: block;
-        }
-        .profile-popup ul {
-            list-style: none;
-            padding: 0;
-        }
-        .profile-popup li {
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
             cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .profile-popup li:hover {
-            background-color: #f8f9fa;
-        }
-        .profile-popup li:last-child {
-            border-bottom: none;
-        }
-         .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 1001;
-            display: none;
-            max-height: 90vh;
-            overflow-y: auto;
-            border-radius: 10px;
-            width: 900px;
-        }
-        .popup.active {
-            display: block;
-        }
-        #info-popup .popup-content p {
-            margin-bottom: 10px;
-        }
-        #info-popup .popup-content {
-            padding: 25px;
-        }
-          .table-responsive {
-            overflow-x: auto;
-          }
-           .table-arenas {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            font-size: 1rem; /* Increase font size */
-            width: 100%;
-            margin: 0 auto;
          }
-           .table-arenas thead {
-                background: linear-gradient(45deg, #4CAF50, #8BC34A);
-                color: white;
-            }
-          .table-arenas th,
-          .table-arenas td {
-                text-align: center;
-                padding: 12px 8px; /* Increase padding */
-                border: none;
-                white-space: nowrap;
-                vertical-align: middle; /* Vertically center text */
-
-            }
-            .table-arenas tbody tr:nth-child(even) {
-                background-color: #f9f9f9;
-            }
-            .table-arenas tbody tr:hover {
-                background-color: #e0f7f5;
-            }
-          .btn-arena {
-               background-color: #3498db;
-                color: white;
-                border: none;
-                padding: 8px 16px; /* Increase padding */
-                border-radius: 5px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-                font-size: 1rem;
-                white-space: nowrap; /* Prevent text wrapping */
-            }
-            .btn-arena:hover {
-                background-color: #2980b9;
-            }
-            .btn-not-open{
-              background-color: #ccc;
-              color: white;
-              border: none;
-              padding: 8px 16px; /* Increase padding */
-              border-radius: 5px;
-             font-size: 1rem;
-              white-space: nowrap; /* Prevent text wrapping */
+          .profile-picture-container img {
+              width: 100px;
+              height: 100px;
+              border-radius: 50%;
+               object-fit: cover;
+              border: 2px solid #ddd;
           }
-           .btn-close {
-               float: right;
-               background-image: url('https://media.istockphoto.com/id/1131230925/vi/vec-to/d%E1%BA%A5u-ki%E1%BB%83m-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-ch%E1%BB%AF-th%E1%BA%ADp-%C4%91%E1%BB%8F-%C4%91%C6%A1n-gi%E1%BA%A3n-vector.jpg?s=612x612&w=0&k=20&c=Zl4pvbt2-7JoQCohB1JdIf2JKS-BoHbhQGNhmhwaiSA=');
-                background-size: contain;
-                 width: 24px;
-                height: 24px;
-                border: 0;
-                cursor: pointer;
-
-                background-repeat: no-repeat;
-            }
-        .profile-picture-container {
-            position: relative;
-            width: 100px;
-            height: 100px;
+           .profile-picture-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto;
-            margin-bottom: 15px;
-        }
-        .profile-picture-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .profile-picture-container input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
             opacity: 0;
+             transition: opacity 0.3s ease;
+         }
+         .profile-picture-container input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+             width: 100%;
+            height: 100%;
+             opacity: 0;
             cursor: pointer;
-        }
-        .profile-picture-container::before {
-            content: "\f030";
-            font-family: 'Font Awesome 6 Free';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.2);
-            color: white;
-            font-size: 2rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
         }
         .profile-picture-container:hover::before {
             opacity: 1;
@@ -323,6 +174,9 @@
                      <a href="trangcanhan.html">
                       <i class="fas fa-trophy" style="color: #27ae60;"></i> <span>Vào thi</span>
                     </a>
+                   <a href="hotro.html">
+                        <i class="fas fa-question-circle" style="color: #f39c12;"></i> <span>Hỗ trợ</span>
+                    </a>
                 </div>
                 <div class="d-flex align-items-center">
                 <div class="profile-header">
@@ -338,7 +192,7 @@
             </div>
         </nav>
 
-        <h1 class="mb-4 text-center">Đấu Trường ARTC - Khối <span id="user-grade-display"></span></h1>
+        <h1 class="mb-4 text-center">Danh Sách Đấu Trường ARTC - Khối <span id="user-grade-display"></span></h1>
         <p id="current-time"></p>
         <div id="arenas-table-container">
             <div class="table-container">
@@ -622,36 +476,64 @@
     const arenas = [
         {
             id: 1,
-            name: 'Đấu Trường Tháng 10',
-            participants: 100,
+            name: 'Đấu Trường Toán Học',
+            participants: 120,
             startDate: '2025-09-05',
             endDate: '2026-04-13',
         },
         {
             id: 2,
-            name: 'Đấu Trường Tháng 12',
-            participants: 50,
+            name: 'Đấu Trường Văn Học',
+            participants: 150,
             startDate: '2025-10-06',
            endDate: '2026-04-13',
         },
           {
             id: 3,
-            name: 'Đấu Trường Tháng 02',
-            participants: 50,
+            name: 'Đấu Trường Vật Lý',
+            participants: 90,
             startDate: '2025-11-10',
             endDate: '2026-04-13',
         },
          {
             id: 4,
-            name: 'Đấu Trường Tháng 04 - Chung Khảo',
-            participants: 50,
+            name: 'Đấu Trường Hóa Học',
+            participants: 100,
             startDate: '2025-11-24',
             endDate: '2026-04-13',
         },
-          {
+         {
             id: 5,
-             name: 'Đấu Trường Tháng 5 - Chung Kết',
-            participants: 10,
+            name: 'Đấu Trường Sinh Học',
+            participants: 140,
+            startDate: '2025-12-08',
+             endDate: '2026-04-13',
+        },
+        {
+            id: 6,
+            name: 'Đấu Trường Anh Văn',
+            participants: 180,
+            startDate: '2025-12-22',
+            endDate: '2026-05-13',
+        },
+       {
+            id: 7,
+            name: 'Đấu Trường Lịch Sử',
+            participants: 130,
+           startDate: '2026-01-12',
+            endDate: '2026-01-16',
+        },
+         {
+            id: 8,
+            name: 'Đấu Trường Địa Lý',
+            participants: 160,
+           startDate: '2026-03-10',
+           endDate: '2026-03-13',
+        },
+          {
+            id: 9,
+             name: 'Đấu Trường Tin Học',
+            participants: 170,
             startDate: '2026-04-01',
             endDate: '2026-04-03',
         },

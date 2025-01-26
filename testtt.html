@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARTC Toàn Tài - Toàn Diện</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: #3498db;
+            color: #fff;
+            padding: 10px 0;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .logo img {
+            height: 35px;
+            margin-right: 5px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #f0f0f0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: #e0f7fa;
+            padding: 60px 0;
+        }
+
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .hero-image {
+            flex: 1;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .hero-content p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn {
+            background: #2ecc71;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+        .btn:hover,
+        .login-btn:hover {
+            background: #2980b9;
+        }
+
+        /* About Section */
+        .about {
+            padding: 40px 0;
+        }
+
+        .about h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .about-content {
+            display: flex;
+            gap: 20px;
+        }
+
+        .about-text {
+            flex: 2;
+            padding-right: 20px;
+        }
+
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
+        .about-features {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+            cursor: pointer;
+        }
+
+        .feature:hover {
+            background: #ecf0f1;
+        }
+
+        .feature i {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        .feature h3 {
+            font-size: 1.2em;
+        }
+
+        /* News Section */
+        .news {
+            background: #ecf0f1;
+            padding: 40px 0;
+        }
+
+        .news h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .swiper {
+            width: 100%;
+            height: auto;
+            padding: 20px 0;
+        }
+
+        .swiper-slide {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            width: 300px;
+            /* Fixed width for each slide */
+        }
+
+        .swiper-slide img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .swiper-slide h3,
+        .swiper-slide p {
+            padding: 10px 15px;
+        }
+
+        .swiper-slide a {
+            display: inline-block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #3498db;
+            transition: color 0.3s;
+        }
+
+        .swiper-slide a:hover {
+            color: #2980b9;
+        }
+        .swiper-slide .btn:hover {
+            background: #2980b9;
+        }
+
+
+        /* Courses Section */
+        .courses {
+            padding: 40px 0;
+        }
+
+        .courses h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .course-list {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .course-item {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .course-item img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .course-item h3,
+        .course-item p {
+            padding: 10px 15px;
+        }
+
+        .course-item .btn {
+            display: inline-block;
+            margin: 15px;
+        }
+         .course-item .btn:hover {
+            background: #2980b9;
+        }
+
+        /* Schedule Section */
+        .schedule {
+            padding: 40px 0;
+            background: #f0f8ff;
+        }
+
+        .schedule h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .schedule-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .schedule-item {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .schedule-item i {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        /* Ranking Section */
+        .ranking {
+            padding: 40px 0;
+            background: #fff;
+        }
+
+        .ranking h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .ranking-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .ranking-item {
+            text-align: center;
+            background: #f0f8ff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .ranking-item i {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        .ranking-item button {
+            background: #3498db;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color .3s;
+        }
+
+        .ranking-item button:hover {
+            background: #2980b9;
+        }
+
+        .ranking-top-list {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #ecf0f1;
+        }
+
+        .ranking-top-list h3 {
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .ranking-top-item {
+            margin-bottom: 10px;
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+        html{
+           scroll-behavior: smooth;
+        }
+
+        @media (max-width: 768px) {
+            .hero .container {
+                flex-direction: column;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                text-align: center;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-text {
+                padding-right: 0;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-left">
+                <div class="logo">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVP9JC9vOCuSniIxwtBOFtywnnfw6h1ZGaUQ&s"
+                        alt="ARTC Logo">
+                    <span>ARTC</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#about">Về ARTC</a></li>
+                        <li><a href="#news">Bản tin</a></li>
+                        <li><a href="#courses">Khóa học</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <a href="dangnhap.html" class="login-btn">Đăng nhập</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Rèn luyện toàn diện cùng ARTC</h1>
+                <p>Nền tảng thi trực tuyến dành cho học sinh lớp 6-9, giúp phát triển tư duy, kiến thức và kỹ năng.</p>
+                <a href="#" class="btn">Bắt đầu ngay <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="hero-image">
+                <img src="https://halinkweb.com/wp-content/uploads/2023/12/99646395-2.jpg" alt="Học tập trực tuyến">
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="about">
+        <div class="container">
+            <h2><i class="fas fa-info-circle"></i> Về ARTC</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>ARTC (Academic Resources & Testing Center) là một nền tảng giáo dục trực tuyến hàng đầu, chuyên cung cấp
+                        các giải pháp thi và học tập toàn diện cho học sinh lớp 6-9. Chúng tôi hiểu rằng giai đoạn này là
+                        vô cùng quan trọng trong quá trình phát triển của các em, vì vậy ARTC không chỉ là nơi để kiểm tra
+                        kiến thức mà còn là môi trường để phát triển toàn diện.</p>
+                    <p><strong>Sứ mệnh của ARTC:</strong></p>
+                    <ul>
+                        <li>Mang đến một nền tảng thi trực tuyến chất lượng, công bằng và hiệu quả.</li>
+                        <li>Hỗ trợ học sinh phát triển tư duy phản biện, kỹ năng giải quyết vấn đề và kiến thức vững chắc.
+                        </li>
+                        <li>Cung cấp các tài liệu học tập đa dạng, phong phú và phù hợp với chương trình học của Bộ Giáo
+                            dục.
+                        </li>
+                        <li>Tạo điều kiện cho học sinh tiếp cận công nghệ giáo dục tiên tiến và hiện đại.</li>
+                    </ul>
+                    <p><strong>Giá trị cốt lõi của ARTC:</strong></p>
+                    <ul>
+                        <li><strong>Toàn diện:</strong> Phát triển toàn diện các khía cạnh tư duy, kiến thức và kỹ năng của
+                            học sinh.</li>
+                        <li><strong>Chất lượng:</strong> Cung cấp các bài kiểm tra và tài liệu học tập được biên soạn kỹ
+                            lưỡng, chính xác.
+                        </li>
+                        <li><strong>Hiệu quả:</strong> Giúp học sinh nắm vững kiến thức, nâng cao kỹ năng làm bài thi và đạt
+                            kết quả tốt nhất.
+                        </li>
+                        <li><strong>Sáng tạo:</strong> Liên tục đổi mới và cải tiến để mang đến trải nghiệm học tập tốt nhất
+                            cho học sinh.</li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVP9JC9vOCuSniIxwtBOFtywnnfw6h1ZGaUQ&s"
+                        alt="ARTC Vision">
+                </div>
+            </div>
+            <div class="about-features">
+                <div class="feature">
+                    <i class="fas fa-brain"></i>
+                    <h3>Phát triển tư duy</h3>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Củng cố kiến thức</h3>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Nâng cao kỹ năng</h3>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Theo dõi tiến độ</h3>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-users"></i>
+                    <h3>Hỗ trợ cộng đồng</h3>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Học tập trực tuyến</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="news" id="news">
+        <div class="container">
+            <h2><i class="fas fa-newspaper"></i> Bản tin</h2>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvm0VePJXjqCZ7k6O46F5LlsqFXHk-_JNO-A&s"
+                            alt="Tin tức 1">
+                        <h3><a href="the-le-thi-arta.html">Thể lệ thi ARTC</a></h3>
+                        <p>Chi tiết về thể lệ và quy định của kỳ thi ARTC.</p>
+                        <a href="the-le-thi-arta.html" class="btn">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvm0VePJXjqCZ7k6O46F5LlsqFXHk-_JNO-A&s"
+                            alt="Tin tức 2">
+                        <h3><a href="khuyen-mai-he.html">Khuyến mãi hè</a></h3>
+                        <p>Ưu đãi hấp dẫn dành cho học viên đăng ký trong tháng 7.</p>
+                        <a href="khuyen-mai-he.html" class="btn">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvm0VePJXjqCZ7k6O46F5LlsqFXHk-_JNO-A&s"
+                            alt="Tin tức 3">
+                        <h3><a href="lich-thi-moi.html">Lịch thi mới nhất</a></h3>
+                        <p>Cập nhật lịch thi chính thức và danh sách ca thi.</p>
+                        <a href="lich-thi-moi.html" class="btn">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvm0VePJXjqCZ7k6O46F5LlsqFXHk-_JNO-A&s"
+                            alt="Tin tức 4">
+                        <h3><a href="chia-se-kinh-nghiem.html">Chia sẻ kinh nghiệm</a></h3>
+                        <p>Kinh nghiệm đạt điểm cao trong các kỳ thi ARTC từ các bạn học viên.</p>
+                        <a href="chia-se-kinh-nghiem.html" class="btn">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="swiper-pagination"></div>
+
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="courses" id="courses">
+        <div class="container">
+            <h2><i class="fas fa-chalkboard-teacher"></i> Khóa học</h2>
+            <div class="course-list">
+                <div class="course-item">
+                    <img src="https://minio.trangnguyen.edu.vn/thumbnail/package_thumbnail_5.0/mot_vong_vietnam.png"
+                        alt="Khóa học Toán">
+                    <h3><a href="toan-lop-6-7.html">Toán học cơ bản lớp 6-7</a></h3>
+                    <p>Ôn tập kiến thức toán học cơ bản, làm quen với các dạng bài tập thường gặp.</p>
+                    <a href="toan-lop-6-7.html" class="btn">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="course-item">
+                    <img src="https://minio.trangnguyen.edu.vn/thumbnail/package_thumbnail_5.0/mot_vong_vietnam.png"
+                        alt="Khóa học Ngữ văn">
+                    <h3><a href="ngu-van-lop-8-9.html">Ngữ văn nâng cao lớp 8-9</a></h3>
+                    <p>Phát triển kỹ năng đọc hiểu, phân tích văn học và viết bài sáng tạo.</p>
+                    <a href="ngu-van-lop-8-9.html" class="btn">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="course-item">
+                    <img src="https://minio.trangnguyen.edu.vn/thumbnail/package_thumbnail_5.0/mot_vong_vietnam.png"
+                        alt="Khóa học Khoa học">
+                    <h3><a href="khoa-hoc-tu-nhien.html">Khoa học tự nhiên</a></h3>
+                    <p>Khám phá thế giới khoa học và các thí nghiệm hấp dẫn.</p>
+                    <a href="khoa-hoc-tu-nhien.html" class="btn">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="schedule">
+        <div class="container">
+            <h2><i class="fas fa-calendar-alt"></i> Lịch thi</h2>
+            <div class="schedule-list">
+                <div class="schedule-item">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Môn Toán</h3>
+                    <p>Ngày 15/07/2024</p>
+                    <p>Giờ: 08:00</p>
+                </div>
+                <div class="schedule-item">
+                    <i class="fas fa-book"></i>
+                    <h3>Môn Ngữ Văn</h3>
+                    <p>Ngày 16/07/2024</p>
+                    <p>Giờ: 14:00</p>
+                </div>
+                <div class="schedule-item">
+                    <i class="fas fa-flask"></i>
+                    <h3>Môn Khoa học tự nhiên</h3>
+                    <p>Ngày 17/07/2024</p>
+                    <p>Giờ: 10:00</p>
+                </div>
+                <div class="schedule-item">
+                    <i class="fas fa-language"></i>
+                    <h3>Môn Tiếng Anh</h3>
+                    <p>Ngày 18/07/2024</p>
+                    <p>Giờ: 15:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ranking">
+        <div class="container">
+            <h2><i class="fas fa-trophy"></i> Bảng xếp hạng quốc gia</h2>
+            <div class="ranking-list">
+                <div class="ranking-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>Khối 6</h3>
+                    <button onclick="showRanking(6)">Xem xếp hạng</button>
+                    <div id="ranking-top-6" class="ranking-top-list" style="display: none">
+                        <h3>Khối 6</h3>
+                    </div>
+                </div>
+                <div class="ranking-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>Khối 7</h3>
+                    <button onclick="showRanking(7)">Xem xếp hạng</button>
+                    <div id="ranking-top-7" class="ranking-top-list" style="display: none">
+                        <h3>Khối 7</h3>
+                    </div>
+                </div>
+                <div class="ranking-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>Khối 8</h3>
+                    <button onclick="showRanking(8)">Xem xếp hạng</button>
+                    <div id="ranking-top-8" class="ranking-top-list" style="display: none">
+                        <h3>Khối 8</h3>
+                    </div>
+                </div>
+                <div class="ranking-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>Khối 9</h3>
+                    <button onclick="showRanking(9)">Xem xếp hạng</button>
+                    <div id="ranking-top-9" class="ranking-top-list" style="display: none">
+                        <h3>Khối 9</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 ARTC. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            slidesPerView: 'auto',
+            spaceBetween: 30,
+            loop: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                }
+            }
+
+        });
+        // Dữ liệu bảng xếp hạng mẫu (có thể thay thế bằng dữ liệu thực)
+        const rankingsData = {
+            6: [
+                { name: 'Học sinh 1', score: 95 },
+                { name: 'Học sinh 2', score: 92 },
+                { name: 'Học sinh 3', score: 88 },
+                { name: 'Học sinh 4', score: 85 },
+                { name: 'Học sinh 5', score: 80 },
+                { name: 'Học sinh 6', score: 78 },
+                { name: 'Học sinh 7', score: 77 },
+            ],
+            7: [
+                { name: 'Học sinh A', score: 97 },
+                { name: 'Học sinh B', score: 93 },
+                { name: 'Học sinh C', score: 90 },
+                { name: 'Học sinh D', score: 86 },
+                { name: 'Học sinh E', score: 83 },
+                { name: 'Học sinh F', score: 82 },
+                { name: 'Học sinh G', score: 81 },
+            ],
+            8: [
+                { name: 'Học sinh X', score: 98 },
+                { name: 'Học sinh Y', score: 94 },
+                { name: 'Học sinh Z', score: 89 },
+                { name: 'Học sinh T', score: 87 },
+                { name: 'Học sinh V', score: 84 },
+                { name: 'Học sinh U', score: 80 },
+                { name: 'Học sinh Q', score: 79 },
+            ],
+            9: [
+                { name: 'Học sinh M', score: 99 },
+                { name: 'Học sinh N', score: 96 },
+                { name: 'Học sinh O', score: 91 },
+                { name: 'Học sinh P', score: 88 },
+                { name: 'Học sinh R', score: 85 },
+                { name: 'Học sinh S', score: 82 },
+                { name: 'Học sinh K', score: 76 },
+            ],
+        };
+
+        function showRanking(grade) {
+            const rankingDiv = document.getElementById(`ranking-top-${grade}`);
+            if (rankingDiv.style.display === 'block') {
+                rankingDiv.style.display = 'none';
+                return;
+            }
+            rankingDiv.style.display = 'block';
+            rankingDiv.innerHTML = `<h3>Top 5 Lớp ${grade}</h3>`
+            const top5 = rankingsData[grade].slice(0, 5);
+
+            top5.forEach(item => {
+                rankingDiv.innerHTML += `<div class="ranking-top-item">
+            <span>${item.name}</span>
+           <span>Điểm: ${item.score}</span>
+       </div>`
+            })
+
+
+        }
+    </script>
+</body>
+
+</html>

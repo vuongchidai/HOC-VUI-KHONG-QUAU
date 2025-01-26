@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vào thi | Trang Cá Nhân</title>
+    <title>Luyện Thi | Trang Cá Nhân</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        body {
+       body {
             background-color: #f8f9fa;
-            margin: 0;
-             overflow-x: hidden;
+            margin: 0; /* Loại bỏ margin mặc định của body */
         }
-        .profile-header {
+         .profile-header {
             cursor: pointer;
             position: relative;
             display: inline-block;
@@ -31,7 +30,7 @@
          .profile-header:hover i {
             color: #2980b9;
         }
-         .profile-popup {
+        .profile-popup {
             position: absolute;
             top: 100%;
             right: 0;
@@ -62,8 +61,8 @@
         .profile-popup li:last-child {
             border-bottom: none;
         }
-          .popup {
-             position: fixed;
+        .popup {
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -78,7 +77,7 @@
             border-radius: 10px;
             width: 900px;
         }
-         .popup.active {
+        .popup.active {
             display: block;
         }
         #info-popup .popup-content p {
@@ -87,15 +86,15 @@
         #info-popup .popup-content {
             padding: 25px;
         }
-         .table-responsive {
+        .table-responsive {
             overflow-x: auto;
         }
-        .table-rounds {
+         .table-rounds {
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            font-size: 1rem;
+            font-size: 1rem; /* Increase font size */
             width: 100%;
             margin: 0 auto;
 }
@@ -106,10 +105,10 @@
     .table-rounds th,
     .table-rounds td {
          text-align: center;
-        padding: 12px 8px;
+        padding: 12px 8px; /* Increase padding */
         border: none;
         white-space: nowrap;
-        vertical-align: middle;
+        vertical-align: middle; /* Vertically center text */
        
     }
     .table-rounds tbody tr:nth-child(even) {
@@ -122,12 +121,12 @@
         background-color: #3498db;
         color: white;
         border: none;
-        padding: 8px 16px;
+        padding: 8px 16px; /* Increase padding */
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
         font-size: 1rem;
-        white-space: nowrap;
+        white-space: nowrap; /* Prevent text wrapping */
     }
     .btn-round:hover {
         background-color: #2980b9;
@@ -136,17 +135,10 @@
         background-color: #ccc;
         color: white;
         border: none;
-        padding: 8px 16px;
+        padding: 8px 16px; /* Increase padding */
         border-radius: 5px;
           font-size: 1rem;
-        white-space: nowrap;
-    }
-    .not-eligible {
-       color: black;
-        padding: 8px 16px;
-        border-radius: 5px;
-        font-size: 1rem;
-        white-space: nowrap;
+        white-space: nowrap; /* Prevent text wrapping */
     }
     .btn-close {
         float: right;
@@ -159,7 +151,7 @@
          
           background-repeat: no-repeat;
       }
-        .profile-picture-container {
+    .profile-picture-container {
         position: relative;
         width: 100px;
         height: 100px;
@@ -173,7 +165,7 @@
         height: 100%;
         object-fit: cover;
     }
-     .profile-picture-container input[type="file"] {
+    .profile-picture-container input[type="file"] {
         position: absolute;
         left: 0;
         top: 0;
@@ -182,7 +174,7 @@
         opacity: 0;
         cursor: pointer;
     }
-      .profile-picture-container::before {
+    .profile-picture-container::before {
         content: "\f030";
         font-family: 'Font Awesome 6 Free';
         position: absolute;
@@ -200,19 +192,19 @@
         transition: opacity 0.3s;
         pointer-events: none;
     }
-      .profile-picture-container:hover::before {
+    .profile-picture-container:hover::before {
         opacity: 1;
     }
     .profile-picture-container:hover input[type="file"] {
         cursor: pointer;
     }
-        .profile-popup-menu {
+    .profile-popup-menu {
         position: relative;
     }
     #edit-profile-btn {
         float: right;
     }
-       .form-control:disabled {
+    .form-control:disabled {
         background: #fff;
         cursor: not-allowed;
         opacity: 0.7;
@@ -221,7 +213,7 @@
         margin-bottom: 200px;
     }
      h1.text-center {
-            margin-top: 180px;
+            margin-top: 180px; /* Khoảng cách 180px tương đương 18cm */
              margin-bottom: 0;
     }
       .table-container{
@@ -229,26 +221,26 @@
              background-color: #fff;
             border-radius: 10px;
            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-           margin-top: 80px;
+           margin-top: 80px; /* Khoảng cách 80px giữa tiêu đề và bảng */
         }
     .popup .btn-close {
          position: absolute;
         top: 10px;
         right: 10px;
-            background-image: url('https://media.istockphoto.com/id/1131230925/vi/vec-to/d%E1%BA%A5u-ki%E1%BB%83m-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-ch%E1%BB%AF-th%E1%BA%ADp-%C4%91%E1%BB%8F-%C4%91%C6%A1n-gi%E1%BA%A3n-vector.jpg?s=612x612&w=0&k=20&c=Zl4pvbt2-7JoQCohB1JdIf2JKS-BoHbhQGNhmhwaiSA=');
+          background-image: url('https://media.istockphoto.com/id/1131230925/vi/vec-to/d%E1%BA%A5u-ki%E1%BB%83m-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-ch%E1%BB%AF-th%E1%BA%ADp-%C4%91%E1%BB%8F-%C4%91%C6%A1n-gi%E1%BA%A3n-vector.jpg?s=612x612&w=0&k=20&c=Zl4pvbt2-7JoQCohB1JdIf2JKS-BoHbhQGNhmhwaiSA=');
             background-size: contain;
            width: 24px;
-          height: 24px;
+           height: 24px;
          cursor: pointer;
-         border: 0;
-           background-repeat: no-repeat;
+          border: 0;
+          background-repeat: no-repeat;
       
     }
-      .day-counter {
+    .day-counter {
         font-size: 0.8rem;
         color: gray;
     }
-      #current-time {
+     #current-time {
         text-align: center;
         margin-bottom: 10px;
         font-size: 1rem;
@@ -256,39 +248,39 @@
     .table-responsive{
       overflow-x: auto;
    }
-     .nav-links {
+      .nav-links {
         display: flex;
         align-items: center;
-        justify-content: space-around;
-        flex-wrap: wrap;
+        justify-content: space-around; /* Đặt các liên kết đều nhau */
+        flex-wrap: wrap; /* Cho phép xuống dòng khi màn hình nhỏ */
     }
      .nav-links a {
         display: flex;
-        flex-direction: column;
+        flex-direction: column; /* Stack icon và text dọc */
         align-items: center;
         color: #333;
         text-decoration: none;
-        margin-right: 10px;
-        margin-bottom: 5px;
+        margin-right: 10px; /* Giảm margin phải */
+        margin-bottom: 5px; /* Thêm margin dưới cho responsive */
         padding: 8px 12px;
         border-radius: 5px;
         transition: background-color 0.3s;
-        text-align: center;
+        text-align: center; /* Center text */
     }
-     .nav-links a:hover {
+    .nav-links a:hover {
         background-color: #e0f7f5;
     }
     .nav-links i {
-        margin-bottom: 5px;
-        font-size: 1.5em;
-        transition: color 0.3s;
+        margin-bottom: 5px; /* Thêm margin dưới cho icon */
+        font-size: 1.5em; /* Lớn hơn một chút cho dễ nhìn */
+        transition: color 0.3s; /* Thêm hiệu ứng chuyển màu */
     }
     .nav-links a:hover i {
           color: #2980b9;
     }
     @media (min-width: 768px) {
       .nav-links {
-            justify-content: flex-start;
+            justify-content: flex-start; /* Các liên kết sang trái trên màn hình lớn hơn */
         }
          .nav-links a {
            flex-direction: row;
@@ -296,76 +288,160 @@
             text-align: left;
            align-items: center;
         }
-          .nav-links i{
+         .nav-links i{
            margin-right: 5px;
             margin-bottom: 0;
            font-size: 1em;
-        }
+         }
     }
     .navbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0.5rem 1rem;
-        margin-bottom: 0;
+         margin-bottom: 0; /* Loại bỏ margin mặc định của navbar */
     }
     .navbar .profile-header {
         margin-left: auto;
     }
-     #notification-popup {
+    .high-round-container {
+            background-color: #f0f8ff;
+            border: 1px solid #c9dff0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            margin-bottom: 200px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    .high-round-container h2 {
+            color: #2980b9;
+            margin-bottom: 20px;
+        }
+     .high-round-item {
+            background-color: #ffffff;
+             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+             border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+             display: flex;
+            justify-content: space-between;
+            align-items: center;
+          transition: transform 0.3s ease;
+          cursor: pointer;
+       }
+     .high-round-item:hover {
+            transform: translateY(-3px);
+        }
+    .high-round-item h3 {
+            font-size: 1.2rem;
+             margin-bottom: 0;
+    }
+    .high-round-item .btn-round{
+        padding: 10px 20px;
+    }
+    .trial-code-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+    }
+     .trial-code-container h2 {
+          margin-bottom: 15px;
+          text-align: center;
+           color: #27ae60;
+         }
+       .trial-code-container input[type="text"] {
+            padding: 10px;
+           border: 1px solid #ddd;
+          border-radius: 5px;
+          margin-right: 10px;
+       }
+      .trial-code-container button {
+        background-color: #27ae60;
+        color: white;
+        border: none;
+         padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+          transition: background-color 0.3s;
+    }
+       .trial-code-container button:hover {
+            background-color: #2ecc71;
+        }
+       .trial-code-container .trial-info {
+        margin-top: 10px;
+        text-align: center;
+       font-weight: bold;
+       color: #e74c3c;
+     }
+      .trial-code-container .trial-count {
+        margin-top: 5px;
+        text-align: center;
+        font-size: 0.9rem;
+        color: #777;
+        }
+    .rules-popup {
+           background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: none;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 1002; /* Ensure it's above other popups */
-            display: none;
+            z-index: 1002;
             max-height: 90vh;
             overflow-y: auto;
-            border-radius: 10px;
-            width: 900px;
-    }
-        #notification-popup.active {
+            width: 80%;
+            max-width: 600px;
+        }
+        .rules-popup.active {
             display: block;
-    }
-      #notification-popup .popup-content {
-        padding: 20px;
-        text-align: center;
-    }
-    #notification-popup h3 {
-         margin-bottom: 15px;
-         font-size: 1.7em;
-         font-weight: bold;
-    }
-      #notification-popup .popup-content img {
-         max-width: 100%;
-         max-height: 400px;
-         display: block;
-         margin: 15px auto;
-     }
-      #notification-popup .popup-content p{
-        font-size: 1.1em;
-    }
-     #notification-popup .popup-content .btn-close {
-         position: absolute;
-         top: 10px;
-         right: 10px;
-          background-image: url('https://media.istockphoto.com/id/1131230925/vi/vec-to/d%E1%BA%A5u-ki%E1%BB%83m-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-ch%E1%BB%AF-th%E1%BA%ADp-%C4%91%E1%BB%8F-%C4%91%C6%A1n-gi%E1%BA%A3n-vector.jpg?s=612x612&w=0&k=20&c=Zl4pvbt2-7JoQCohB1JdIf2JKS-BoHbhQGNhmhwaiSA=');
+        }
+       .rules-popup h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+      .rules-popup ul {
+          list-style-type: disc;
+          padding-left: 20px;
+          margin-bottom: 15px;
+       }
+    .rules-popup li{
+          line-height: 1.6;
+       }
+      .rules-popup .btn-close {
+         float: right;
+            background-image: url('https://media.istockphoto.com/id/1131230925/vi/vec-to/d%E1%BA%A5u-ki%E1%BB%83m-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-ch%E1%BB%AF-th%E1%BA%ADp-%C4%91%E1%BB%8F-%C4%91%C6%A1n-gi%E1%BA%A3n-vector.jpg?s=612x612&w=0&k=20&c=Zl4pvbt2-7JoQCohB1JdIf2JKS-BoHbhQGNhmhwaiSA=');
             background-size: contain;
             width: 24px;
             height: 24px;
+         cursor: pointer;
           border: 0;
-            background-repeat: no-repeat;
-           cursor: pointer;
+          background-repeat: no-repeat;
+     }
+     .high-round-item .btn-rules {
+        background-color: #f39c12;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+         font-size: 1rem;
+    }
+    .high-round-item .btn-rules:hover {
+          background-color: #e67e22;
     }
 </style>
 </head>
 <body>
-    <div class="container-fluid">
-       <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div class="container-fluid">
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <div class="nav-links">
                <a href="vaohoc.html">
@@ -394,40 +470,172 @@
             </div>
         </div>
     </nav>
-       <h1 class="mb-4 text-center">Danh Sách Vòng Thi SIO - Khối <span id="user-grade-display"></span></h1>
+    <h1 class="mb-4 text-center">Luyện Thi SIO - Khối <span id="user-grade-display"></span></h1>
     <p id="current-time"></p>
+      <div class="trial-code-container">
+        <h2>Nhập Mã Thi Thử</h2>
+        <div class="d-flex justify-content-center align-items-center">
+            <input type="text" id="trial-code-input" placeholder="Nhập mã thi thử (20 kí tự)" maxlength="20">
+            <button id="check-trial-code">Kiểm tra</button>
+        </div>
+        <p id="trial-info" class="trial-info" style="display:none"></p>
+           <p id="trial-count" class="trial-count" style="display:none">
+         Số lượt thi thử còn lại: <span id="remaining-trials"></span>
+            </p>
+    </div>
     <div id="rounds-table-container">
           <div class="table-container">
-              <div class="table-responsive">
+            <div class="table-responsive">
                 <table class="table table-bordered table-rounds">
-                     <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Tên vòng thi</th>
-                             <th>Ngày mở</th>
-                             <th>Ngày đóng</th>
-                              <th>Điểm</th>
-                            <th>Thao tác</th>
-                       </tr>
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên vòng thi</th>
+                        <th>Thao tác</th>
+                    </tr>
                     </thead>
-                   <tbody id="rounds-table-body">
+                     <tbody id="rounds-table-body">
+                      <tr>
+                            <td>1</td>
+                            <td>Vòng 1 - Tự do 1</td>
+                            <td><a href="V1TTDK6.html" class="btn btn-round">Vào thi</a></td>
+                        </tr>
+                      <tr>
+                          <td>2</td>
+                          <td>Vòng 2 - Tự do 2</td>
+                         <td><a href="V2TTDK6.html" class="btn btn-round">Vào thi</a></td>
+                        </tr>
+                         <tr>
+                            <td>3</td>
+                            <td>Vòng 3 - Tự do 3</td>
+                             <td><a href="V3TTDK6.html" class="btn btn-round">Vào thi</a></td>
+                         </tr>
+                           <tr>
+                            <td>4</td>
+                             <td>Vòng 4 - Tự do 4</td>
+                            <td><a href="V4TTDK6.html" class="btn btn-round">Vào thi</a></td>
+                         </tr>
+                          <tr>
+                           <td>5</td>
+                             <td>Vòng 5 - Tự do 5</td>
+                            <td><a href="V5TTDK6.html" class="btn btn-round">Vào thi</a></td>
+                         </tr>
                     </tbody>
                 </table>
             </div>
-         </div>
+       </div>
+    </div>
+      <div class="high-round-container">
+        <h2>Vòng Thi Cao Cấp</h2>
+        <div class="high-round-item">
+            <h3>Vòng 6 - Cấp Trường</h3>
+            <div>
+                 <button class="btn btn-rules" data-rules="rules-6">Quy chế</button>
+                <a href="V6CTK6.html" class="btn btn-round">Vào thi</a>
+            </div>
+        </div>
+        <div class="high-round-item">
+            <h3>Vòng 7 - Cấp Huyện</h3>
+             <div>
+                <button class="btn btn-rules" data-rules="rules-7">Quy chế</button>
+                 <a href="V7CHK6.html" class="btn btn-round">Vào thi</a>
+            </div>
+        </div>
+          <div class="high-round-item">
+            <h3>Vòng 8 - Cấp Tỉnh</h3>
+            <div>
+                <button class="btn btn-rules" data-rules="rules-8">Quy chế</button>
+                 <a href="V8CPK6.html" class="btn btn-round">Vào thi</a>
+            </div>
+        </div>
+         <div class="high-round-item">
+            <h3>Vòng 9 - Cấp Quốc Gia</h3>
+            <div>
+                <button class="btn btn-rules" data-rules="rules-9">Quy chế</button>
+                 <a href="V9CQGK6.html" class="btn btn-round">Vào thi</a>
+            </div>
+        </div>
+    </div>
+      <div id="rules-popup-6" class="rules-popup">
+        <button type="button" class="btn-close" aria-label="Close"></button>
+           <h3>Quy chế vòng thi cấp trường</h3>
+        <ul>
+            <li><b>Thời gian làm bài:</b> 60 phút.</li>
+            <li><b>Số lượng câu hỏi:</b> 30 câu trắc nghiệm.</li>
+            <li><b>Nội dung thi:</b> Kiến thức đã học từ các vòng trước và mở rộng thêm.</li>
+            <li><b>Hình thức nộp bài:</b> Nộp bài trực tuyến, chấm điểm tự động.</li>
+            <li><b>Quy định khác:</b>
+                <ul>
+                    <li>Không được phép gian lận dưới mọi hình thức.</li>
+                    <li>Mọi thắc mắc cần phản hồi trực tiếp cho ban tổ chức để được hỗ trợ kịp thời.</li>
+                    <li>Kết quả sẽ được công bố sau khi vòng thi kết thúc.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+      <div id="rules-popup-7" class="rules-popup">
+           <button type="button" class="btn-close" aria-label="Close"></button>
+        <h3>Quy chế vòng thi cấp huyện</h3>
+        <ul>
+            <li><b>Thời gian làm bài:</b> 75 phút.</li>
+            <li><b>Số lượng câu hỏi:</b> 35 câu trắc nghiệm.</li>
+            <li><b>Nội dung thi:</b> Kiến thức nâng cao hơn so với vòng cấp trường.</li>
+            <li><b>Hình thức nộp bài:</b> Nộp bài trực tuyến, chấm điểm tự động.</li>
+             <li><b>Quy định khác:</b>
+                <ul>
+                    <li>Không được phép gian lận dưới mọi hình thức.</li>
+                    <li>Mọi thắc mắc cần phản hồi trực tiếp cho ban tổ chức để được hỗ trợ kịp thời.</li>
+                    <li>Kết quả sẽ được công bố sau khi vòng thi kết thúc.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div id="rules-popup-8" class="rules-popup">
+         <button type="button" class="btn-close" aria-label="Close"></button>
+        <h3>Quy chế vòng thi cấp tỉnh</h3>
+        <ul>
+            <li><b>Thời gian làm bài:</b> 90 phút.</li>
+            <li><b>Số lượng câu hỏi:</b> 40 câu trắc nghiệm.</li>
+            <li><b>Nội dung thi:</b> Kiến thức chuyên sâu, mở rộng kiến thức thực tế.</li>
+            <li><b>Hình thức nộp bài:</b> Nộp bài trực tuyến, chấm điểm tự động.</li>
+             <li><b>Quy định khác:</b>
+                <ul>
+                    <li>Không được phép gian lận dưới mọi hình thức.</li>
+                    <li>Mọi thắc mắc cần phản hồi trực tiếp cho ban tổ chức để được hỗ trợ kịp thời.</li>
+                    <li>Kết quả sẽ được công bố sau khi vòng thi kết thúc.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+       <div id="rules-popup-9" class="rules-popup">
+          <button type="button" class="btn-close" aria-label="Close"></button>
+        <h3>Quy chế vòng thi cấp quốc gia</h3>
+        <ul>
+            <li><b>Thời gian làm bài:</b> 120 phút.</li>
+            <li><b>Số lượng câu hỏi:</b> 50 câu trắc nghiệm.</li>
+            <li><b>Nội dung thi:</b> Kiến thức toàn diện, tư duy phản biện cao.</li>
+            <li><b>Hình thức nộp bài:</b> Nộp bài trực tuyến, chấm điểm tự động.</li>
+            <li><b>Quy định khác:</b>
+                <ul>
+                    <li>Không được phép gian lận dưới mọi hình thức.</li>
+                    <li>Mọi thắc mắc cần phản hồi trực tiếp cho ban tổ chức để được hỗ trợ kịp thời.</li>
+                    <li>Kết quả sẽ được công bố sau khi vòng thi kết thúc.</li>
+                </ul>
+            </li>
+        </ul>
     </div>
 </div>
-    <div id="info-popup" class="popup">
+<div id="info-popup" class="popup">
     <div class="popup-content">
         <button type="button" class="btn-close" aria-label="Close"></button>
         <h3>Thông tin cá nhân</h3>
-          <div class="profile-picture-container">
+        <div class="profile-picture-container">
             <img id="profile-picture" src="https://placehold.co/100x100/333/fff" alt="Ảnh đại diện">
             <input type="file" id="profile-image-upload" accept="image/*">
-         </div>
+        </div>
         <button id="edit-profile-btn" class="btn btn-primary">Chỉnh sửa</button>
         <form id="edit-profile-form">
-           <div class="mb-3">
+            <div class="mb-3">
                 <label for="popup-fullname" class="form-label">Họ và tên</label>
                 <input type="text" class="form-control" id="popup-fullname" disabled required>
             </div>
@@ -435,46 +643,46 @@
                 <label for="popup-username" class="form-label">Tên đăng nhập</label>
                 <input type="text" class="form-control" id="popup-username" disabled required>
             </div>
-              <div class="mb-3">
+            <div class="mb-3">
                 <label for="popup-email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="popup-email" disabled required>
             </div>
-             <div class="mb-3">
+            <div class="mb-3">
                 <label for="popup-phone" class="form-label">Số điện thoại</label>
                 <input type="tel" class="form-control" id="popup-phone" disabled required>
-             </div>
+            </div>
             <div class="mb-3">
                 <label for="popup-address" class="form-label">Địa chỉ</label>
                 <input type="text" class="form-control" id="popup-address" disabled required>
-             </div>
-             <div class="mb-3">
+            </div>
+            <div class="mb-3">
                 <label for="popup-grade" class="form-label">Khối</label>
                 <input type="text" class="form-control" id="popup-grade" disabled>
             </div>
-             <div class="mb-3">
+            <div class="mb-3">
                 <label for="popup-school" class="form-label">Trường</label>
                 <input type="text" class="form-control" id="popup-school" disabled required>
             </div>
-             <div class="mb-3">
+            <div class="mb-3">
                 <label for="popup-class" class="form-label">Lớp</label>
                 <input type="text" class="form-control" id="popup-class" disabled required>
             </div>
-           <div class="mb-3">
+            <div class="mb-3">
                 <label for="popup-dob" class="form-label">Ngày sinh</label>
                 <input type="date" class="form-control" id="popup-dob" disabled required>
-           </div>
+            </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary" style="display: none">Lưu thông tin</button>
             </div>
         </form>
     </div>
 </div>
-    <div id="change-password-popup" class="popup">
+<div id="change-password-popup" class="popup">
     <div class="popup-content">
         <button type="button" class="btn-close" aria-label="Close"></button>
         <h3>Đổi mật khẩu</h3>
-       <form id="change-password-form">
-           <div class="mb-3">
+        <form id="change-password-form">
+            <div class="mb-3">
                 <label for="current-password" class="form-label">Mật khẩu hiện tại</label>
                 <input type="password" class="form-control" id="current-password" required>
             </div>
@@ -486,23 +694,15 @@
                 <label for="confirm-new-password" class="form-label">Nhập lại mật khẩu mới</label>
                 <input type="password" class="form-control" id="confirm-new-password" required>
             </div>
-           <div class="d-grid">
-               <button type="submit" class="btn btn-primary">Xác nhận đổi mật khẩu</button>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Xác nhận đổi mật khẩu</button>
             </div>
-       </form>
-    </div>
-</div>
- <div id="notification-popup" class="popup">
-    <div class="popup-content">
-        <button type="button" class="btn-close" aria-label="Close"></button>
-        <h3 class="text-center">Thông báo quan trọng</h3>
-        <img src="https://blog.xiteb.com/wp-content/uploads/2024/05/360_F_459371368_1C9csykMjOXDUstaTPs6KWpzXMiRuuaT.jpg" alt="Notification Image">
-        <p>Chào mừng bạn đến với trang cá nhân của mình! Hãy chắc chắn rằng bạn đã xem qua danh sách các vòng thi và chuẩn bị thật tốt nhé!</p>
+        </form>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-     const profileHeader = document.querySelector('.profile-header');
+   const profileHeader = document.querySelector('.profile-header');
     const profilePopup = document.querySelector('.profile-popup');
     const infoPopup = document.getElementById('info-popup');
     const editProfileForm = document.getElementById('edit-profile-form');
@@ -512,15 +712,25 @@
     const profilePicture = document.getElementById('profile-picture');
     const profileImageUpload = document.getElementById('profile-image-upload');
     const roundsTableBody = document.getElementById('rounds-table-body');
+     const trialCodeInput = document.getElementById('trial-code-input');
+      const checkTrialCodeBtn = document.getElementById('check-trial-code');
+     const trialInfo = document.getElementById('trial-info');
+      const trialCount = document.getElementById('trial-count');
+      const remainingTrials = document.getElementById('remaining-trials');
     const infoMenu = document.getElementById('info-menu');
     const changePasswordMenu = document.getElementById('change-password-menu');
     const logoutMenu = document.getElementById('logout-menu');
     const userGradeDisplay = document.getElementById('user-grade-display');
     const roundsTableContainer = document.getElementById('rounds-table-container');
     const currentTimeDisplay = document.getElementById('current-time');
-    const notificationPopup = document.getElementById('notification-popup');
-
-    const loginTime = localStorage.getItem('loginTime');
+     const highRoundItems = document.querySelectorAll('.high-round-item');
+    const rulesPopups = {
+        'rules-6': document.getElementById('rules-popup-6'),
+        'rules-7': document.getElementById('rules-popup-7'),
+        'rules-8': document.getElementById('rules-popup-8'),
+        'rules-9': document.getElementById('rules-popup-9')
+    };
+     const loginTime = localStorage.getItem('loginTime');
     const currentTime = new Date().getTime();
     if (!loginTime || (currentTime - parseInt(loginTime)) > 24 * 60 * 60 * 1000) {
         localStorage.removeItem('user');
@@ -543,7 +753,7 @@
     // Hiển thị thông tin người dùng trên header
     document.getElementById('header-fullname').textContent = user.fullname;
 
-    function updateCurrentTime() {
+      function updateCurrentTime() {
         const now = new Date();
         const formattedTime = now.toLocaleDateString('vi-VN', {
             day: '2-digit',
@@ -557,27 +767,32 @@
     updateCurrentTime();
     setInterval(updateCurrentTime, 60000);
 
+
     function toggleProfilePopup() {
         profilePopup.classList.toggle('active');
-         if(profilePopup.classList.contains('active')){
-             document.addEventListener('click',function(event){
-                if (!profileHeader.contains(event.target)) {
-                     profilePopup.classList.remove('active');
-                     document.removeEventListener('click', arguments.callee);
-                }
-            });
-        }
+        if(profilePopup.classList.contains('active')){
+            document.addEventListener('click',function(event){
+            if (!profileHeader.contains(event.target)) {
+                 profilePopup.classList.remove('active');
+                 document.removeEventListener('click', arguments.callee);
+            }
+           });
+         }
+       
     }
     profileHeader.addEventListener('click', toggleProfilePopup);
 
     function closeAllPopup() {
         infoPopup.classList.remove('active');
         changePasswordPopup.classList.remove('active');
+          Object.values(rulesPopups).forEach(popup => popup.classList.remove('active'));
     }
     document.querySelectorAll('.popup .btn-close').forEach(closeButton => {
         closeButton.addEventListener('click', closeAllPopup);
     });
-
+     document.querySelectorAll('.rules-popup .btn-close').forEach(closeButton => {
+         closeButton.addEventListener('click', closeAllPopup);
+     });
     function loadInfoPopup() {
         document.getElementById('popup-fullname').value = user.fullname;
         document.getElementById('popup-username').value = user.username;
@@ -622,6 +837,7 @@
         });
         editProfileForm.querySelector('button[type="submit"]').style.display = 'block';
     });
+
     // Xử lý sự kiện chỉnh sửa thông tin
     editProfileForm.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -629,7 +845,7 @@
         user.username = document.getElementById('popup-username').value;
         user.email = document.getElementById('popup-email').value;
         user.phone = document.getElementById('popup-phone').value;
-          user.city = document.getElementById('popup-address').value.split(', ')[2] || user.city;
+         user.city = document.getElementById('popup-address').value.split(', ')[2] || user.city;
         user.district = document.getElementById('popup-address').value.split(', ')[1] || user.district;
         user.ward = document.getElementById('popup-address').value.split(', ')[0] || user.ward;
         user.school = document.getElementById('popup-school').value;
@@ -643,7 +859,7 @@
             input.disabled = true;
         });
         editProfileForm.querySelector('button[type="submit"]').style.display = 'none';
-        infoPopup.classList.remove('active');
+         infoPopup.classList.remove('active');
     });
     profileImageUpload.addEventListener('change', function () {
         const file = profileImageUpload.files[0];
@@ -665,6 +881,10 @@
     });
 
     function isImageSafe(imageBase64) {
+        // Đây là nơi bạn sẽ thêm logic quét ảnh thông minh
+        // Với mục đích ví dụ, mình sẽ return true (luôn cho là ảnh an toàn)
+        // Trong thực tế, bạn sẽ sử dụng một thư viện bên thứ 3 hoặc API để scan ảnh
+        // Bạn có thể dùng model AI/ML
         return true;
     }
     // Xử lý form đổi mật khẩu
@@ -686,144 +906,60 @@
         alert('Đổi mật khẩu thành công!');
         changePasswordPopup.classList.remove('active');
     });
-    const rounds = [
-        { id: 1, name: 'Vòng 1 - Tự do 1', startDate: '2025-09-05', endDate: '2026-04-13', examId: '404.html', minScore: 200 },
-        { id: 2, name: 'Vòng 2 - Tự do 2', startDate: '2025-10-06', endDate: '2026-04-13', examId: '404.html', minScore: 200 },
-        { id: 3, name: 'Vòng 3 - Tự do 3', startDate: '2025-11-10', endDate: '2026-04-13', examId: '404.html', minScore: 200 },
-        { id: 4, name: 'Vòng 4 - Tự do 4', startDate: '2025-11-24', endDate: '2026-04-13', examId: '404.html', minScore: 200 },
-        { id: 5, name: 'Vòng 5 - Tự do 5', startDate: '2025-12-08', endDate: '2026-04-13', examId: '404.html', minScore: 200 },
-        { id: 6, name: 'Vòng 6 - Cấp Trường', startDate: '2025-12-22', endDate: '2025-12-26', examId: '404.html', minScore: 0 },
-        { id: 7, name: 'Vòng 7 - Cấp Huyện', startDate: '2026-01-12', endDate: '2026-01-16', examId: '404.html', minScore: 0 },
-        { id: 8, name: 'Vòng 8 - Cấp Tỉnh', startDate: '2026-03-10', endDate: '2026-03-13', examId: '404.html', minScore: 0 },
-        { id: 9, name: 'Vòng 9 - Cấp Quốc Gia', startDate: '2026-04-01', endDate: '2026-04-03', examId: '404.html', minScore: 0 },
-    ];
-
-    function renderRoundsTable() {
-        roundsTableBody.innerHTML = '';
-        if (rounds.length === 0) {
-            roundsTableContainer.innerHTML = '<p class="text-center">Không có dữ liệu. Lỗi 404!</p>';
-            return;
-        }
-        const today = new Date();
-        let previousRoundPassed = true;
-
-        for (let i = 0; i < rounds.length; i++) {
-            const round = rounds[i];
-            const startDate = new Date(round.startDate);
-            const endDate = new Date(round.endDate);
-            const row = document.createElement('tr');
-            const link = round.examId;
-            let actionButton = '';
-            let daysRemaining = '';
-            const storedScore = localStorage.getItem(`score_${link}`);
-            const score = storedScore !== null ? parseInt(storedScore) : 0;
-            const scoreDisplay = storedScore !== null ? storedScore : 'Chưa thi';
-            let isEligible = true;
-            if (i > 0 && !previousRoundPassed) {
-                isEligible = false;
+   let trialCounts = JSON.parse(localStorage.getItem('trialCounts')) || {};
+  checkTrialCodeBtn.addEventListener('click', function () {
+    const trialCode = trialCodeInput.value;
+     if (trialCode.length !== 20) {
+         trialInfo.textContent = 'Mã thi thử không hợp lệ. Vui lòng nhập lại.';
+            trialInfo.style.display = 'block';
+           trialCount.style.display = 'none';
+            setTimeout(function(){
+                trialInfo.style.display = 'none';
+             },3000);
+        return;
+      }
+   const trialCodes = {
+            'ABC123XYZ456DEF789GHI': 3
+        };
+         if (trialCodes.hasOwnProperty(trialCode)) {
+            trialInfo.style.display = 'none';
+            trialCount.style.display = 'block';
+            if (!trialCounts[trialCode]) {
+              trialCounts[trialCode] = trialCodes[trialCode];
+               localStorage.setItem('trialCounts',JSON.stringify(trialCounts));
+               remainingTrials.textContent = trialCounts[trialCode];
             }
-
-            if (startDate > today) {
-                const timeDiff = startDate.getTime() - today.getTime();
-                const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                if (days <= 2) {
-                    daysRemaining = `<span class="day-counter">Còn ${days} ngày</span>`;
+              else if(trialCounts[trialCode] > 0){
+                remainingTrials.textContent = trialCounts[trialCode];
                 }
-                actionButton = '<button class="btn btn-not-open" disabled>Chưa mở</button>';
-            }
-            else if (endDate < today) {
-                actionButton = '<button class="btn btn-not-open" disabled>Đã đóng</button>';
-            }
-            else if (!isEligible) {
-                actionButton = `<span class="not-eligible">Chưa đủ điều kiện</span>`;
+               else{
+                    trialCount.style.display = 'none';
+                    trialInfo.textContent = 'Bạn đã hết lượt thi thử. Vui lòng nhập mã khác';
+                     trialInfo.style.display = 'block';
+                       setTimeout(function(){
+                          trialInfo.style.display = 'none';
+                       },3000);
+                 }
 
-            }
-            else {
-                actionButton = `<a href="${link}" class="btn btn-round">Vào thi</a>`;
-            }
-
-            row.innerHTML = `
-                     <td>${i + 1}</td>
-                     <td>${round.name}</td>
-                     <td>${round.startDate}${daysRemaining}</td>
-                     <td>${round.endDate}</td>
-                     <td>${scoreDisplay}</td>
-                    <td>${actionButton}</td>
-                 `;
-            roundsTableBody.appendChild(row);
-
-            if (i < 5 && score < round.minScore && storedScore != null) {
-                previousRoundPassed = false;
-            }
+        } else {
+            trialInfo.textContent = 'Mã thi thử không hợp lệ. Vui lòng nhập lại.';
+            trialInfo.style.display = 'block';
+            trialCount.style.display = 'none';
+            setTimeout(function(){
+                trialInfo.style.display = 'none';
+             },3000);
         }
-    }
-
-    renderRoundsTable();
-
-    // Notification logic
-    function showNotificationPopup() {
-        notificationPopup.classList.add('active');
-         document.addEventListener('click', function(event) {
-            if (!notificationPopup.contains(event.target)) {
-                 return;
-            }
-        });
-    }
-
-    function hideNotificationPopup() {
-        notificationPopup.classList.remove('active');
-    }
-    notificationPopup.querySelector('.btn-close').addEventListener('click', hideNotificationPopup);
-    function handleNotification() {
-        let notificationCount = localStorage.getItem('notificationCount') || 0;
-        let lastDismissTime = localStorage.getItem('lastDismissTime') || 0;
-        let showAfterTime = localStorage.getItem('showAfterTime') || 0;
-        const currentTime = Date.now();
-
-          // Check if it's been more than a day since last login or if user cleared the data
-         const loginTime = localStorage.getItem('loginTime');
-        if (!loginTime || (currentTime - parseInt(loginTime)) > 24 * 60 * 60 * 1000) {
-             notificationCount = 0;
-             localStorage.setItem('notificationCount',0);
-             localStorage.removeItem('lastDismissTime');
-            localStorage.removeItem('showAfterTime');
-
-        }
-        if (notificationCount < 5) {
-            if (currentTime - parseInt(showAfterTime) >= 0) {
-                showNotificationPopup();
-                notificationCount++;
-                localStorage.setItem('notificationCount', notificationCount);
-                localStorage.setItem('lastDismissTime', currentTime);
-                const waitTime = 2 * 60 * 60 * 1000 + Math.floor(Math.random() * 4 * 60 * 60 * 1000);
-                localStorage.setItem('showAfterTime', currentTime + waitTime);
-            }
-        } else if (localStorage.getItem('lastDismissTime') && (currentTime - parseInt(localStorage.getItem('lastDismissTime'))) < 3 * 60 * 60 * 1000) {
-            return
-        } else if (notificationCount >= 5) {
-            localStorage.removeItem('lastDismissTime');
-             localStorage.setItem('notificationCount', 0);
-            localStorage.removeItem('showAfterTime');
-        }
-
-    }
-    setTimeout(handleNotification, 2000);
-
-    // Disable text selection
-    document.addEventListener('selectstart', function(e) {
-       e.preventDefault();
-    });
-
-    // Disable right-click
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-    });
-
-    // Disable keyboard shortcuts for copy and paste
-    document.addEventListener('keydown', function(e) {
-        if ((e.ctrlKey || e.metaKey) && (e.key === 'c' || e.key === 'v' || e.key === 'x' || e.key === 'a' )) {
-            e.preventDefault();
-        }
+   });
+     highRoundItems.forEach(item => {
+         const rulesButton = item.querySelector('.btn-rules');
+         if(rulesButton){
+             rulesButton.addEventListener('click', function() {
+                  const rulesId = rulesButton.getAttribute('data-rules');
+                  if(rulesPopups[rulesId]){
+                     rulesPopups[rulesId].classList.add('active');
+                    }
+             });
+         }
     });
 </script>
 </body>
