@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Xác Nhận Sinh Nhật</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 1000px;
+            /* Chiều dài 1000px */
+            text-align: center;
+            position: relative;
+            /* Cần thiết cho vị trí tuyệt đối của popup */
+        }
+
+        h1 {
+            color: #e91e63;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-align: left;
+            /* Căn trái tiêu đề */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            text-align: left;
+            /* Căn trái label */
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        #thongTin {
+            /* Thêm ID cho phần thông tin */
+            margin-bottom: 20px;
+            /* Thêm khoảng cách trước khi ẩn */
+            text-align: left;
+            /* Căn trái thông tin nhập */
+        }
+
+        button {
+            font-size: 18px;
+            padding: 14px 28px;
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #d4145a;
+        }
+
+        #xacNhan {
+            display: none;
+            margin-top: 30px;
+            text-align: center;
+            /* Căn giữa nội dung xác nhận */
+        }
+
+        #xacNhan h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #coButton,
+        #khongButton {
+            font-size: 18px;
+            padding: 14px 28px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            border: none;
+            /* Loại bỏ viền mặc định */
+        }
+
+        #coButton {
+            background-color: #4CAF50;
+            color: white;
+
+        }
+
+        #coButton:hover {
+            background-color: #45a049;
+        }
+
+        #khongButton {
+            background-color: #f44336;
+            color: white;
+
+        }
+
+        #khongButton:hover {
+            background-color: #da190b;
+        }
+
+        /* CSS cho popup icon tức giận */
+        .popup-icon {
+            position: absolute;
+            top: 20%;
+            /* Điều chỉnh vị trí theo chiều dọc */
+            left: 80%;
+            /* Điều chỉnh vị trí theo chiều ngang */
+            transform: translate(-50%, -50%);
+            font-size: 5em;
+            color: red;
+            opacity: 0;
+            animation: fadeOut 3s forwards;
+            /* animation mờ dần */
+            z-index: 10;
+            /* Đảm bảo nó ở trên cùng */
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Style cho phần lời nhắn sinh nhật */
+        .message-box {
+            max-width: 600px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin: 20px auto;
+            /* Căn giữa theo chiều ngang và thêm khoảng cách */
+        }
+
+        .message-box img {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-content p {
+            font-size: 18px;
+            color: #444;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+
+        .button-group {
+            margin-top: 15px;
+        }
+
+        .button-group button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 10px;
+            margin-right: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-yes {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-yes:hover {
+            background-color: #45a049;
+        }
+
+        .btn-ok {
+            background-color: #2196F3;
+            color: white;
+        }
+
+        .btn-ok:hover {
+            background-color: #1e87dc;
+        }
+
+        .btn-next {
+            background-color: #FF9800;
+            color: white;
+        }
+
+        .btn-next:hover {
+            background-color: #e08900;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Style cho phần giới thiệu thành viên */
+        #introContainer {
+            display: none;
+            /* Ẩn ban đầu */
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /*Hiển thị ảnh từng người*/
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', 'Montserrat', 'Roboto', sans-serif;
+            overflow: hidden;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 32px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 24px rgba(44, 62, 80, 0.25), 0 1.5px 0 #222;
+            animation: fadeIn 2s cubic-bezier(.42, 0, .58, 1);
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            -webkit-text-fill-color: unset;
+            position: relative;
+        }
+
+        .title::after {
+            content: "🎉";
+            position: absolute;
+            right: -2.5rem;
+            top: 0.2rem;
+            font-size: 2.2rem;
+            filter: grayscale(0.2) brightness(0.95);
+            opacity: 0.85;
+        }
+
+        .member {
+            background: linear-gradient(135deg, #232526 0%, #4b6cb7 100%);
+            border-radius: 24px;
+            box-shadow: 0 12px 40px 0 rgba(44, 62, 80, 0.22), 0 2px 8px 0 rgba(44, 62, 80, 0.13);
+            padding: 32px 36px 28px 36px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.8) translateY(40px);
+            transition: all 0.9s cubic-bezier(.42, 0, .58, 1);
+            max-width: 340px;
+            margin: 0 auto;
+            border: 3px solid #4b6cb7;
+            position: relative;
+        }
+
+        .member.bg1 {
+            background: linear-gradient(135deg, #232526 0%, #4b6cb7 100%);
+        }
+
+        .member.bg2 {
+            background: linear-gradient(135deg, #232526 0%, #00c6ff 100%);
+        }
+
+        .member.bg3 {
+            background: linear-gradient(135deg, #232526 0%, #232526 100%);
+        }
+
+        .member.bg4 {
+            background: linear-gradient(135deg, #232526 0%, #232526 80%, #4b6cb7 100%);
+        }
+
+        .member.bg5 {
+            background: linear-gradient(135deg, #232526 0%, #232526 60%, #00c6ff 100%);
+        }
+
+        .member.bg6 {
+            background: linear-gradient(135deg, #232526 0%, #232526 70%, #4b6cb7 100%);
+        }
+
+        .member.bg7 {
+            background: linear-gradient(135deg, #232526 0%, #232526 50%, #00c6ff 100%);
+        }
+
+        .member.bg8 {
+            background: linear-gradient(135deg, #232526 0%, #232526 40%, #4b6cb7 100%);
+        }
+
+        .member.bg9 {
+            background: linear-gradient(135deg, #232526 0%, #232526 30%, #00c6ff 100%);
+        }
+
+        .member::before {
+            content: "🎂";
+            position: absolute;
+            left: 18px;
+            top: -28px;
+            font-size: 2.2rem;
+            filter: grayscale(0.2) brightness(0.95);
+            opacity: 0.85;
+        }
+
+        .member.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .member img {
+            width: 220px;
+            height: 220px;
+            border-radius: 18px;
+            object-fit: cover;
+            border: 6px solid #4b6cb7;
+            box-shadow: 0 8px 32px rgba(75, 108, 183, 0.18), 0 1.5px 0 #232526;
+            transition: transform 0.5s cubic-bezier(.42, 0, .58, 1), box-shadow 0.5s;
+            background: linear-gradient(135deg, #232526 0%, #4b6cb7 100%);
+        }
+
+        .member img:hover {
+            transform: scale(1.07) rotate(-2deg);
+            box-shadow: 0 16px 48px rgba(75, 108, 183, 0.25), 0 2.5px 0 #4b6cb7;
+        }
+
+        .member p {
+            margin-top: 18px;
+            font-size: 2rem;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px rgba(75, 108, 183, 0.18);
+            background: linear-gradient(90deg, #4b6cb7 10%, #00c6ff 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .member {
+                padding: 18px 8px 16px 8px;
+                max-width: 98vw;
+            }
+
+            .member img {
+                width: 60vw;
+                height: 60vw;
+                max-width: 220px;
+                max-height: 220px;
+            }
+        }
+
+        .title {
+            font-size: 1.5rem;
+        }
+
+        .member p {
+            font-size: 1.2rem;
+        }
+
+        /* Music button styles */
+        .music-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+            background: rgba(44, 62, 80, 0.85);
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(44, 62, 80, 0.18);
+            cursor: pointer;
+            transition: background 0.2s;
+            outline: none;
+        }
+
+        .music-toggle:hover {
+            background: rgba(75, 108, 183, 0.95);
+        }
+
+        .music-toggle svg {
+            width: 32px;
+            height: 32px;
+            fill: #fff;
+        }
+
+        .music-toggle[aria-pressed="false"] svg .on {
+            display: none;
+        }
+
+        .music-toggle[aria-pressed="true"] svg .off {
+            display: none;
+        }
+
+        /*Chúc mừng sinh nhật 3D với hiệu ứng rơi và đếm ngược*/
+        /*Tạo hiệu ứng sinh động với video nền và âm thanh*/
+        /* Hiển thị ảnh từng người */
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(to bottom, #fbc2eb, #a6c1ee);
+            overflow: hidden;
+            font-family: 'Segoe UI', sans-serif;
+            perspective: 1000px;
+        }
+
+        .scene {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            white-space: nowrap;
+            text-shadow: 3px 3px 6px #6b47dc;
+            z-index: 10;
+        }
+
+        .countdown {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 9999;
+        }
+
+        .falling-msg,
+        .falling-icon {
+            position: absolute;
+            top: -60px;
+            font-weight: bold;
+            opacity: 0.9;
+            pointer-events: none;
+            transform-style: preserve-3d;
+        }
+
+        .falling-msg {
+            color: #5a189a;
+            font-size: 24px;
+            animation: fallMsg linear infinite;
+        }
+
+        .falling-icon {
+            color: #f72585;
+            font-size: 28px;
+            animation: fallIcon linear infinite;
+        }
+
+        @keyframes fallMsg {
+            0% {
+                transform: translateY(-60px) translateZ(0px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) translateZ(-200px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes fallIcon {
+            0% {
+                transform: translateY(-60px) rotate(0deg) translateZ(0px);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(360deg) translateZ(-300px);
+                opacity: 0;
+            }
+        }
+
+        /*nhanqua.html*/
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 id="tieuDe">Xác Nhận Thông Tin</h1>
+
+        <div id="thongTin">
+            <label for="hoTen">Họ và tên:</label>
+            <input type="text" id="hoTen">
+
+            <label for="ngaySinh">Ngày sinh (dd/mm/yyyy):</label>
+            <input type="text" id="ngaySinh">
+        </div>
+
+        <button id="kiemTraButton" onclick="kiemTraThongTin()">Kiểm tra</button>
+
+        <div id="xacNhan" style="display: none;">
+            <h2>Cậu có quý chúng tớ không?</h2>
+            <button id="coButton" onclick="coClick()">Có</button>
+            <button id="khongButton" onclick="khongClick()">Không</button>
+        </div>
+
+        <div id="popupContainer"></div>
+        <!-- Thêm container cho popup -->
+
+        <!-- Phần lời nhắn sinh nhật (ẩn ban đầu) -->
+        <div class="message-box hidden" id="step1">
+            <img src="https://i.pinimg.com/originals/17/a9/46/17a946921da91360e395d666e9813258.gif" alt="icon">
+            <div class="message-content">
+                <p id="msg1"></p>
+                <div class="button-group">
+                    <button class="btn-yes hidden" id="btn1" onclick="showStep2()">Có</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="message-box hidden" id="step2">
+            <img src="https://i.pinimg.com/originals/17/a9/46/17a946921da91360e395d666e9813258.gif" alt="icon">
+            <div class="message-content">
+                <p id="msg2"></p>
+                <div class="button-group">
+                    <button class="btn-ok hidden" id="btn2" onclick="showStep3()">OK</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="message-box hidden" id="step3">
+            <img src="https://i.pinimg.com/originals/17/a9/46/17a946921da91360e395d666e9813258.gif" alt="icon">
+            <div class="message-content">
+                <p id="msg3"></p>
+                <div class="button-group">
+                    <button class="btn-next hidden" id="btn3" onclick="showIntro()">Tiếp tục</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phần giới thiệu thành viên (ẩn ban đầu) -->
+        <div id="introContainer" style="display: none;">
+            <audio id="bgMusic" autoplay loop playsinline muted>
+                <source src="https://files.catbox.moe/24lofz.mp3" type="audio/mpeg">
+                Trình duyệt của bạn không hỗ trợ phát âm thanh.
+            </audio>
+
+            <button class="music-toggle" id="musicToggle" aria-pressed="true" title="Bật/Tắt nhạc">
+                <svg viewBox="0 0 32 32">
+                    <g class="on">
+                        <path d="M8 24v-16h2v14h10v2z" />
+                        <path d="M22 8v2c2.21 0 4 1.79 4 4s-1.79 4-4 4v2c3.31 0 6-2.69 6-6s-2.69-6-6-6z" />
+                    </g>
+                    <g class="off">
+                        <path d="M8 24v-16h2v14h10v2z" />
+                        <line x1="6" y1="6" x2="26" y2="26" stroke="#fff" stroke-width="2" />
+                    </g>
+                </svg>
+            </button>
+
+            <div class="title">Bạn đồng hành cùng cậu nè:))</div>
+
+            <div class="member" id="memberDisplay">
+                <img id="memberImage" src="" alt="Thành viên">
+                <p id="memberName"></p>
+            </div>
+        </div>
+
+        <!-- Phần chúc mừng sinh nhật 3D (ẩn ban đầu) -->
+        <div id="chucmungContainer" style="display: none;">
+            <div class="countdown" id="countdown">01:00</div>
+
+            <video autoplay playsinline id="bgm" style="display: none" preload="auto">
+                <source src="https://files.catbox.moe/v2cvy7.mp4" type="video/mp4">
+                Trình duyệt của bạn không hỗ trợ video.
+            </video>
+
+            <div class="scene" id="scene">
+                <div class="center-text">✨ Chúc Mừng Sinh Nhật ✨</div>
+            </div>
+        </div>
+        <!--nhanqua.html-->
+        <div class="container" id="nhanquaContainer" style="display: none;">
+            <h1>Chúc Mừng Sinh Nhật!</h1>
+            <p>Chúc bạn nhận được nhiều quà và niềm vui trong ngày sinh nhật của mình!</p>
+            <button onclick="alert('Chúc bạn có một ngày sinh nhật thật vui vẻ!')">Nhận Quà!</button>
+        </div>
+
+    </div>
+
+    <script>
+        let coFontSize = 18;
+        let lanKhong = 0;
+        let introStarted = false;
+        let members = [
+            { name: "Đại", img: "https://i.postimg.cc/DmVS5HXm/487317616-637081949482097-3285782362905892956-n.jpg" },
+            { name: "Phương Vy", img: "https://i.postimg.cc/4yvYLwb5/504275359-677689938595791-5797876275000580325-n.jpg" },
+            { name: "Bảo Pẹp", img: "https://i.postimg.cc/GpZ9b6XK/511897063-122137068638749899-5993216057692696367-n.jpg" },
+            { name: "Phương An", img: "https://i.postimg.cc/pLFgg7nR/500704060-122166205082410068-7085791207864671139-n.jpg" },
+            { name: "Pẹp", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSSf3DqvmbWIw654xZ50i7t9mVtSaaA6ZF8ZZXBle9_RLtuPSMIFtrJ-DhpBcrSxix498&usqp=CAU" },
+            { name: "An", img: "https://img6.thuthuatphanmem.vn/uploads/2022/11/18/avatar-don-gian-ma-dep_081800917.jpeg" },
+            { name: "Trân", img: "https://jbagy.me/wp-content/uploads/2025/03/Hinh-anh-avatar-nam-cute-2.jpg" },
+            { name: "Lan", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSSf3DqvmbWIw654xZ50i7t9mVtSaaA6ZF8ZZXBle9_RLtuPSMIFtrJ-DhpBcrSxix498&usqp=CAU" },
+            { name: "Nam", img: "https://img6.thuthuatphanmem.vn/uploads/2022/11/18/avatar-don-gian-ma-dep_081800917.jpeg" }
+        ];
+
+        function kiemTraThongTin() {
+            const hoTen = document.getElementById("hoTen").value;
+            const ngaySinh = document.getElementById("ngaySinh").value;
+
+            if (hoTen === "Phong" && ngaySinh === "26/07/2010") {
+                // Ẩn thông tin, tiêu đề và nút kiểm tra
+                document.getElementById("thongTin").style.display = "none";
+                document.getElementById("tieuDe").style.display = "none";
+                document.getElementById("kiemTraButton").style.display = "none";
+                document.getElementById("xacNhan").style.display = "block";
+                // Hiển thị phần xác nhận
+            } else {
+                alert("Thông tin không chính xác.");
+            }
+        }
+
+        function coClick() {
+            startMessage();
+        }
+
+        function khongClick() {
+            lanKhong++;
+            coFontSize += 6 + lanKhong * 2;
+
+            const coButton = document.getElementById("coButton");
+            let messages = [
+                "Có đi mà",
+                "Có mà",
+                "Thật không vậy (Có)",
+                "Bạn ơi có đi,...",
+                "Đi mà, nha nha",
+                "Pleaseee",
+                "Chỉ cần Có thôi mà",
+                "Đừng bỏ tớ mà :("
+            ];
+            let randomIndex = Math.floor(Math.random() * messages.length);
+            coButton.textContent = messages[randomIndex];
+
+            coButton.style.fontSize = coFontSize + "px";
+            coButton.style.padding = (14 + (lanKhong * 2)) + "px " + (28 + (lanKhong * 4)) + "px";
+
+            // Tạo popup icon tức giận
+            const popupIcon = document.createElement("div");
+            popupIcon.classList.add("popup-icon");
+            popupIcon.innerHTML = '<i class="fas fa-angry"></i>'; //Sử dụng Font Awesome
+            document.querySelector(".container").appendChild(popupIcon); // Thêm vào container
+
+            if (lanKhong > 7) {
+                startMessage();
+            }
+        }
+        //lời nhắn
+        function typeText(elementId, text, callback) {
+            const el = document.getElementById(elementId);
+            el.textContent = "";
+            let i = 0;
+            const interval = setInterval(() => {
+                el.textContent += text.charAt(i);
+                i++;
+                if (i >= text.length) {
+                    clearInterval(interval);
+                    if (callback) callback();
+                }
+            }, 50);
+        }
+        //chuyen trang
+        function showStep2() {
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+            typeText('msg2', 'Òm! Chúc cậu một ngày đặc biệt nha, ngày mà cậu được sinh ra trên đời. Mình chúc cậu luôn vui vẻ, đẹp trai và đạt được nhiều điều mong muốn hơn nữa', () => {
+                document.getElementById('btn2').classList.remove('hidden');
+            });
+        }
+
+        function showStep3() {
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+            typeText('msg3', 'Cậu nhấn tiếp tục để màn trình diễn bắt đầu nha', () => {
+                document.getElementById('btn3').classList.remove('hidden');
+            });
+        }
+        //giới thiệu
+        function showIntro() {
+            document.getElementById("xacNhan").style.display = "none";
+            document.getElementById("step3").style.display = "none";
+            document.getElementById("introContainer").style.display = "block";
+            startIntro();
+        }
+
+        function startMessage() {
+            document.getElementById("xacNhan").style.display = "none";
+            document.getElementById("step1").classList.remove('hidden');
+            typeText('msg1', 'Cậu có biết hôm nay là ngày gì không?', () => {
+                document.getElementById('btn1').classList.remove('hidden');
+            });
+        }
+
+        function updateMusicButton() {
+            musicToggle.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+        }
+
+        function startIntro() {
+            // Âm nhạc
+            const audio = document.getElementById("bgMusic");
+            const musicToggle = document.getElementById("musicToggle");
+            let isPlaying = true;
+
+            // Tự động phát nhạc khi vào trang (không cần thao tác người dùng)
+            window.addEventListener('load', () => {
+                const audio = document.getElementById("bgMusic");
+                audio.volume = 0.7;
+                audio.muted = false;
+                setTimeout(() => {
+                    audio.play().catch(() => { });
+                }, 100);
+            });
+
+            musicToggle.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                    isPlaying = false;
+                } else {
+                    audio.play();                    isPlaying = true;
+                }
+                updateMusicButton();
+            });
+
+            audio.addEventListener('pause', () => {
+                isPlaying = false;
+                updateMusicButton();
+            });
+            audio.addEventListener('play', () => {
+                isPlaying = true;
+                updateMusicButton();
+            });
+
+            updateMusicButton();
+
+            const memberDiv = document.getElementById("memberDisplay");
+            const memberImg = document.getElementById("memberImage");
+            const memberName = document.getElementById("memberName");
+
+            let index = 0;
+            const totalDuration = 45000; // tổng thời gian 45 giây
+            const delayStart = 5000; // 5 giây chờ ban đầu
+            const perImageTime = totalDuration / members.length;
+
+            function showNextMember() {
+                if (index < members.length) {
+                    memberImg.src = members[index].img;
+                    memberName.textContent = members[index].name;
+
+                    memberDiv.classList.remove("active");
+                    void memberDiv.offsetWidth; // trigger reflow
+                    memberDiv.classList.add("active");
+
+                    setTimeout(() => {
+                        memberDiv.classList.remove("active");
+                        index++;
+                        setTimeout(showNextMember, 300); // delay giữa ảnh
+                    }, perImageTime - 300);
+                } else {
+                    showChucMung(); // Chuyển đến phần chúc mừng sau khi hết ảnh
+                }
+            }
+
+            setTimeout(showNextMember, delayStart);
+        }
+        //chucmung sinh nhat 3d
+        function showChucMung() {
+            //Ẩn phần intro
+            document.getElementById("introContainer").style.display = "none";
+            //Hiện phần chúc mừng
+            document.getElementById("chucmungContainer").style.display = "block";
+            startChucMung();
+        }
+
+        function startChucMung() {
+            const iconList = ["🎂", "🎉", "🎈", "🎁", "🍰", "✨", "🥳", "💝"];
+            const messages = [
+                "Chúc mừng sinh nhật vui vẻ!",
+                "Tuổi mới thên nhiều niềm vui!",
+                "Chúc đạt được ước mơ!",
+                "Một ngày thật đặc biệt!",
+                "Chúc sức khỏe dồi dào!",
+                "Sinh nhật hạnh phúc nhé!",
+                "Mọi điều tốt đẹp!",
+                "Chúc bạn luôn tươi cười!",
+                "Ngày sinh nhật thật ý nghĩa!",
+                "Chúc bạn mãi mãi trẻ trung!",
+                "Chúc bạn luôn thành công!",
+                "Hay ăn chóng lớn",
+                "Có một không khí thoải mái",
+                "Trưởng thành hơn từng ngày"
+            ];
+
+            const scene = document.getElementById('scene');
+
+            function createFallingItem(type = 'icon') {
+                const span = document.createElement('span');
+                span.className = type === 'icon' ? 'falling-icon' : 'falling-msg';
+                span.innerText = type === 'icon'
+                    ? iconList[Math.floor(Math.random() * iconList.length)]
+                    : messages[Math.floor(Math.random() * messages.length)];
+                span.style.left = Math.random() * 100 + 'vw';
+                span.style.animationDuration = (type === 'icon' ? (2 + Math.random() * 2) : (5 + Math.random() * 4)) + 's';
+                span.style.fontSize = (type === 'icon' ? (20 + Math.random() * 15) : (18 + Math.random() * 10)) + 'px';
+                span.style.transform = `translateZ(${Math.random() * 200 - 100}px)`;
+                scene.appendChild(span);
+
+                setTimeout(() => span.remove(), 10000);
+            }
+
+            setInterval(() => createFallingItem('icon'), 250);
+            setInterval(() => createFallingItem('msg'), 1500);
+
+            // Đếm ngược 60 giây và chuyển trang
+            let seconds = 60;
+            const countdown = document.getElementById('countdown');
+            const countdownInterval = setInterval(() => {
+                seconds--;
+                const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+                const s = String(seconds % 60).padStart(2, '0');
+                countdown.textContent = `${m}:${s}`;
+                if (seconds <= 0) {
+                    clearInterval(countdownInterval);
+                    showNhanQua();
+                }
+            }, 1000);
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const video = document.getElementById('bgm');
+                video.muted = false;
+                video.play().catch(() => {
+                    document.addEventListener('click', () => {
+                        video.play();
+                    }, { once: true });
+                });
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                const x = (e.clientX / window.innerWidth - 0.5) * 30;
+                const y = (e.clientY / window.innerHeight - 0.5) * -30;
+                scene.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            });
+        }
+        //nhanqua
+        function showNhanQua() {
+            document.getElementById("chucmungContainer").style.display = "none";
+            document.getElementById("nhanquaContainer").style.display = "block";
+        }
+    </script>
+</body>
+
+</html>

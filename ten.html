@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Xác Nhận Sinh Nhật</title>
+  <meta name="viewport" content="width=900, initial-scale=1.0">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #e91e63;
+      --secondary: #4CAF50;
+      --danger: #f44336;
+      --bg: #fff;
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      --radius: 18px;
+      --transition: 0.3s cubic-bezier(.4,2,.6,1);
+      --input-bg: #f3f3f7;
+      --input-border: #e0e0e0;
+      --label: #555;
+      --text: #222;
+      --muted: #888;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: var(--bg);
+    }
+
+    .container {
+      background: var(--bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 48px 40px 36px 40px;
+      width: 900px;
+      max-width: 98vw;
+      position: relative;
+      transition: box-shadow var(--transition);
+      animation: fadeIn 1s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: none;}
+    }
+
+    h1#tieuDe {
+      color: var(--primary);
+      font-size: 2.2em;
+      font-weight: 700;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h1#tieuDe i {
+      font-size: 1.1em;
+      color: var(--secondary);
+    }
+
+    .info-section {
+      margin-bottom: 28px;
+      text-align: left;
+      max-width: 500px;
+    }
+
+    label {
+      font-weight: 600;
+      color: var(--label);
+      margin-bottom: 7px;
+      display: block;
+      font-size: 1em;
+      letter-spacing: 0.2px;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 13px 16px;
+      margin-bottom: 18px;
+      border: 1.5px solid var(--input-border);
+      border-radius: 8px;
+      background: var(--input-bg);
+      font-size: 1em;
+      color: var(--text);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      box-sizing: border-box;
+    }
+
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px #e91e6333;
+    }
+
+    .btn {
+      font-size: 1.1em;
+      padding: 14px 32px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 2px 8px 0 rgba(233,30,99,0.08);
+      display: inline-block;
+    }
+
+    .btn:hover, .btn:focus {
+      background: #d4145a;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 4px 16px 0 rgba(233,30,99,0.13);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+    }
+    .btn-secondary:hover, .btn-secondary:focus {
+      background: #388e3c;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+    }
+    .btn-danger:hover, .btn-danger:focus {
+      background: #da190b;
+    }
+
+    .admin-login-link {
+      display: block;
+      text-align: right;
+      margin-top: 8px;
+      margin-bottom: 0;
+      font-size: 0.97em;
+    }
+    .admin-login-link a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color var(--transition);
+    }
+    .admin-login-link a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    #xacNhan {
+      display: none;
+      margin-top: 30px;
+      text-align: center;
+      animation: fadeIn 0.7s;
+    }
+
+    #xacNhan h2 {
+      color: var(--text);
+      margin-bottom: 20px;
+      font-size: 1.3em;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    #coButton, #khongButton {
+      font-size: 1.1em;
+      padding: 14px 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--transition);
+      margin: 10px 8px;
+      border: none;
+      font-weight: 700;
+      box-shadow: 0 2px 8px 0 rgba(76,175,80,0.08);
+    }
+
+    #coButton {
+      background: var(--secondary);
+      color: #fff;
+    }
+    #coButton:hover {
+      background: #388e3c;
+    }
+
+    #khongButton {
+      background: var(--danger);
+      color: #fff;
+    }
+    #khongButton:hover {
+      background: #da190b;
+    }
+
+    .popup-icon {
+      position: absolute;
+      top: 18%;
+      left: 85%;
+      transform: translate(-50%, -50%);
+      font-size: 4.5em;
+      color: var(--danger);
+      opacity: 0;
+      animation: fadeOut 2.5s forwards;
+      z-index: 10;
+      pointer-events: none;
+      filter: drop-shadow(0 2px 8px #f4433633);
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1;}
+      to { opacity: 0;}
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .container {
+        width: 98vw;
+        padding: 24px 8vw 18px 8vw;
+      }
+      .popup-icon {
+        left: 70%;
+        font-size: 3em;
+      }
+    }
+    @media (max-width: 600px) {
+      .container {
+        width: 99vw;
+        padding: 12px 2vw 12px 2vw;
+      }
+      .info-section {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="tieuDe"><i class="fas fa-birthday-cake"></i> Xác Nhận Thông Tin</h1>
+    <div class="info-section" id="thongTin">
+      <label for="hoTen">Họ và tên:</label>
+      <input type="text" id="hoTen" autocomplete="off" placeholder="Nhập họ và tên...">
+
+      <label for="ngaySinh">Ngày sinh (dd/mm/yyyy):</label>
+      <input type="text" id="ngaySinh" autocomplete="off" placeholder="VD: 26/07/2010">
+
+      <div class="admin-login-link">
+        <a href="#" onclick="showAdminLogin(event)"><i class="fas fa-user-shield"></i> Đăng nhập quản trị</a>
+      </div>
+    </div>
+
+    <div id="adminLogin" style="display:none; margin-bottom:18px;">
+      <form onsubmit="return adminLogin(event)">
+        <label for="adminUser">Tài khoản quản trị:</label>
+        <input type="text" id="adminUser" autocomplete="off" placeholder="Tên đăng nhập">
+
+        <label for="adminPass">Mật khẩu:</label>
+        <input type="password" id="adminPass" autocomplete="off" placeholder="Mật khẩu">
+
+        <button class="btn btn-secondary" type="submit">Đăng nhập</button>
+        <button class="btn" type="button" onclick="hideAdminLogin()">Hủy</button>
+      </form>
+    </div>
+
+    <button class="btn" id="kiemTraButton" onclick="kiemTraThongTin()">Kiểm tra</button>
+
+    <div id="xacNhan">
+      <h2>Cậu có quý chúng tớ không?</h2>
+      <button id="coButton" onclick="coClick()">Có</button>
+      <button id="khongButton" onclick="khongClick()">Không</button>
+    </div>
+
+    <div id="popupContainer"></div>
+  </div>
+
+  <script>
+    let coFontSize = 18;
+    let lanKhong = 0;
+
+    function kiemTraThongTin() {
+      const hoTen = document.getElementById("hoTen").value.trim();
+      const ngaySinh = document.getElementById("ngaySinh").value.trim();
+
+      if (hoTen === "Phong" && ngaySinh === "26/07/2010") {
+        document.getElementById("thongTin").style.display = "none";
+        document.getElementById("tieuDe").style.display = "none";
+        document.getElementById("kiemTraButton").style.display = "none";
+        document.getElementById("xacNhan").style.display = "block";
+      } else {
+        alert("Thông tin không chính xác.");
+      }
+    }
+
+    function coClick() {
+      window.location.href = "nhannhu.html";
+    }
+
+    function khongClick() {
+      lanKhong++;
+      coFontSize += 6 + lanKhong * 2;
+
+      const coButton = document.getElementById("coButton");
+      let messages = [
+        "Có đi mà",
+        "Có mà",
+        "Thật không vậy (Có)",
+        "Bạn ơi có đi,...",
+        "Đi mà, nha nha",
+        "Pleaseee",
+        "Chỉ cần Có thôi mà",
+        "Đừng bỏ tớ mà :("
+      ];
+      let randomIndex = Math.floor(Math.random() * messages.length);
+      coButton.textContent = messages[randomIndex];
+
+      coButton.style.fontSize = coFontSize + "px";
+      coButton.style.padding = (14 + (lanKhong * 2)) + "px " + (32 + (lanKhong * 4)) + "px";
+
+      // Tạo popup icon tức giận
+      const popupIcon = document.createElement("div");
+      popupIcon.classList.add("popup-icon");
+      popupIcon.innerHTML = '<i class="fas fa-angry"></i>';
+      document.querySelector(".container").appendChild(popupIcon);
+
+      setTimeout(() => {
+        if (popupIcon.parentNode) popupIcon.parentNode.removeChild(popupIcon);
+      }, 2500);
+
+      if (lanKhong > 7) {
+        window.location.href = "nhannhu.html";
+      }
+    }
+
+    // Admin login logic
+    function showAdminLogin(e) {
+      e.preventDefault();
+      document.getElementById("adminLogin").style.display = "block";
+      document.getElementById("thongTin").style.display = "none";
+      document.getElementById("kiemTraButton").style.display = "none";
+    }
+    function hideAdminLogin() {
+      document.getElementById("adminLogin").style.display = "none";
+      document.getElementById("thongTin").style.display = "block";
+      document.getElementById("kiemTraButton").style.display = "inline-block";
+    }
+    function adminLogin(e) {
+      e.preventDefault();
+      // Đơn giản: tài khoản admin/admin123
+      const user = document.getElementById("adminUser").value.trim();
+      const pass = document.getElementById("adminPass").value;
+      if (user === "admin" && pass === "admin123") {
+        window.location.href = "quantri.html";
+      } else {
+        alert("Tài khoản hoặc mật khẩu không đúng!");
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>

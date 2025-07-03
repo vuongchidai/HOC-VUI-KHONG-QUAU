@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chúc Mừng Sinh Nhật 3D</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(to bottom, #fbc2eb, #a6c1ee);
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      perspective: 1000px;
+    }
+    .scene {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out;
+    }
+    .center-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      font-weight: bold;
+      color: white;
+      white-space: nowrap;
+      text-shadow: 3px 3px 6px #6b47dc;
+      z-index: 10;
+    }
+    .countdown {
+      position: fixed;
+      top: 10px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 9999;
+    }
+    .falling-msg, .falling-icon {
+      position: absolute;
+      top: -60px;
+      font-weight: bold;
+      opacity: 0.9;
+      pointer-events: none;
+      transform-style: preserve-3d;
+    }
+    .falling-msg {
+      color: #5a189a;
+      font-size: 24px;
+      animation: fallMsg linear infinite;
+    }
+    .falling-icon {
+      color: #f72585;
+      font-size: 28px;
+      animation: fallIcon linear infinite;
+    }
+    @keyframes fallMsg {
+      0% { transform: translateY(-60px) translateZ(0px); opacity: 1; }
+      100% { transform: translateY(100vh) translateZ(-200px); opacity: 0; }
+    }
+    @keyframes fallIcon {
+      0% { transform: translateY(-60px) rotate(0deg) translateZ(0px); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg) translateZ(-300px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="countdown" id="countdown">01:00</div>
+
+  <video autoplay loop muted id="bgm" style="display: none" preload="auto">
+    <source src="https://files.catbox.moe/v2cvy7.mp4" type="video/mp4">
+    Trình duyệt của bạn không hỗ trợ video.
+  </video>
+
+  <div class="scene" id="scene">
+    <div class="center-text">✨ Chúc Mừng Sinh Nhật ✨</div>
+  </div>
+
+  <script>
+    const iconList = ["🎂", "🎉", "🎈", "🎁", "🍰", "✨", "🥳", "💝"];
+    const messages = [
+      "Chúc mừng sinh nhật vui vẻ!",
+      "Tuổi mới thên nhiều niềm vui!",
+      "Chúc đạt được ước mơ!",
+      "Một ngày thật đặc biệt!",
+      "Chúc sức khỏe dồi dào!",
+      "Sinh nhật hạnh phúc nhé!",
+      "Mọi điều tốt đẹp!",
+      "Chúc bạn luôn tươi cười!",
+      "Ngày sinh nhật thật ý nghĩa!",
+      "Chúc bạn mãi mãi trẻ trung!",
+      "Chúc bạn luôn thành công!",
+      "Hay ăn chóng lớn",
+      "Có một không khí thoải mái",
+      "Trưởng thành hơn từng ngày"
+    ];
+
+    const scene = document.getElementById('scene');
+
+    function createFallingItem(type = 'icon') {
+      const span = document.createElement('span');
+      span.className = type === 'icon' ? 'falling-icon' : 'falling-msg';
+      span.innerText = type === 'icon' 
+        ? iconList[Math.floor(Math.random() * iconList.length)] 
+        : messages[Math.floor(Math.random() * messages.length)];
+      span.style.left = Math.random() * 100 + 'vw';
+      span.style.animationDuration = (type === 'icon' ? (2 + Math.random() * 2) : (5 + Math.random() * 4)) + 's';
+      span.style.fontSize = (type === 'icon' ? (20 + Math.random() * 15) : (18 + Math.random() * 10)) + 'px';
+      span.style.transform = `translateZ(${Math.random() * 200 - 100}px)`;
+      scene.appendChild(span);
+
+      setTimeout(() => span.remove(), 10000);
+    }
+
+    setInterval(() => createFallingItem('icon'), 250);
+    setInterval(() => createFallingItem('msg'), 1500);
+
+    // Đếm ngược 60 giây và chuyển trang
+    let seconds = 60;
+    const countdown = document.getElementById('countdown');
+    const countdownInterval = setInterval(() => {
+      seconds--;
+      const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const s = String(seconds % 60).padStart(2, '0');
+      countdown.textContent = `${m}:${s}`;
+      if (seconds <= 0) {
+        clearInterval(countdownInterval);
+        window.location.href = 'nhanqua.html';
+      }
+    }, 1000);
+
+    // Tự động phát nhạc khi trang tải xong
+    document.addEventListener('DOMContentLoaded', () => {
+      const video = document.getElementById('bgm');
+      // Muted ban đầu để tránh trình duyệt chặn auto-play
+      // và sẽ bỏ muted sau khi video đã bắt đầu phát
+      video.muted = true;
+
+      video.play()
+        .then(() => {
+          // Tắt muted sau khi video đã bắt đầu phát
+          video.muted = false;
+        })
+        .catch(error => {
+          console.error("Lỗi khi phát nhạc tự động:", error);
+          // Nếu phát tự động không thành công, có thể hiển thị thông báo
+          // hoặc thử lại sau một khoảng thời gian ngắn.
+          // Ví dụ:
+          // setTimeout(() => {
+          //   video.play().then(() => video.muted = false).catch(err => console.error("Lỗi phát lại:", err));
+          // }, 1000);
+        });
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * -30;
+      scene.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+    });
+  </script>
+</body>
+</html>

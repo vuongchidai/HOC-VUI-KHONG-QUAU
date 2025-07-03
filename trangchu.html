@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - AMV School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* CSS chung */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* Header */
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            text-align: right;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main */
+        main {
+            padding: 20px 0;
+        }
+
+       /* Hero section */
+        .hero {
+            text-align: center;
+           padding: 50px 0;
+           background-image: url('images/background.jpg');
+            background-size: cover;
+           background-position: center;
+           color: #fff;
+           position: relative;
+           overflow: hidden;
+        }
+
+       .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+           height: 100%;
+           background-color: rgba(0, 0, 0, 0.5);
+        }
+        .hero .container {
+           position: relative;
+           z-index: 1;
+        }
+
+        .hero h2 {
+           margin-bottom: 20px;
+           font-size: 2.5em;
+        }
+
+        .hero p {
+           font-size: 1.2em;
+            margin-bottom: 30px;
+           max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+       .hero button {
+           padding: 12px 25px;
+           background-color: #fff;
+            color: #007bff;
+            border: none;
+           border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+       .hero button:hover {
+           background-color: #ddd;
+       }
+
+        /* Features Section */
+       .features {
+            text-align: center;
+            padding: 30px 0;
+           background-color: #fff;
+           border-bottom: 1px solid #ddd;
+        }
+
+       .features h2 {
+            margin-bottom: 30px;
+        }
+
+        .feature-grid {
+            display: grid;
+           grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+           gap: 30px;
+           padding-top: 20px;
+        }
+
+        .feature {
+           background-color: #f9f9f9;
+           padding: 25px;
+            border-radius: 8px;
+           box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature:hover {
+            transform: translateY(-5px);
+           box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+       }
+
+        .feature i {
+           font-size: 40px;
+            margin-bottom: 15px;
+           display: block;
+            color: #007bff;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        /* About Us Section */
+       .about-us {
+            padding: 40px 0;
+           text-align: center;
+        }
+
+       .about-us h2 {
+           margin-bottom: 20px;
+        }
+
+        .about-us p {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Điểm khác biệt, Tính năng giáo viên, học sinh */
+        .diff-features {
+          padding: 30px 0;
+          text-align: center;
+        }
+       .diff-features h2 {
+           margin-bottom: 30px;
+        }
+        .diff-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 30px;
+           padding-top: 20px;
+        }
+        .diff-feature {
+           background-color: #f0f8ff;
+          padding: 25px;
+            border-radius: 8px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .diff-feature:hover {
+           transform: translateY(-5px);
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        .diff-feature i {
+           font-size: 40px;
+          margin-bottom: 15px;
+           display: block;
+           color: #007bff;
+        }
+         .diff-feature h3 {
+           margin-bottom: 10px;
+            color: #007bff;
+       }
+
+      /* Footer */
+       footer {
+            background-color: #333;
+           color: #fff;
+           text-align: center;
+          padding: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>AMV School Management System</h1>
+            <nav>
+                 <a href="dangnhap.html"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div id="home-page">
+            <section class="hero">
+               <div class="container">
+                    <h2>Hệ thống Quản lý Trường học AMV</h2>
+                    <p>Giải pháp quản lý toàn diện, tối ưu hóa mọi hoạt động của trường học, mang đến trải nghiệm tốt nhất cho học sinh và giáo viên.</p>
+                   <a href="dangnhap.html"  style="display: inline-block; text-decoration: none;">
+                       <button>Bắt đầu ngay</button>
+                    </a>
+               </div>
+            </section>
+
+            <section class="features">
+               <div class="container">
+                   <h2>Tính năng nổi bật</h2>
+                    <div class="feature-grid">
+                         <div class="feature">
+                              <i class="fas fa-user-graduate"></i>
+                            <h3>Quản lý học sinh</h3>
+                            <p>Hồ sơ, điểm số.</p>
+                        </div>
+                        <div class="feature">
+                           <i class="fas fa-chalkboard-teacher"></i>
+                            <h3>Quản lý giáo viên</h3>
+                           <p>Hồ sơ, lịch dạy.</p>
+                       </div>
+                       <div class="feature">
+                            <i class="fas fa-school"></i>
+                            <h3>Quản lý lớp học</h3>
+                            <p>Thông tin lớp.</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h3>Quản lý lịch học</h3>
+                            <p>Lịch trình.</p>
+                        </div>
+                       <div class="feature">
+                            <i class="fas fa-file-alt"></i>
+                           <h3>Quản lý bài kiểm tra</h3>
+                           <p>Đề thi, điểm.</p>
+                        </div>
+                        <div class="feature">
+                           <i class="fas fa-chart-bar"></i>
+                           <h3>Báo cáo</h3>
+                            <p>Thống kê.</p>
+                       </div>
+                   </div>
+                </div>
+            </section>
+            <section class="diff-features">
+              <div class="container">
+                   <h2>Điểm khác biệt của hệ thống</h2>
+                    <div class="diff-grid">
+                         <div class="diff-feature">
+                                <i class="fas fa-tachometer-alt"></i>
+                            <h3>Hiệu quả</h3>
+                           <p>Tối ưu hóa quy trình.</p>
+                        </div>
+                        <div class="diff-feature">
+                            <i class="fas fa-user-check"></i>
+                            <h3>Dễ sử dụng</h3>
+                           <p>Giao diện thân thiện.</p>
+                        </div>
+                       <div class="diff-feature">
+                            <i class="fas fa-cloud"></i>
+                           <h3>Linh hoạt</h3>
+                            <p>Truy cập mọi nơi.</p>
+                       </div>
+                   </div>
+               </div>
+           </section>
+             <section class="diff-features">
+               <div class="container">
+                   <h2>Tính năng dành cho giáo viên</h2>
+                   <div class="diff-grid">
+                       <div class="diff-feature">
+                             <i class="fas fa-book"></i>
+                             <h3>Soạn bài giảng</h3>
+                             <p>Tài liệu trực tuyến.</p>
+                       </div>
+                       <div class="diff-feature">
+                           <i class="fas fa-clipboard-list"></i>
+                            <h3>Chấm điểm</h3>
+                            <p>Quản lý bài kiểm tra.</p>
+                       </div>
+                        <div class="diff-feature">
+                             <i class="fas fa-comments"></i>
+                             <h3>Giao tiếp</h3>
+                           <p>Với học sinh, phụ huynh.</p>
+                        </div>
+                    </div>
+                </div>
+           </section>
+          <section class="diff-features">
+               <div class="container">
+                    <h2>Tính năng dành cho học sinh</h2>
+                     <div class="diff-grid">
+                         <div class="diff-feature">
+                               <i class="fas fa-calendar-check"></i>
+                             <h3>Xem lịch học</h3>
+                            <p>Lịch trình hàng ngày.</p>
+                       </div>
+                       <div class="diff-feature">
+                            <i class="fas fa-tasks"></i>
+                            <h3>Xem bài tập</h3>
+                            <p>Nộp bài trực tuyến.</p>
+                       </div>
+                       <div class="diff-feature">
+                            <i class="fas fa-chart-line"></i>
+                           <h3>Xem điểm số</h3>
+                           <p>Kết quả học tập.</p>
+                       </div>
+                   </div>
+                </div>
+          </section>
+           <section class="about-us">
+               <div class="container">
+                    <h2>Về AMV School</h2>
+                   <p>Hệ thống quản lý trường học hiện đại, cung cấp giải pháp quản lý toàn diện và dễ sử dụng.</p>
+                    <p><strong>Sứ mệnh</strong>: Tối ưu công tác quản lý, hỗ trợ sự phát triển của học sinh.</p>
+                </div>
+          </section>
+        </div>
+   </main>
+   <footer>
+       <div class="container">
+           <p>© 2025 AMV School. All rights reserved.</p>
+       </div>
+   </footer>
+</body>
+</html>

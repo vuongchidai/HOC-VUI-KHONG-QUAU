@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bé Nhanh Mắt – Tìm Hình Giống Nhau</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+        }
+        .game-container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #ff6347;
+            font-size: 24px;
+        }
+        #start-screen, #game-screen, #countdown-screen {
+            display: none;
+        }
+        #start-screen.active, #game-screen.active, #countdown-screen.active {
+            display: block;
+        }
+        #mode-select, #image-type-select {
+            margin: 20px 0;
+        }
+        #mode-select select, #image-type-select select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        #start-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #start-button:hover {
+            background-color: #45a049;
+        }
+        #countdown {
+            font-size: 48px;
+            color: #ff6347;
+            margin: 20px 0;
+        }
+        #game-board {
+            display: grid;
+            gap: 10px;
+            margin: 20px auto;
+        }
+        .card {
+            background-color: #87ceeb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            cursor: pointer;
+            border-radius: 10px;
+            user-select: none;
+        }
+        .card.flipped {
+            background-color: #fff;
+            border: 2px solid #ff6347;
+        }
+        .card.matched {
+            background-color: #90ee90;
+            cursor: default;
+        }
+        #info {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        #message {
+            font-size: 16px;
+            color: #333;
+            margin-top: 10px;
+        }
+        #restart {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: none;
+        }
+        #restart:hover {
+            background-color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Bé Nhanh Mắt – Tìm Hình Giống Nhau</h1>
+        <div id="start-screen" class="active">
+            <div id="mode-select">
+                <label for="mode">Chọn số ô:</label><br>
+                <select id="mode">
+                    <option value="4x3">4x3 (12 ô)</option>
+                    <option value="4x4">4x4 (16 ô)</option>
+                    <option value="5x4">5x4 (20 ô)</option>
+                </select>
+            </div>
+            <div id="image-type-select">
+                <label for="image-type">Chọn kiểu hình ảnh:</label><br>
+                <select id="image-type">
+                    <option value="animals">Động vật</option>
+                    <option value="fruits">Trái cây</option>
+                    <option value="numbers">Số</option>
+                    <option value="colors">Màu sắc</option>
+                    <option value="objects">Đồ vật</option>
+                </select>
+            </div>
+            <button id="start-button">Bắt đầu</button>
+        </div>
+        <div id="countdown-screen">
+            <div id="countdown">3</div>
+        </div>
+        <div id="game-screen">
+            <div id="info">Thời gian: <span id="time">60</span>s | Điểm: <span id="score">0</span></div>
+            <div id="game-board"></div>
+            <div id="message"></div>
+            <button id="restart">Chơi lại</button>
+        </div>
+    </div>
+
+    <script>
+        const emojiSets = {
+            animals: ['🐱', '🐶', '🐰', '🐔', '🐷', '🐮', '🐸', '🐵', '🐼', '🦁'],
+            fruits: ['🍎', '🍊', '🍇', '🍉', '🍓', '🍑', '🍍', '🥭', '🍋', '🍐'],
+            numbers: ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '0️⃣'],
+            colors: ['🔴', '🟢', '🔵', '🟡', '🟣', '🟠', '⚫', '⚪', '🟤', '🟦'],
+            objects: ['✏️', '📚', '🎒', '🚗', '🧸', '⚽', '🎸', '🖌️', '🕰️', '🔦']
+        };
+        let emojis = [];
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let score = 0;
+        let timeLeft = 60;
+        let gameActive = false;
+        let timer;
+        let mode = '4x3';
+        let imageType = 'animals';
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function selectEmojis(numPairs) {
+            const shuffled = shuffleArray([...emojiSets[imageType]]);
+            return shuffled.slice(0, numPairs);
+        }
+
+        function createBoard() {
+            const board = document.getElementById('game-board');
+            board.innerHTML = '';
+            let rows, cols, cardSize;
+            let numPairs;
+
+            switch(mode) {
+                case '4x3':
+                    rows = 3; cols = 4; cardSize = 80; numPairs = 6;
+                    break;
+                case '4x4':
+                    rows = 4; cols = 4; cardSize = 70; numPairs = 8;
+                    break;
+                case '5x4':
+                    rows = 4; cols = 5; cardSize = 60; numPairs = 10;
+                    break;
+            }
+
+            board.style.gridTemplateColumns = `repeat(${cols}, ${cardSize}px)`;
+            emojis = selectEmojis(numPairs);
+            cards = [...emojis, ...emojis].sort(() => Math.random() - 0.5);
+
+            cards.forEach((emoji, index) => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.dataset.emoji = emoji;
+                card.dataset.index = index;
+                card.style.width = `${cardSize}px`;
+                card.style.height = `${cardSize}px`;
+                card.addEventListener('click', flipCard);
+                board.appendChild(card);
+            });
+        }
+
+        function showCards() {
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.add('flipped');
+                card.textContent = card.dataset.emoji;
+            });
+
+            setTimeout(() => {
+                document.querySelectorAll('.card').forEach(card => {
+                    if (!card.classList.contains('matched')) {
+                        card.classList.remove('flipped');
+                        card.textContent = '';
+                    }
+                });
+                gameActive = true;
+                startTimer();
+            }, 3000);
+        }
+
+        function flipCard() {
+            if (!gameActive || flippedCards.length >= 2 || this.classList.contains('flipped') || this.classList.contains('matched')) return;
+            
+            this.classList.add('flipped');
+            this.textContent = this.dataset.emoji;
+            flippedCards.push(this);
+
+            if (flippedCards.length === 2) {
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const messageElement = document.getElementById('message');
+
+            if (card1.dataset.emoji === card2.dataset.emoji) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                score += 10;
+                matchedPairs++;
+                document.getElementById('score').textContent = score;
+                flippedCards = [];
+                
+                if (matchedPairs === emojis.length) {
+                    gameActive = false;
+                    clearInterval(timer);
+                    messageElement.textContent = 'Xuất sắc! Bạn đã thắng!';
+                    messageElement.style.color = 'green';
+                    document.getElementById('restart').style.display = 'block';
+                }
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    card1.textContent = '';
+                    card2.textContent = '';
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('time').textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    gameActive = false;
+                    document.getElementById('message').textContent = 'Hết giờ! Cần cố gắng hơn!';
+                    document.getElementById('message').style.color = 'red';
+                    document.getElementById('restart').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        function startGame() {
+            mode = document.getElementById('mode').value;
+            imageType = document.getElementById('image-type').value;
+            document.getElementById('start-screen').classList.remove('active');
+            document.getElementById('countdown-screen').classList.add('active');
+            createBoard();
+
+            let countdown = 3;
+            document.getElementById('countdown').textContent = countdown;
+            const countdownTimer = setInterval(() => {
+                countdown--;
+                if (countdown >= 0) {
+                    document.getElementById('countdown').textContent = countdown;
+                } else {
+                    clearInterval(countdownTimer);
+                    document.getElementById('countdown-screen').classList.remove('active');
+                    document.getElementById('game-screen').classList.add('active');
+                    showCards();
+                }
+            }, 1000);
+        }
+
+        function restartGame() {
+            cards = [];
+            flippedCards = [];
+            matchedPairs = 0;
+            score = 0;
+            timeLeft = 60;
+            gameActive = false;
+            document.getElementById('score').textContent = score;
+            document.getElementById('time').textContent = timeLeft;
+            document.getElementById('message').textContent = '';
+            document.getElementById('restart').style.display = 'none';
+            document.getElementById('game-screen').classList.remove('active');
+            document.getElementById('start-screen').classList.add('active');
+            clearInterval(timer);
+        }
+
+        // Sự kiện bắt đầu
+        document.getElementById('start-button').addEventListener('click', startGame);
+        document.getElementById('restart').addEventListener('click', restartGame);
+    </script>
+</body>
+</html>

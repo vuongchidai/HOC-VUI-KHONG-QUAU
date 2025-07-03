@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ Điểm</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+         .header {
+            display: flex;
+            justify-content: space-between;
+             align-items: center;
+              margin-bottom: 20px;
+        }
+
+        .form-group {
+             display: flex;
+              align-items: center;
+             margin-right: 10px;
+        }
+         .form-group label {
+             margin-right: 5px;
+        }
+         .form-group select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .input-area {
+           display: flex;
+             margin-bottom: 20px;
+              align-items: flex-start;
+         }
+         .input-area label {
+              display: block;
+             margin-right: 10px;
+           margin-bottom: 5px;
+           }
+          .input-area textarea{
+                width: 300px;
+                padding: 8px;
+                 border: 1px solid #ddd;
+                 border-radius: 4px;
+        }
+         table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+             background-color: white;
+              box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+         .save-btn {
+              display: block;
+                margin-top: 15px;
+                margin-left: auto;
+                background-color: #28a745;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+           }
+             .save-btn:hover {
+                 background-color: #218838;
+            }
+            .add-student-btn {
+                background-color: #007bff;
+                color: white;
+                 padding: 10px 15px;
+                 border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+                margin-bottom: 20px;
+            }
+             .add-student-btn:hover {
+                background-color: #0056b3;
+             }
+               .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+         .popup-overlay{
+              display: none;
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0,0,0,0.5);
+              z-index: 999;
+         }
+        .popup h3 {
+            margin-top: 0;
+        }
+
+        .popup label {
+            display: block;
+            margin-bottom: 5px;
+        }
+       .popup input{
+           width: calc(100% - 12px);
+           padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+             box-sizing: border-box;
+       }
+         .popup button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: auto;
+         }
+       .popup button:hover {
+             background-color: #0056b3;
+        }
+         .popup-footer {
+            display: flex;
+            justify-content: flex-end;
+           
+        }
+        .popup-footer button{
+             margin-left: 10px;
+         }
+         .icon-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+             color: #666;
+            padding: 0 5px;
+           
+         }
+          .icon-btn:hover {
+            color: #333;
+        }
+        .edit-btn {
+             color: #007bff;
+        }
+        .edit-btn:hover {
+             color: #0056b3;
+        }
+        .delete-btn {
+            color: red;
+        }
+        .delete-btn:hover {
+              color: darkred;
+       }
+                 /* Responsive design */
+         @media (max-width: 768px) {
+             table {
+                font-size: 0.8em;
+             }
+              th, td {
+                padding: 5px;
+            }
+               .input-area{
+                  flex-direction: column;
+                   align-items: stretch;
+            }
+                .input-area textarea{
+                    width: 100%;
+              }
+        }
+         .alert-container{
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translate(-50%,0);
+            background-color: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1001;
+            display: none;
+            transition: opacity 0.3s ease;
+         }
+           .score-input {
+            width: 50px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+              text-align: center;
+           }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+         <div class="header">
+            <h2>Sổ Điểm</h2>
+              <div class="form-group">
+                 <label for="classSelect">Lớp:</label>
+                 <select id="classSelect"></select>
+              </div>
+            <div class="form-group">
+                 <label for="subjectSelect">Môn học:</label>
+                <select id="subjectSelect"></select>
+           </div>
+        </div>
+          <div class="input-area">
+             <label for="studentList">Nhập danh sách học sinh:</label>
+              <textarea id="studentList" rows="5" placeholder="Nhập mỗi học sinh trên một dòng"></textarea>
+         </div>
+            <button class="add-student-btn" id="addStudentBtn">Thêm học sinh</button>
+        <table id="scoreTable">
+            <thead>
+                <tr>
+                   <th>Họ và tên</th>
+                    <th>Mã học sinh</th>
+                    <th>TX1</th>
+                    <th>TX2</th>
+                     <th>TX3</th>
+                      <th>GK1</th>
+                    <th>GK2</th>
+                    <th>CK1</th>
+                      <th>TX4</th>
+                     <th>TX5</th>
+                     <th>TX6</th>
+                     <th>GK2</th>
+                       <th>CK2</th>
+                      <th>TBM</th>
+                       <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dữ liệu sổ điểm sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+          <button class="save-btn" id="saveAll">Lưu và về trang chủ</button>
+           <div class="popup-overlay" id="popupOverlay"></div>
+          <div class="popup" id="addStudentPopup">
+               <h3>Thêm học sinh</h3>
+             <label for="newStudentList">Nhập danh sách học sinh:</label>
+              <textarea id="newStudentList" rows="5" placeholder="Nhập mỗi học sinh trên một dòng"></textarea>
+               <div class="popup-footer">
+                     <button id="saveStudents">Thêm</button>
+                     <button id="cancelStudent">Hủy</button>
+             </div>
+          </div>
+          <div class="popup" id="editStudentPopup">
+               <h3>Chỉnh sửa tên học sinh</h3>
+             <label for="editStudentName">Họ và tên:</label>
+              <input type="text" id="editStudentName" />
+               <div class="popup-footer">
+                     <button id="saveEditStudent">Lưu</button>
+                     <button id="cancelEditStudent">Hủy</button>
+             </div>
+          </div>
+             <div id="alert" class="alert-container"></div>
+    </div>
+    <script>
+        const classes = ["1A1","1A2","1A3","1A4","2A1","2A2","2A3","2A4","2A5","3A1","3A2","3A3","3A4","3A5","4A1","4A2","4A3","4A4","4A5","4A6","4A7","5A1","5A2","5A3","5A4","5A5","6A1","6A2","6A3","6A4","6A5","6A6","7A1","7A2","7A3","7A4","7A5","8A1","8A2","8A3","8A4","9A1","9A2","9A3","9A4","9A5","9A6","10A1","10A2","10A3","10A4","10A5","10A6","10A7","10A8","11A1","11A2","11A3","11A4","11A5","11A6","12A1","12A2","12A3","12A4","12A5","12A6","12A7"];
+        const subjects = ['Toán', 'Ngữ văn', 'Tiếng Anh', 'Vật lý', 'Hóa học', 'Sinh học', 'Lịch sử', 'Địa lý', 'GDCD', 'Công nghệ','Tin học','Âm nhạc', 'Mĩ thuật','Thể dục'];
+        let generatedCodes = {};
+         function generateCode(selectedClass) {
+              if (!generatedCodes[selectedClass]) {
+                generatedCodes[selectedClass] = new Set();
+            }
+             let code;
+            do {
+               code = String(Math.floor(Math.random() * 10000000000)).padStart(10, '0');
+            }
+           while (generatedCodes[selectedClass].has(code));
+           generatedCodes[selectedClass].add(code);
+           return code;
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+              const classSelect = document.getElementById('classSelect');
+              const subjectSelect = document.getElementById('subjectSelect');
+                const scoreTable = document.getElementById('scoreTable').getElementsByTagName('tbody')[0];
+              const addStudentBtn = document.getElementById('addStudentBtn');
+              const popupOverlay =  document.getElementById('popupOverlay');
+               const addStudentPopup = document.getElementById('addStudentPopup');
+                 const editStudentPopup = document.getElementById('editStudentPopup');
+             const studentListInput = document.getElementById('studentList');
+              classes.forEach(className =>{
+                   const option = document.createElement('option');
+                    option.value = className;
+                   option.textContent = className
+                  classSelect.appendChild(option);
+            })
+               subjects.forEach(subject =>{
+                   const option = document.createElement('option');
+                    option.value = subject;
+                     option.textContent = subject;
+                   subjectSelect.appendChild(option);
+             })
+             let currentClass = localStorage.getItem('currentClass') || classes[0];
+              let currentSubject = localStorage.getItem('currentSubject') || subjects[0];
+               classSelect.value = currentClass;
+              subjectSelect.value = currentSubject;
+            loadData(currentClass, currentSubject);
+              classSelect.addEventListener('change', function () {
+                 currentClass = classSelect.value;
+                 localStorage.setItem('currentClass', currentClass);
+                loadData(currentClass, subjectSelect.value);
+
+             });
+          subjectSelect.addEventListener('change', function () {
+              currentSubject = subjectSelect.value;
+               localStorage.setItem('currentSubject', currentSubject);
+               loadData(classSelect.value, currentSubject);
+          });
+           addStudentBtn.addEventListener('click', function(){
+               popupOverlay.style.display = "block";
+               addStudentPopup.style.display = 'block';
+            });
+             document.getElementById('cancelStudent').addEventListener('click', function () {
+                popupOverlay.style.display = "none";
+                 addStudentPopup.style.display = 'none';
+            });
+             document.getElementById('saveStudents').addEventListener('click', function () {
+                try{
+                     const newStudentList = document.getElementById('newStudentList').value;
+                     if (!newStudentList) {
+                        showAlert("Vui lòng nhập danh sách học sinh")
+                          return;
+                     }
+                     const studentNames = newStudentList.split('\n').filter(name => name.trim() !== '');
+                        const selectedClass = classSelect.value;
+                     let allStudents =  JSON.parse(localStorage.getItem(`students_${selectedClass}`) || '[]');
+                     studentNames.forEach(studentName =>{
+                           const checkExisted = allStudents.find(student => student.name === studentName)
+                            if(checkExisted) {
+                              return;
+                             }
+                           const newCode = generateCode(selectedClass);
+                           const newStudent = {
+                                 name: studentName,
+                                 code: newCode,
+                            };
+                             allStudents.push(newStudent);
+                     })
+                   localStorage.setItem(`students_${selectedClass}`, JSON.stringify(allStudents));
+                   popupOverlay.style.display = "none";
+                    addStudentPopup.style.display = 'none';
+                 document.getElementById('newStudentList').value = "";
+                   loadData(selectedClass, subjectSelect.value);
+               }
+                catch(e){
+                  showAlert("Có lỗi xảy ra khi thêm")
+                   console.log(e)
+                }
+            });
+             studentListInput.addEventListener('input', function () {
+               const studentNames = studentListInput.value.split('\n').filter(name => name.trim() !== '');
+                  const selectedClass = classSelect.value;
+                    let allStudents = JSON.parse(localStorage.getItem(`students_${selectedClass}`) || '[]');
+                       studentNames.forEach(studentName =>{
+                           const checkExisted = allStudents.find(student => student.name === studentName)
+                            if(checkExisted) {
+                               return;
+                            }
+                            const newCode = generateCode(selectedClass);
+                            const newStudent = {
+                                 name: studentName,
+                                 code: newCode
+                            };
+                            allStudents.push(newStudent);
+                       })
+                    localStorage.setItem(`students_${selectedClass}`, JSON.stringify(allStudents));
+                    loadData(selectedClass, subjectSelect.value);
+           });
+             document.getElementById('saveAll').addEventListener('click', function () {
+              window.location.href = 'giaovien.html';
+            });
+            function showEditPopup(index,studentName, selectedClass, selectedSubject) {
+              popupOverlay.style.display = "block";
+                editStudentPopup.style.display = 'block';
+                 document.getElementById('editStudentName').value = studentName;
+                 editStudentPopup.dataset.index = index;
+                 editStudentPopup.dataset.class = selectedClass;
+                 editStudentPopup.dataset.subject = selectedSubject;
+
+            }
+             document.getElementById('cancelEditStudent').addEventListener('click', function () {
+               popupOverlay.style.display = "none";
+                  editStudentPopup.style.display = 'none';
+            });
+             document.getElementById('saveEditStudent').addEventListener('click', function (){
+                try{
+                    const index =  editStudentPopup.dataset.index;
+                      const selectedClass =  editStudentPopup.dataset.class;
+                       const selectedSubject =  editStudentPopup.dataset.subject;
+                   const newName = document.getElementById('editStudentName').value;
+                   if(!newName){
+                      showAlert("Vui lòng nhập tên học sinh")
+                       return;
+                   }
+                    let allStudents =  JSON.parse(localStorage.getItem(`students_${selectedClass}`) || '[]');
+                        allStudents[index].name = newName;
+                   localStorage.setItem(`students_${selectedClass}`, JSON.stringify(allStudents));
+                     popupOverlay.style.display = "none";
+                      editStudentPopup.style.display = 'none';
+                      loadData(selectedClass, selectedSubject)
+
+                }
+                catch(e){
+                   showAlert("Có lỗi xảy ra khi sửa")
+                   console.log(e);
+                }
+            });
+             function deleteStudent(index, selectedClass, selectedSubject){
+                 if(confirm("Bạn có chắc chắn muốn xóa học sinh này không ?")) {
+                   try{
+                         let allStudents = JSON.parse(localStorage.getItem(`students_${selectedClass}`) || '[]');
+                       allStudents.splice(index,1);
+                    localStorage.setItem(`students_${selectedClass}`, JSON.stringify(allStudents));
+                      loadData(selectedClass, selectedSubject);
+                   }
+                      catch(e){
+                        showAlert("Có lỗi xảy ra khi xóa");
+                        console.log(e)
+                       }
+              }
+           }
+             function loadData(selectedClass, selectedSubject){
+                  scoreTable.innerHTML = '';
+                     const allStudents = JSON.parse(localStorage.getItem(`students_${selectedClass}`) || '[]');
+                      const scores = JSON.parse(localStorage.getItem(`scores_${selectedClass}_${selectedSubject}`) || '[]');
+                       allStudents.forEach((student, index) =>{
+                           const newRow = scoreTable.insertRow();
+                            const nameCell = newRow.insertCell();
+                            nameCell.textContent = student.name;
+                             const codeCell = newRow.insertCell();
+                           codeCell.textContent = student.code;
+                         const studentScores = scores.find(score => score.code === student.code)?.scores || Array(11).fill("");
+                           studentScores.forEach((score, index) =>{
+                            const inputCell = newRow.insertCell();
+                             if (index < 11) {
+                                    const scoreInput = document.createElement('input');
+                                  scoreInput.type = 'number';
+                                  scoreInput.classList.add('score-input');
+                                  scoreInput.value = score;
+                                 scoreInput.max = 10;
+                                  scoreInput.min = 0;
+                                 scoreInput.addEventListener('focusout', () =>{
+                                        studentScores[index] = scoreInput.value;
+                                         let allScores = JSON.parse(localStorage.getItem(`scores_${selectedClass}_${selectedSubject}`) || '[]');
+                                         const updatedIndex = allScores.findIndex(s => s.code === student.code);
+                                          if(updatedIndex > -1) {
+                                            allScores[updatedIndex].scores = studentScores;
+                                         }
+                                         else{
+                                              allScores.push({
+                                                 code: student.code,
+                                                   scores: studentScores
+                                             })
+                                         }
+                                         localStorage.setItem(`scores_${selectedClass}_${selectedSubject}`, JSON.stringify(allScores));
+                                        updateTBM(newRow, studentScores)
+                                    });
+                                   inputCell.appendChild(scoreInput);
+                           }
+                       })
+                       const tbmCell = newRow.insertCell();
+                       updateTBM(newRow, studentScores);
+                         const actionCell = newRow.insertCell();
+                         let editButton = document.createElement('button');
+                         editButton.innerHTML = '<i class="fas fa-edit"></i>';
+                           editButton.classList.add('icon-btn','edit-btn')
+                           editButton.addEventListener('click', () => showEditPopup(index, student.name, selectedClass, selectedSubject));
+                          actionCell.appendChild(editButton);
+                            let deleteButton = document.createElement('button');
+                            deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+                            deleteButton.classList.add('icon-btn', 'delete-btn');
+                           deleteButton.addEventListener('click', ()=> deleteStudent(index, selectedClass, selectedSubject));
+                            actionCell.appendChild(deleteButton);
+                     });
+              }
+            function updateTBM(row, scores){
+               const sumScores = scores.reduce((acc, score) => acc + Number(score), 0);
+                const tbm = scores.every(score => score ==="") ? "" : (sumScores/11).toFixed(1);
+                  row.cells[13].textContent = tbm;
+           }
+             function showAlert(message) {
+                 const alertBox = document.getElementById('alert');
+                   alertBox.textContent = message;
+                   alertBox.style.display = 'block';
+                      alertBox.style.opacity = 1;
+                     setTimeout(() => {
+                         alertBox.style.opacity = 0;
+                           setTimeout(() => {
+                            alertBox.style.display = 'none'
+                        }, 300)
+
+                   }, 3000);
+               }
+        });
+    </script>
+</body>
+
+</html>

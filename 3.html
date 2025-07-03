@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Luyện Lịch Sử THCS - Cấp Huyện</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f4f8;
+            color: #37474f;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 900px;
+            animation: fadeIn 0.5s ease-out;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+         @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h1 {
+            text-align: center;
+            color: #2196f3;
+            margin-bottom: 25px;
+            font-size: 2.8em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+            font-weight: 500;
+        }
+        .question {
+            margin-bottom: 30px;
+            padding: 25px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            background-color: #fff;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 7px rgba(0,0,0,0.08);
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .question:hover {
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .question p {
+            margin-bottom: 15px;
+            font-weight: 500;
+            color: #263238;
+            font-size: 1.2em;
+        }
+         .question .question-number {
+              font-size: 1.2em;
+              color: #78909c;
+              margin-bottom: 5px;
+              display: block;
+           }
+         .question .answer-image {
+             display: block;
+             max-width: 60%;
+              height: auto;
+              margin: 10px auto;
+          }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: #455a64;
+            cursor: pointer;
+        }
+        input[type="radio"], input[type="checkbox"] {
+             margin-right: 10px;
+             transform: scale(1.2);
+        }
+         input[type="checkbox"]:checked + span {
+            color: #2196f3;
+            font-weight: 500;
+         }
+           input[type="radio"]:checked + span {
+             color: #2196f3;
+             font-weight: 500;
+         }
+         .answer-label {
+               display: inline-block;
+               min-width: 30px;
+            }
+         button {
+            padding: 12px 20px;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 20px auto;
+             font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+            display: block;
+             font-weight: 500;
+         }
+         button:hover{
+                background-color: #1976d2;
+                 transform: scale(1.05);
+           }
+        #result {
+            text-align: center;
+            margin-top: 30px;
+            display: none;
+           animation: fadeInResult 0.5s ease-out;
+        }
+        @keyframes fadeInResult {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        #result h2 {
+            color: #2196f3;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        #result p {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #263238;
+        }
+        .fill-in-blank-inline {
+            display: inline-block;
+        }
+
+        .fill-in-blank-inline .blank-input {
+               margin: 0 5px;
+               padding: 5px;
+              border: 1px solid #e0e0e0;
+              border-radius: 4px;
+              width: 80px;
+              display: inline-block;
+              font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Ôn Luyện Lịch Sử THCS - Cấp Huyện</h1>
+    <form id="quiz-form">
+          <div class="question" data-question-id="1">
+            <span class="question-number">Câu 1 - Lịch sử Việt Nam</span>
+              <p>Bộ luật nào được ban hành dưới thời nhà Lê sơ, thể hiện sự phát triển cao của luật pháp phong kiến Việt Nam?</p>
+              <label><input type="radio" name="q1" value="a"><span class="answer-label">A.</span> Luật Gia Long</label><br>
+              <label><input type="radio" name="q1" value="b"><span class="answer-label">B.</span> Luật Hình Thư</label><br>
+             <label><input type="radio" name="q1" value="c"><span class="answer-label">C.</span> Luật Hồng Đức</label><br>
+             <label><input type="radio" name="q1" value="d"><span class="answer-label">D.</span> Luật Quốc Triều</label><br>
+         </div>
+        <div class="question" data-question-id="2">
+            <span class="question-number">Câu 2 - Lịch sử Việt Nam</span>
+             <p>Nguyên nhân chính dẫn đến phong trào Tây Sơn bùng nổ là gì?</p>
+              <label><input type="radio" name="q2" value="a"><span class="answer-label">A.</span> Do mâu thuẫn giữa các phe phái trong triều đình</label><br>
+              <label><input type="radio" name="q2" value="b"><span class="answer-label">B.</span> Do chính sách bóc lột của nhà Nguyễn</label><br>
+              <label><input type="radio" name="q2" value="c"><span class="answer-label">C.</span> Do đời sống nhân dân đói khổ, bất công</label><br>
+              <label><input type="radio" name="q2" value="d"><span class="answer-label">D.</span> Do ảnh hưởng của các cuộc nổi dậy trước đó</label><br>
+          </div>
+           <div class="question" data-question-id="3">
+              <span class="question-number">Câu 3 - Lịch sử Việt Nam</span>
+              <p>Việc dời đô từ Hoa Lư về Thăng Long của Lý Công Uẩn thể hiện điều gì?</p>
+               <label><input type="radio" name="q3" value="a"><span class="answer-label">A.</span> Sự suy yếu của nhà Lý</label><br>
+               <label><input type="radio" name="q3" value="b"><span class="answer-label">B.</span> Sự phát triển của Phật giáo</label><br>
+               <label><input type="radio" name="q3" value="c"><span class="answer-label">C.</span> Tầm nhìn chiến lược, mong muốn phát triển đất nước</label><br>
+               <label><input type="radio" name="q3" value="d"><span class="answer-label">D.</span> Sự mất ổn định chính trị</label><br>
+          </div>
+           <div class="question" data-question-id="4">
+              <span class="question-number">Câu 4 - Lịch sử Việt Nam</span>
+              <p>Chiến thắng nào đã đánh bại quân Thanh xâm lược vào năm 1789?</p>
+               <label><input type="radio" name="q4" value="a"><span class="answer-label">A.</span> Chiến thắng Rạch Gầm - Xoài Mút</label><br>
+               <label><input type="radio" name="q4" value="b"><span class="answer-label">B.</span> Chiến thắng Ngọc Hồi - Đống Đa</label><br>
+              <label><input type="radio" name="q4" value="c"><span class="answer-label">C.</span> Chiến thắng Chi Lăng - Xương Giang</label><br>
+               <label><input type="radio" name="q4" value="d"><span class="answer-label">D.</span> Chiến thắng Bạch Đằng</label><br>
+         </div>
+         <div class="question" data-question-id="5">
+            <span class="question-number">Câu 5 - Lịch sử Việt Nam</span>
+             <p>Sự kiện nào đánh dấu sự kết thúc của chế độ thực dân phong kiến ở Việt Nam?</p>
+              <label><input type="radio" name="q5" value="a"><span class="answer-label">A.</span> Chiến thắng Điện Biên Phủ</label><br>
+               <label><input type="radio" name="q5" value="b"><span class="answer-label">B.</span> Cách mạng tháng Tám năm 1945</label><br>
+               <label><input type="radio" name="q5" value="c"><span class="answer-label">C.</span> Cuộc kháng chiến chống Mỹ</label><br>
+              <label><input type="radio" name="q5" value="d"><span class="answer-label">D.</span> Hiệp định Paris</label><br>
+         </div>
+          <div class="question" data-question-id="6">
+            <span class="question-number">Câu 6 - Lịch sử Việt Nam</span>
+              <p>Cuộc kháng chiến chống quân Mông - Nguyên lần thứ 3 diễn ra vào năm nào?</p>
+              <label><input type="radio" name="q6" value="a"><span class="answer-label">A.</span> 1258</label><br>
+               <label><input type="radio" name="q6" value="b"><span class="answer-label">B.</span> 1285</label><br>
+              <label><input type="radio" name="q6" value="c"><span class="answer-label">C.</span> 1287</label><br>
+               <label><input type="radio" name="q6" value="d"><span class="answer-label">D.</span> 1293</label><br>
+         </div>
+          <div class="question" data-question-id="7">
+             <span class="question-number">Câu 7 - Lịch sử Việt Nam</span>
+            <p>Phong trào Cần Vương bùng nổ sau sự kiện nào?</p>
+              <label><input type="radio" name="q7" value="a"><span class="answer-label">A.</span> Vua Tự Đức qua đời</label><br>
+              <label><input type="radio" name="q7" value="b"><span class="answer-label">B.</span> Vua Hàm Nghi bị bắt</label><br>
+              <label><input type="radio" name="q7" value="c"><span class="answer-label">C.</span> Cuộc phản công tại kinh thành Huế</label><br>
+              <label><input type="radio" name="q7" value="d"><span class="answer-label">D.</span> Pháp tấn công Đà Nẵng</label><br>
+        </div>
+        <div class="question" data-question-id="8">
+            <span class="question-number">Câu 8 - Lịch sử Việt Nam</span>
+            <p>Triều đại nào có thời kỳ phát triển rực rỡ của văn hóa Đại Việt, với nhiều thành tựu về văn học, nghệ thuật và kiến trúc?</p>
+            <label><input type="radio" name="q8" value="a"><span class="answer-label">A.</span> Nhà Đinh</label><br>
+            <label><input type="radio" name="q8" value="b"><span class="answer-label">B.</span> Nhà Ngô</label><br>
+           <label><input type="radio" name="q8" value="c"><span class="answer-label">C.</span> Nhà Lý - Trần</label><br>
+            <label><input type="radio" name="q8" value="d"><span class="answer-label">D.</span> Nhà Hậu Lê</label><br>
+       </div>
+       <div class="question" data-question-id="9">
+            <span class="question-number">Câu 9 - Lịch sử Việt Nam</span>
+          <p>Chiến dịch nào đánh dấu thắng lợi quyết định trong cuộc kháng chiến chống Mỹ cứu nước?</p>
+           <label><input type="radio" name="q9" value="a"><span class="answer-label">A.</span> Chiến dịch Điện Biên Phủ</label><br>
+           <label><input type="radio" name="q9" value="b"><span class="answer-label">B.</span> Chiến dịch Hồ Chí Minh</label><br>
+           <label><input type="radio" name="q9" value="c"><span class="answer-label">C.</span> Chiến dịch Tây Nguyên</label><br>
+           <label><input type="radio" name="q9" value="d"><span class="answer-label">D.</span> Chiến dịch Mậu Thân</label><br>
+       </div>
+        <div class="question" data-question-id="10">
+            <span class="question-number">Câu 10 - Lịch sử Việt Nam</span>
+            <p>Vị vua nào đã có công dời đô từ Hoa Lư về Thăng Long?</p>
+              <label><input type="radio" name="q10" value="a"><span class="answer-label">A.</span> Lý Thái Tông</label><br>
+              <label><input type="radio" name="q10" value="b"><span class="answer-label">B.</span> Lý Công Uẩn</label><br>
+              <label><input type="radio" name="q10" value="c"><span class="answer-label">C.</span> Trần Thái Tông</label><br>
+              <label><input type="radio" name="q10" value="d"><span class="answer-label">D.</span> Lê Thái Tổ</label><br>
+       </div>
+       <div class="question" data-question-id="11">
+           <span class="question-number">Câu 11 - Lịch sử Việt Nam</span>
+            <p>Ai là tác giả của bài "Bình Ngô Đại Cáo"?</p>
+            <label><input type="radio" name="q11" value="a"><span class="answer-label">A.</span> Lê Lợi</label><br>
+            <label><input type="radio" name="q11" value="b"><span class="answer-label">B.</span> Nguyễn Trãi</label><br>
+           <label><input type="radio" name="q11" value="c"><span class="answer-label">C.</span> Trần Hưng Đạo</label><br>
+           <label><input type="radio" name="q11" value="d"><span class="answer-label">D.</span> Quang Trung</label><br>
+       </div>
+      <div class="question" data-question-id="12">
+          <span class="question-number">Câu 12 - Lịch sử Việt Nam</span>
+          <p>Ai là người chỉ huy quân đội nhà Trần đánh bại quân Mông - Nguyên lần thứ 2?</p>
+          <label><input type="radio" name="q12" value="a"><span class="answer-label">A.</span> Lý Thường Kiệt</label><br>
+          <label><input type="radio" name="q12" value="b"><span class="answer-label">B.</span> Trần Quốc Toản</label><br>
+          <label><input type="radio" name="q12" value="c"><span class="answer-label">C.</span> Trần Hưng Đạo</label><br>
+           <label><input type="radio" name="q12" value="d"><span class="answer-label">D.</span> Lê Hoàn</label><br>
+      </div>
+         <div class="question" data-question-id="13">
+             <span class="question-number">Câu 13 - Lịch sử Thế Giới</span>
+            <p>Công trình kiến trúc nào là biểu tượng của nền văn minh Ai Cập cổ đại?</p>
+            <label><input type="radio" name="q13" value="a"><span class="answer-label">A.</span> Vạn Lý Trường Thành</label><br>
+           <label><input type="radio" name="q13" value="b"><span class="answer-label">B.</span> Kim tự tháp Giza</label><br>
+            <label><input type="radio" name="q13" value="c"><span class="answer-label">C.</span> Đền Parthenon</label><br>
+            <label><input type="radio" name="q13" value="d"><span class="answer-label">D.</span> Đấu trường Colosseum</label><br>
+       </div>
+       <div class="question" data-question-id="14">
+           <span class="question-number">Câu 14 - Lịch sử Thế Giới</span>
+          <p>Nhà triết học nào có ảnh hưởng lớn đến tư tưởng và khoa học phương Tây thời cổ đại?</p>
+           <label><input type="radio" name="q14" value="a"><span class="answer-label">A.</span> Socrates</label><br>
+           <label><input type="radio" name="q14" value="b"><span class="answer-label">B.</span> Plato</label><br>
+           <label><input type="radio" name="q14" value="c"><span class="answer-label">C.</span> Aristotle</label><br>
+          <label><input type="radio" name="q14" value="d"><span class="answer-label">D.</span> Homer</label><br>
+     </div>
+      <div class="question" data-question-id="15">
+         <span class="question-number">Câu 15 - Lịch sử Thế Giới</span>
+           <p>Ai là người đã phát hiện ra châu Mỹ?</p>
+           <label><input type="radio" name="q15" value="a"><span class="answer-label">A.</span> Magellan</label><br>
+           <label><input type="radio" name="q15" value="b"><span class="answer-label">B.</span> Vasco da Gama</label><br>
+           <label><input type="radio" name="q15" value="c"><span class="answer-label">C.</span> Christopher Columbus</label><br>
+           <label><input type="radio" name="q15" value="d"><span class="answer-label">D.</span> Marco Polo</label><br>
+    </div>
+       <div class="question" data-question-id="16">
+           <span class="question-number">Câu 16 - Lịch sử Thế Giới</span>
+          <p>Cách mạng tháng Mười Nga năm 1917 đã làm thay đổi điều gì?</p>
+           <label><input type="radio" name="q16" value="a"><span class="answer-label">A.</span> Sự sụp đổ của chủ nghĩa tư bản</label><br>
+           <label><input type="radio" name="q16" value="b"><span class="answer-label">B.</span> Sự ra đời của nhà nước XHCN đầu tiên</label><br>
+          <label><input type="radio" name="q16" value="c"><span class="answer-label">C.</span> Sự kết thúc chiến tranh thế giới thứ nhất</label><br>
+          <label><input type="radio" name="q16" value="d"><span class="answer-label">D.</span> Sự thành lập Liên Hợp Quốc</label><br>
+     </div>
+     <div class="question" data-question-id="17">
+        <span class="question-number">Câu 17 - Lịch sử Thế Giới</span>
+        <p>Hiệp ước nào đã kết thúc chiến tranh thế giới thứ nhất?</p>
+        <label><input type="radio" name="q17" value="a"><span class="answer-label">A.</span> Hiệp ước Washington</label><br>
+         <label><input type="radio" name="q17" value="b"><span class="answer-label">B.</span> Hiệp ước Véc-xai</label><br>
+         <label><input type="radio" name="q17" value="c"><span class="answer-label">C.</span> Hiệp ước Saint Germain</label><br>
+        <label><input type="radio" name="q17" value="d"><span class="answer-label">D.</span> Hiệp ước Brest-Litovsk</label><br>
+     </div>
+     <div class="question" data-question-id="18">
+        <span class="question-number">Câu 18 - Lịch sử Thế Giới</span>
+        <p>Tổ chức nào được thành lập sau chiến tranh thế giới thứ nhất để duy trì hòa bình thế giới?</p>
+         <label><input type="radio" name="q18" value="a"><span class="answer-label">A.</span> Liên hợp quốc</label><br>
+         <label><input type="radio" name="q18" value="b"><span class="answer-label">B.</span> Hội quốc liên</label><br>
+        <label><input type="radio" name="q18" value="c"><span class="answer-label">C.</span> Tổ chức Hiệp ước Bắc Đại Tây Dương (NATO)</label><br>
+         <label><input type="radio" name="q18" value="d"><span class="answer-label">D.</span> Liên minh châu Âu</label><br>
+    </div>
+       <div class="question" data-question-id="19">
+          <span class="question-number">Câu 19 - Lịch sử Thế Giới</span>
+          <p>Các quốc gia nào thuộc phe Trục trong chiến tranh thế giới thứ hai?</p>
+           <label><input type="checkbox" name="q19" value="a"><span class="answer-label">A.</span> Đức</label><br>
+           <label><input type="checkbox" name="q19" value="b"><span class="answer-label">B.</span> Nhật Bản</label><br>
+          <label><input type="checkbox" name="q19" value="c"><span class="answer-label">C.</span> Anh</label><br>
+          <label><input type="checkbox" name="q19" value="d"><span class="answer-label">D.</span> Ý</label><br>
+     </div>
+      <div class="question" data-question-id="20">
+         <span class="question-number">Câu 20 - Lịch sử Thế Giới</span>
+         <p>Sự kiện nào được xem là khởi đầu cho cuộc Chiến tranh Lạnh?</p>
+          <label><input type="radio" name="q20" value="a"><span class="answer-label">A.</span> Sự thành lập khối NATO</label><br>
+           <label><input type="radio" name="q20" value="b"><span class="answer-label">B.</span> Sự chia cắt nước Đức</label><br>
+          <label><input type="radio" name="q20" value="c"><span class="answer-label">C.</span> Sự ra đời của Liên Xô</label><br>
+          <label><input type="radio" name="q20" value="d"><span class="answer-label">D.</span> Bài diễn văn của Churchill ở Fulton</label><br>
+     </div>
+       <div class="question" data-question-id="21">
+            <span class="question-number">Câu 21 - Lịch sử Thế Giới</span>
+             <p>Hội nghị Yalta diễn ra vào năm nào?</p>
+            <label><input type="radio" name="q21" value="a"><span class="answer-label">A.</span> 1943</label><br>
+            <label><input type="radio" name="q21" value="b"><span class="answer-label">B.</span> 1945</label><br>
+            <label><input type="radio" name="q21" value="c"><span class="answer-label">C.</span> 1947</label><br>
+            <label><input type="radio" name="q21" value="d"><span class="answer-label">D.</span> 1949</label><br>
+       </div>
+        <div class="question" data-question-id="22">
+           <span class="question-number">Câu 22 - Lịch sử Thế Giới</span>
+             <p>Nhà khoa học nào đã đưa ra thuyết tương đối?</p>
+              <label><input type="radio" name="q22" value="a"><span class="answer-label">A.</span> Isaac Newton</label><br>
+              <label><input type="radio" name="q22" value="b"><span class="answer-label">B.</span> Albert Einstein</label><br>
+              <label><input type="radio" name="q22" value="c"><span class="answer-label">C.</span> Marie Curie</label><br>
+             <label><input type="radio" name="q22" value="d"><span class="answer-label">D.</span> Stephen Hawking</label><br>
+        </div>
+        <div class="question" data-question-id="23">
+            <span class="question-number">Câu 23 - Lịch sử Thế Giới</span>
+            <p>Ai là người lãnh đạo cuộc cách mạng Cuba?</p>
+             <label><input type="radio" name="q23" value="a"><span class="answer-label">A.</span> Che Guevara</label><br>
+             <label><input type="radio" name="q23" value="b"><span class="answer-label">B.</span> Hugo Chavez</label><br>
+            <label><input type="radio" name="q23" value="c"><span class="answer-label">C.</span> Fidel Castro</label><br>
+             <label><input type="radio" name="q23" value="d"><span class="answer-label">D.</span> Raul Castro</label><br>
+       </div>
+      <div class="question" data-question-id="24">
+        <span class="question-number">Câu 24 - Lịch sử Thế Giới</span>
+           <p>Người nào được xem là cha đẻ của phong trào bất bạo động ở Ấn Độ?</p>
+           <label><input type="radio" name="q24" value="a"><span class="answer-label">A.</span> Jawaharlal Nehru</label><br>
+           <label><input type="radio" name="q24" value="b"><span class="answer-label">B.</span> Indira Gandhi</label><br>
+           <label><input type="radio" name="q24" value="c"><span class="answer-label">C.</span> Mahatma Gandhi</label><br>
+           <label><input type="radio" name="q24" value="d"><span class="answer-label">D.</span> Sardar Patel</label><br>
+      </div>
+      <div class="question" data-question-id="25">
+          <span class="question-number">Câu 25 - Lịch sử Thế Giới</span>
+           <p>Phát minh nào đã làm thay đổi cách chiếu sáng thế giới?</p>
+           <label><input type="radio" name="q25" value="a"><span class="answer-label">A.</span> Điện thoại</label><br>
+          <label><input type="radio" name="q25" value="b"><span class="answer-label">B.</span> Bóng đèn điện</label><br>
+          <label><input type="radio" name="q25" value="c"><span class="answer-label">C.</span> Máy phát điện</label><br>
+          <label><input type="radio" name="q25" value="d"><span class="answer-label">D.</span> Radio</label><br>
+      </div>
+     <div class="question" data-question-id="26">
+          <span class="question-number">Câu 26 - Lịch sử Thế Giới</span>
+          <p>
+                 <span class="fill-in-blank-inline">
+                     <br> <input type="text" class="blank-input" data-correct-answer="Moscow" maxlength="20"> là thủ đô của nước Nga.
+                  </span>
+           </p>
+        </div>
+         <div class="question" data-question-id="27">
+            <span class="question-number">Câu 27 - Lịch sử Việt Nam</span>
+             <p>
+                 <span class="fill-in-blank-inline">
+                   <br>Trận <input type="text" class="blank-input" data-correct-answer="Bạch Đằng" maxlength="20"> năm 1288 là một chiến thắng vĩ đại của quân dân ta chống quân Mông-Nguyên.
+                  </span>
+            </p>
+        </div>
+         <div class="question" data-question-id="28">
+            <span class="question-number">Câu 28 - Lịch sử Thế Giới</span>
+            <p>
+                 <span class="fill-in-blank-inline">
+                      <br><input type="text" class="blank-input" data-correct-answer="Albert Einstein" maxlength="20"> là nhà khoa học đã đưa ra thuyết tương đối.
+                   </span>
+            </p>
+         </div>
+         <div class="question" data-question-id="29">
+            <span class="question-number">Câu 29 - Lịch sử Việt Nam</span>
+            <p>
+                 <span class="fill-in-blank-inline">
+                      <br> <input type="text" class="blank-input" data-correct-answer="Nguyễn Trãi" maxlength="20"> là tác giả của bài "Bình Ngô Đại Cáo".
+                   </span>
+            </p>
+        </div>
+          <div class="question" data-question-id="30">
+             <span class="question-number">Câu 30 - Lịch sử Thế Giới</span>
+              <p>
+                 <span class="fill-in-blank-inline">
+                     <br>Hiệp ước <input type="text" class="blank-input" data-correct-answer="Versailles" maxlength="20"> năm 1919 đã kết thúc Chiến tranh thế giới thứ nhất.
+                   </span>
+           </p>
+         </div>
+    <button type="submit">Kiểm tra kết quả</button>
+    </form>
+    <div id="result" style="display: none;">
+        <h2>Kết quả bài ôn luyện</h2>
+        <p>Điểm của bạn: <span id="score"></span>/300</p>
+         <p id="time-taken" style="display: none;">Thời gian làm bài: <span id="time-display"></span></p>
+    </div>
+</div>
+<script>
+const quizForm = document.getElementById('quiz-form');
+const resultDiv = document.getElementById('result');
+quizForm.addEventListener('submit', function(e){
+ e.preventDefault();
+  let score = 0;
+  const answers = {
+    q1: 'c',
+    q2: 'c',
+    q3: 'c',
+     q4: 'b',
+      q5: 'b',
+       q6: 'c',
+         q7: 'b',
+         q8: 'c',
+         q9: 'b',
+          q10: 'b',
+           q11: 'b',
+          q12: 'c',
+          q13: 'b',
+         q14: 'c',
+         q15: 'c',
+          q16: 'b',
+           q17: 'b',
+             q18: 'b',
+             q19: ['a','b','d'],
+              q20: 'd',
+             q21: 'b',
+               q22: 'b',
+              q23: 'c',
+            q24: 'c',
+            q25: 'b',
+       };
+         for (let question in answers) {
+          if(question === "q19"){
+             const selectedCheckBox = document.querySelectorAll(`.question[data-question-id="${question.slice(1)}"] input[type="checkbox"]:checked); let correct = true; let correctAnswers = answers[question]; if(selectedCheckBox.length === 0){ correct = false; }else{ let countCorrect = 0; selectedCheckBox.forEach(checkbox => { if(correctAnswers.includes(checkbox.value)){ countCorrect++; } }) if(countCorrect >= 3){ correct = true; } else{ correct = false; } } if(correct) { score += 10; } }else{ const selectedAnswer = document.querySelector(input[name="${question}"]:checked`);
+if(selectedAnswer && selectedAnswer.value === answers[question]){
+score += 10;
+}
+}
+}
+const blankInputs = document.querySelectorAll('.blank-input[data-correct-answer]');
+blankInputs.forEach(input => {
+const inputValue = input.value.trim();
+if(inputValue === input.dataset.correctAnswer) {
+score += 10;
+}
+});
+resultDiv.style.display = 'block';
+document.getElementById('score').textContent = score;
+});
+
+</script>
+</body>
+</html>

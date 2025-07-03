@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ Đầu Bài</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+          body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+          .header {
+            display: flex;
+            justify-content: space-between;
+             align-items: center;
+              margin-bottom: 20px;
+        }
+
+        .form-group {
+             display: flex;
+              align-items: center;
+             margin-right: 10px;
+        }
+         .form-group label {
+             margin-right: 5px;
+        }
+         .form-group select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        .action-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #007bff;
+        }
+
+         .action-btn:disabled {
+            color: #aaa;
+            cursor: default;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+         .popup-overlay{
+              display: none;
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0,0,0,0.5);
+              z-index: 999;
+         }
+        .popup h3 {
+            margin-top: 0;
+        }
+
+        .popup label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .popup textarea,
+        .popup input {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+              box-sizing: border-box; /* Include padding and border in width */
+        }
+         .popup button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: auto;
+         }
+       .popup button:hover {
+             background-color: #0056b3;
+        }
+        .popup-footer {
+            display: flex;
+            justify-content: flex-end;
+           
+        }
+        .popup-footer button{
+             margin-left: 10px;
+         }
+         .icon-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+             color: #666;
+           
+         }
+          .icon-btn:hover {
+            color: #333;
+        }
+        .edit-btn, .delete-btn {
+            margin-right: 5px;
+             color: #007bff;
+        }
+
+        .edit-btn:hover {
+             color: #0056b3;
+        }
+          .delete-btn {
+             color: red;
+        }
+        .delete-btn:hover {
+             color: darkred;
+        }
+        .save-btn {
+              display: block;
+                margin-top: 15px;
+                margin-left: auto;
+                background-color: #28a745;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+           }
+             .save-btn:hover {
+                 background-color: #218838;
+            }
+         /* Responsive design */
+         @media (max-width: 768px) {
+             table {
+                font-size: 0.8em;
+             }
+              th, td {
+                padding: 5px;
+            }
+        }
+        .alert-container{
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translate(-50%,0);
+            background-color: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1001;
+            display: none;
+            transition: opacity 0.3s ease;
+         }
+         td.merged-cell {
+            vertical-align: top;
+        }
+
+        td.merged-cell > div {
+             margin-bottom: 5px;
+          }
+          td.merged-cell > div:last-child {
+                margin-bottom: 0;
+          }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+         <div class="header">
+           <h2>Sổ Đầu Bài</h2>
+             <div class="form-group">
+               <label for="classSelect">Lớp:</label>
+                <select id="classSelect"></select>
+           </div>
+           <div class="form-group">
+                 <label for="weekSelect">Tuần:</label>
+                <select id="weekSelect"></select>
+             </div>
+        </div>
+        <table id="sodaubaiTable">
+            <thead>
+                <tr>
+                     <th>Thời khóa biểu</th>
+                    <th>Môn học</th>
+                     <th>GV kí</th>
+                      <th>Tên HS nghỉ tiết</th>
+                    <th>Tên nội dung/công việc</th>
+                    <th>Kiểm tra miệng</th>
+                    <th>Nhận xét của GV</th>
+                       <th>Xếp loại</th>
+                     <th>Hành động</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dữ liệu sổ đầu bài sẽ được thêm vào đây -->
+            </tbody>
+        </table>
+          <button class="save-btn" id="saveAll">Lưu và về trang chủ</button>
+           <div class="popup-overlay" id="popupOverlay"></div>
+        <div class="popup" id="signaturePopup">
+            <h3>Ký Sổ Đầu Bài</h3>
+            <label for="teacherName">Tên giáo viên:</label>
+            <input type="text" id="teacherName" readonly>
+           <label for="subject">Môn học:</label>
+            <input type="text" id="subject" readonly>
+            <label for="signatureContent">Nội dung ký:</label>
+            <textarea id="signatureContent" rows="4"></textarea>
+              <div class="popup-footer">
+                    <button id="saveSignature">Ký</button>
+                    <button id="cancelSignature">Hủy</button>
+                </div>
+        </div>
+          <div class="popup" id="editPopup">
+            <h3>Chỉnh sửa/Xóa Kí</h3>
+                <label for="editSignatureContent">Nội dung đã ký:</label>
+                <textarea id="editSignatureContent" rows="4"></textarea>
+              <div class="popup-footer">
+                     <button class="edit-signature">Lưu</button>
+                     <button class="delete-signature">Xóa</button>
+                    <button class="cancel-edit">Hủy</button>
+                </div>
+        </div>
+          <div id="alert" class="alert-container"></div>
+    </div>
+    <script>
+          const classes = ["1A1","1A2","1A3","1A4","2A1","2A2","2A3","2A4","2A5","3A1","3A2","3A3","3A4","3A5","4A1","4A2","4A3","4A4","4A5","4A6","4A7","5A1","5A2","5A3","5A4","5A5","6A1","6A2","6A3","6A4","6A5","6A6","7A1","7A2","7A3","7A4","7A5","8A1","8A2","8A3","8A4","9A1","9A2","9A3","9A4","9A5","9A6","10A1","10A2","10A3","10A4","10A5","10A6","10A7","10A8","11A1","11A2","11A3","11A4","11A5","11A6","12A1","12A2","12A3","12A4","12A5","12A6","12A7"];
+           const weeks = Array.from({ length: 35 }, (_, i) => i + 1); // Tạo mảng tuần từ 1 đến 35
+          const currentWeek = 20; // Tuần hiện tại
+            const ratings = ["Tốt", "Khá", "Trung bình", "Yếu"];
+           const subjects = {
+             'Ngữ văn': 5,
+            'Toán': 5,
+            'Tiếng Anh': 3,
+            'Tiếng Nhật': 3,
+            'Tiếng Pháp': 1,
+            'Tiếng Lào': 1,
+            'Giáo dục công dân': 1,
+            'Lịch sử': 2,
+            'Địa lí': 1,
+            'Khoa học tự nhiên': 2,
+            'Công nghệ': 1,
+            'Tin học': 1,
+            'Giáo dục thể chất': 2,
+            'Âm nhạc': 1,
+            'Mĩ thuật': 1
+         };
+          const days = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6','Thứ 7']
+
+        document.addEventListener('DOMContentLoaded', function () {
+             const classSelect = document.getElementById('classSelect');
+             const weekSelect = document.getElementById('weekSelect');
+             const sodaubaiTable = document.getElementById('sodaubaiTable').getElementsByTagName('tbody')[0];
+              classes.forEach(className =>{
+                   const option = document.createElement('option');
+                   option.value = className;
+                    option.textContent = className
+                   classSelect.appendChild(option);
+              })
+               weeks.forEach(week =>{
+                   const option = document.createElement('option');
+                   option.value = week;
+                   option.textContent = week;
+                     if(week === currentWeek) {
+                         option.selected = true;
+                    }
+                    weekSelect.appendChild(option);
+              })
+             let currentClass = localStorage.getItem('currentClass') || classes[0];
+              let currentWeekValue = localStorage.getItem('currentWeek') || currentWeek;
+              classSelect.value = currentClass;
+               weekSelect.value = currentWeekValue;
+            loadData(currentClass, currentWeekValue);
+            classSelect.addEventListener('change', function () {
+               currentClass = classSelect.value;
+                localStorage.setItem('currentClass', currentClass);
+                 loadData(currentClass, weekSelect.value);
+
+            });
+              weekSelect.addEventListener('change', function () {
+                 currentWeekValue = weekSelect.value;
+                 localStorage.setItem('currentWeek', currentWeekValue);
+                 loadData(classSelect.value, currentWeekValue);
+            });
+          const popupOverlay =  document.getElementById('popupOverlay');
+             const signaturePopup = document.getElementById('signaturePopup');
+               const editPopup =  document.getElementById('editPopup');
+          const teacherNameInput = document.getElementById('teacherName');
+           const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+         const teacherName = loggedInUser ? loggedInUser.name : "Unknown Teacher";
+          teacherNameInput.value = teacherName
+         function loadData(selectedClass, selectedWeek) {
+                sodaubaiTable.innerHTML = ''; //clear data
+                const sodaubaiKey = `sodaubai_${selectedClass}_${selectedWeek}`
+              let sodaubaiData = JSON.parse(localStorage.getItem(sodaubaiKey) || '[]');
+               if(!sodaubaiData.length) {
+                 let weekDays = ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6','Thứ 7'];
+                   for (let day of weekDays) {
+                         let shifts = day !== 'Thứ 7' ? ['Sáng', 'Chiều'] : ['Sáng'] // Thứ 7 chỉ có buổi sáng
+                          for (let shift of shifts) {
+                            let maxPeriods = shift === 'Sáng' ? 5 : 3; // Số tiết mỗi buổi
+                            for (let i = 1; i <= maxPeriods; i++) {
+                                let row =  {
+                                       day: day,
+                                        shift: shift,
+                                      period: i,
+                                       subject: '',
+                                         absent_students: '',
+                                      content: '',
+                                       oral_test: '',
+                                       comment: '',
+                                     rating: '',
+                                     signature: null
+                                };
+                                sodaubaiData.push(row);
+
+                            }
+                         }
+                     }
+                  localStorage.setItem(sodaubaiKey, JSON.stringify(sodaubaiData));
+                 }
+                   let dayShiftPeriodMap = {};
+                   sodaubaiData.forEach((row, index) => {
+                        const key = `${row.day}-${row.shift}-${row.period}`;
+                         if (!dayShiftPeriodMap[key]) {
+                            dayShiftPeriodMap[key] = [];
+                        }
+                      dayShiftPeriodMap[key].push({...row,index});
+
+                     });
+                     Object.keys(dayShiftPeriodMap).forEach(key =>{
+                       const rowList = dayShiftPeriodMap[key];
+                         const newRow = sodaubaiTable.insertRow();
+                        const mergedCell = newRow.insertCell();
+                         mergedCell.classList.add('merged-cell');
+                     const [day, shift, period] = key.split('-');
+                           mergedCell.innerHTML = `
+                           <div>${day}</div>
+                           <div>${shift}</div>
+                         <div>Tiết ${period}</div>
+                           `
+                       for(let row of rowList){
+                                let subjectCell= newRow.insertCell();
+                        subjectCell.textContent = row.subject;
+                       let signatureCell= newRow.insertCell();
+                         if (row.signature){
+                           let icon = document.createElement('button');
+                            icon.innerHTML = '<i class="fas fa-file-signature"></i>';
+                             icon.classList.add('icon-btn')
+                          signatureCell.appendChild(icon);
+                           let editButton = document.createElement('button');
+                             editButton.innerHTML = '<i class="fas fa-edit"></i>';
+                           editButton.classList.add('icon-btn','edit-btn')
+                             editButton.addEventListener('click', ()=> showEditPopup(row.index,row.signature, selectedClass, selectedWeek));
+                          signatureCell.appendChild(editButton);
+                           let deleteButton = document.createElement('button');
+                            deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+                           deleteButton.classList.add('icon-btn', 'delete-btn')
+                          deleteButton.addEventListener('click', ()=> deleteSignature(row.index, selectedClass, selectedWeek));
+                            signatureCell.appendChild(deleteButton);
+                         signatureCell.title = 'Đã ký bởi: ' + row.signature.teacherName;
+                       }
+                       else{
+                           signatureCell.textContent = "Chưa ký"
+                     }
+                          let absentStudentsCell= newRow.insertCell();
+                       absentStudentsCell.textContent = row.absent_students;
+                         let contentCell= newRow.insertCell();
+                        contentCell.textContent = row.content;
+                           let oralTestCell= newRow.insertCell();
+                         oralTestCell.textContent = row.oral_test;
+                         let commentCell= newRow.insertCell();
+                         commentCell.textContent = row.comment;
+                           let ratingCell = newRow.insertCell();
+                        const ratingSelect = document.createElement('select');
+                            ratings.forEach(rating => {
+                            const option = document.createElement('option');
+                                option.value = rating;
+                              option.textContent = rating;
+                                if (row.rating === rating) {
+                                     option.selected = true;
+                               }
+                           ratingSelect.appendChild(option);
+                      });
+                      ratingSelect.addEventListener('change', function () {
+                           sodaubaiData[row.index].rating = this.value;
+                            localStorage.setItem(sodaubaiKey, JSON.stringify(sodaubaiData));
+                       });
+                    ratingCell.appendChild(ratingSelect);
+                            let actionCell= newRow.insertCell();
+                         let actionButton = document.createElement('button')
+                         actionButton.classList.add('action-btn')
+                          actionButton.innerHTML = '<i class="fas fa-pencil-alt"></i>';
+                         actionButton.addEventListener('click', ()=> showSignaturePopup(row.index, row.subject, selectedClass, selectedWeek));
+                         if(row.signature){
+                             actionButton.disabled = true;
+                         }
+                        actionCell.appendChild(actionButton);
+                         break;// Chỉ cần lấy 1 row trong data để tạo cell
+                       }
+
+                   });
+                     //set môn học vào sổ đầu bài
+                  sodaubaiData.forEach(row => {
+                 if(row.subject){
+                     return;
+                 }
+                 const availableSubjects = Object.keys(subjects);
+                   if (row.day === 'Thứ 2' || row.day === 'Thứ 3' || row.day === 'Thứ 4' || row.day === 'Thứ 5' || row.day === 'Thứ 6') {
+                         if(row.period ===1){
+                             row.subject = 'Toán';
+                         }
+                       else if(row.period === 2){
+                           row.subject = 'Ngữ văn';
+                       }
+                          else if (row.period === 3){
+                                row.subject = availableSubjects[Math.floor(Math.random()* availableSubjects.length)]
+                        }
+                          else if(row.period === 4){
+                            row.subject = 'Tiếng Anh';
+                           }
+                         else if(row.period ===5){
+                               row.subject = availableSubjects[Math.floor(Math.random()* availableSubjects.length)];
+                        }
+                }
+                 else if(row.day === 'Thứ 7') {
+                     if(row.period ===1){
+                           row.subject = 'Ngữ văn';
+                      }
+                      else if(row.period === 2){
+                          row.subject = 'Toán';
+                       }
+                        else if(row.period === 3){
+                            row.subject = availableSubjects[Math.floor(Math.random()* availableSubjects.length)]
+                      }
+                  }
+               })
+                   localStorage.setItem(sodaubaiKey, JSON.stringify(sodaubaiData));
+
+             }
+            function showSignaturePopup(index,subject, selectedClass, selectedWeek) {
+                popupOverlay.style.display = "block";
+                signaturePopup.style.display = 'block';
+                 document.getElementById('subject').value = subject;
+               signaturePopup.dataset.index = index;
+                 signaturePopup.dataset.class = selectedClass;
+               signaturePopup.dataset.week = selectedWeek;
+                document.getElementById('signatureContent').value = '';
+            }
+            function showEditPopup(index, signatureData, selectedClass, selectedWeek) {
+                 popupOverlay.style.display = "block";
+                 editPopup.style.display = 'block';
+                document.getElementById('editSignatureContent').value = signatureData.signatureContent;
+                  editPopup.dataset.index = index;
+                   editPopup.dataset.class = selectedClass;
+                   editPopup.dataset.week = selectedWeek;
+            }
+           document.getElementById('cancelSignature').addEventListener('click', function () {
+              popupOverlay.style.display = "none";
+               signaturePopup.style.display = 'none';
+            });
+            document.querySelectorAll('.cancel-edit').forEach(button =>{
+               button.addEventListener('click', function () {
+                  popupOverlay.style.display = "none";
+                   editPopup.style.display = 'none';
+                });
+           })
+            document.getElementById('saveSignature').addEventListener('click', function () {
+                 try{
+                       const index = signaturePopup.dataset.index;
+                       const selectedClass = signaturePopup.dataset.class;
+                       const selectedWeek = signaturePopup.dataset.week;
+                    const signatureContent = document.getElementById('signatureContent').value;
+                     if(!signatureContent){
+                         showAlert("Vui lòng nhập nội dung ký!")
+                      return;
+                     }
+                      const sodaubaiKey = `sodaubai_${selectedClass}_${selectedWeek}`
+                     const sodaubaiData = JSON.parse(localStorage.getItem(sodaubaiKey));
+                      sodaubaiData[index].signature = {
+                           teacherName: teacherName,
+                            signatureContent: signatureContent,
+                           subject: document.getElementById('subject').value
+                    }
+                    localStorage.setItem(sodaubaiKey, JSON.stringify(sodaubaiData));
+                      popupOverlay.style.display = "none";
+                      signaturePopup.style.display = 'none';
+                     loadData(selectedClass, selectedWeek);
+                }
+              catch(e){
+                    showAlert("Có lỗi xảy ra khi kí");
+                      console.log(e)
+                }
+             });
+           document.querySelectorAll('.edit-signature').forEach(button =>{
+                button.addEventListener('click', function () {
+                    try{
+                         const index = editPopup.dataset.index;
+                          const selectedClass = editPopup.dataset.class;
+                        const selectedWeek = editPopup.dataset.week;
+                     const editSignatureContent = document.getElementById('editSignatureContent').value;
+                       if(!editSignatureContent){
+                           showAlert("Vui lòng nhập nội dung ký!");
+                           return;
+                        }
+                        const sodaubaiKey = `sodaubai_${selectedClass}_${selectedWeek}`
+                       const sodaubaiData = JSON.parse(localStorage.getItem(sodaubaiKey));
+                      sodaubaiData[index].signature.signatureContent = editSignatureContent;
+                     localStorage.setItem(sodaubaiKey, JSON.stringify(sodaubaiData));
+                     popupOverlay.style.display = "none";
+                     editPopup.style.display = 'none';
+                       loadData(selectedClass, selectedWeek);
+                   }
+                 catch(e){
+                      showAlert("Có lỗi xảy ra khi lưu");
+                    console.log(e)
+                  }
+                });
+            })
+
+              function deleteSignature(index, selectedClass, selectedWeek){
+                if(confirm("Bạn có chắc chắn muốn xóa chữ kí này không ?")) {
+                   try{
+                        const sodaubaiKey = `sodaubai_${selectedClass}_${selectedWeek}`
+                        const sodaubaiData = JSON.parse(localStorage.getItem(sodaubaiKey));
+                         sodaubaiData[index].signature = null;
+                         localStorage.setItem(sodaubaiKey, JSON.stringify(sodaubaiData));
+                         loadData(selectedClass, selectedWeek);
+                   }
+                      catch(e){
+                            showAlert("Có lỗi xảy ra khi xóa");
+                          console.log(e)
+                     }
+               }
+            }
+              document.querySelectorAll('.delete-signature').forEach(button => {
+                  button.addEventListener('click', () => {
+                      try{
+                        const index = editPopup.dataset.index;
+                          const selectedClass = editPopup.dataset.class;
+                         const selectedWeek = editPopup.dataset.week;
+                         if(confirm("Bạn có chắc chắn muốn xóa chữ kí này không ?")) {
+                              const sodaubaiKey = `sodaubai_${selectedClass}_${selectedWeek}`
+                             const sodaubaiData = JSON.parse(localStorage.getItem(sodaubaiKey));
+                             sodaubaiData[index].signature = null;
+                             localStorage.setItem(sodaubaiKey, JSON.stringify(sodaubaiData));
+                             popupOverlay.style.display = "none";
+                           editPopup.style.display = 'none';
+                             loadData(selectedClass, selectedWeek);
+                       }
+                   }
+                    catch(e){
+                       showAlert("Có lỗi xảy ra khi xóa");
+                        console.log(e)
+                   }
+                });
+           })
+             document.getElementById('saveAll').addEventListener('click', function () {
+                window.location.href = 'giaovien.html';
+            })
+              function showAlert(message) {
+                    const alertBox = document.getElementById('alert');
+                      alertBox.textContent = message;
+                    alertBox.style.display = 'block';
+                   alertBox.style.opacity = 1;
+                      setTimeout(() => {
+                       alertBox.style.opacity = 0;
+                          setTimeout(() => {
+                             alertBox.style.display = 'none'
+                       }, 300)
+
+                   }, 3000);
+               }
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Giáo Viên</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .header {
+            background-color: #007bff;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .header-right {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        .sidebar {
+            background-color: #f0f0f0;
+            padding: 20px;
+            width: 250px;
+            border-right: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar a i {
+            margin-right: 5px;
+        }
+
+        .sidebar a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+          .content h2 {
+             margin-top: 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .content {
+                padding: 10px;
+            }
+        }
+
+        .news-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-item h3 {
+            margin-top: 0;
+        }
+
+        .news-item p {
+            color: #666;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+             margin-bottom: 15px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+           
+        }
+         .form-group {
+            margin-bottom: 15px;
+        }
+       .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+       .form-group input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group button{
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+       .form-group button:hover {
+             background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Quản lí</h1>
+        <div class="header-right" id="teacherName"></div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Quản lý</h2>
+            <ul>
+                <li><a href="sodaubai.html"><i class="fas fa-book"></i> Sổ đầu bài</a></li>
+                <li><a href="sodiem.html"><i class="fas fa-graduation-cap"></i> Sổ điểm</a></li>
+                <li><a href="hocsinh.html"><i class="fas fa-users"></i> Học sinh</a></li>
+                <li><a href="thongbao.html"><i class="fas fa-bullhorn"></i> Thông báo</a></li>
+                <li><a href="tintuc.html"><i class="fas fa-newspaper"></i> Tin tức</a></li>
+                <li><a href="kiemtra.html"><i class="fas fa-tasks"></i> Kiểm tra</a></li>
+            </ul>
+            <button onclick="toggleCreateForm()">Tạo tài khoản</button>
+        </div>
+
+        <div class="content">
+            <h2>Trang chủ</h2>
+            <div class="news-item">
+                <h3>Tin tức 1</h3>
+                <p>Nội dung tin tức 1...</p>
+            </div>
+            <div class="news-item">
+                <h3>Tin tức 2</h3>
+                <p>Nội dung tin tức 2...</p>
+            </div>
+            <div class="news-item">
+                <h3>Tin tức 3</h3>
+                <p>Nội dung tin tức 3...</p>
+            </div>
+               <div id="createFormContainer" class="form-container" style="display: none;">
+                <h2>Tạo tài khoản giáo viên</h2>
+                <form id="createTeacherForm">
+                    <div class="form-group">
+                         <label for="newTeacherUsername">Tên đăng nhập:</label>
+                        <input type="text" id="newTeacherUsername" name="newTeacherUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newTeacherPassword">Mật khẩu:</label>
+                        <input type="password" id="newTeacherPassword" name="newTeacherPassword" required>
+                    </div>
+                      <div class="form-group">
+                           <label for="newTeacherName">Họ và tên:</label>
+                         <input type="text" id="newTeacherName" name="newTeacherName" required>
+                    </div>
+                    <div class="form-group">
+                         <button type="submit">Tạo tài khoản</button>
+                    </div>
+                </form>
+             </div>
+        </div>
+    </div>
+       <script>
+           document.addEventListener('DOMContentLoaded', function () {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+             if (loggedInUser) {
+               document.getElementById('teacherName').textContent = loggedInUser.username;
+               let teachers = JSON.parse(localStorage.getItem('teachers') || '[]');
+                const teacher = teachers.find(teacher => teacher.username === loggedInUser.username)
+                 if(teacher && teacher.name){
+                      document.getElementById('teacherName').textContent = teacher.name;
+                 }
+            }
+        });
+        function toggleCreateForm() {
+            var form = document.getElementById('createFormContainer');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+        document.getElementById('createTeacherForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('newTeacherUsername').value;
+            const password = document.getElementById('newTeacherPassword').value;
+             const name = document.getElementById('newTeacherName').value;
+
+            let teachers = JSON.parse(localStorage.getItem('teachers') || '[]');
+             if (teachers.find(teacher => teacher.username === username)) {
+                alert("Tài khoản đã tồn tại");
+                return;
+            }
+             const newTeacher = {
+                username: username,
+                password: password,
+                name: name,
+                role: 'teacher'
+            }
+            teachers.push(newTeacher);
+            localStorage.setItem('teachers', JSON.stringify(teachers));
+             localStorage.setItem('loggedInUser', JSON.stringify({username: username, name:name}));
+             document.getElementById('teacherName').textContent = name
+            alert('Tài khoản giáo viên đã được tạo!');
+              document.getElementById('createFormContainer').style.display = "none"; // Hide form
+            document.getElementById('newTeacherUsername').value = "";
+            document.getElementById('newTeacherPassword').value = "";
+             document.getElementById('newTeacherName').value = "";
+        });
+    </script>
+</body>
+
+</html>

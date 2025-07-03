@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện Tập Lịch Sử</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #quiz-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        #rules-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        #rules-container h2{
+           margin-bottom: 20px;
+        }
+
+        #rules-container p{
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        #rules-container button {
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s ease;
+        }
+
+        #rules-container button:hover {
+            background-color: #2980b9;
+        }
+
+
+        .question-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .question-card .question-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #f0f0f0;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .question-card h3{
+            margin-top: 0px;
+            margin-bottom: 20px;
+            padding-left: 40px;
+            word-wrap: break-word; /* Add word wrap */
+        }
+
+
+       .fill-in-question {
+           padding-left: 40px;
+       }
+        .fill-in-question p{
+          display: inline-block;
+          margin-bottom: 10px;
+        }
+
+
+       .fill-in-question .fill-in {
+           display: inline-block;
+            border-bottom: 1px solid #3498db;
+            padding: 0 5px;
+            min-width: 100px;
+            margin: 0 5px;
+            position: relative;
+            top: 5px;
+        }
+        .fill-in-question .fill-in input[type="text"]{
+            border: none;
+            outline: none;
+            border-bottom: 1px solid #bdc3c7;
+            padding: 5px;
+            font-size: 15px;
+            font-family: 'Roboto', sans-serif;
+            transition: border-bottom-color 0.3s ease;
+        }
+
+        .fill-in-question .fill-in input[type="text"]:focus {
+            border-bottom-color: #3498db;
+        }
+
+        .options{
+              padding-left: 40px;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            cursor: pointer;
+            padding: 12px;
+            border: 1px solid #e1e8ef;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background-color: #fff;
+           gap: 10px;
+        }
+        .options label:hover {
+            background-color: #ecf0f1;
+            border-color: #bdc3c7;
+        }
+        .options label input[type="radio"]{
+               margin-right: 10px;
+                -webkit-appearance: none; /* Remove default checkbox styles */
+                -moz-appearance: none;
+                appearance: none;
+                width: 15px;
+                height: 15px;
+                border: 2px solid #bdc3c7;
+                border-radius: 50%;
+                display: inline-block;
+                position: relative;
+                cursor: pointer;
+                 transition: background-color 0.2s ease;
+        }
+
+           .options label input[type="radio"]:checked {
+              border-color: #3498db;
+           }
+              .options label input[type="radio"]:checked::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background-color: #3498db;
+                transform: translate(-50%, -50%);
+            }
+           .options label .option-text{
+               flex: 1;
+           }
+
+        button {
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+         #result-container {
+            text-align: center;
+            display: none;
+            background-color: #fff;
+            padding: 30px;
+             border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        #result-container h2{
+           margin-bottom: 20px;
+        }
+       #result-container #total-score-display{
+            font-size: 2.5em;
+            color: #27ae60;
+           margin-bottom: 20px;
+           font-weight: bold;
+        }
+        #result-container button{
+            margin-top: 15px;
+        }
+         #result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+             border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #result-table th, #result-table td {
+            padding: 10px;
+            border: 1px solid #e1e8ef;
+             text-align: left;
+        }
+
+        #result-table th {
+          background-color: #f9f9f9;
+            font-weight: 500;
+         }
+        .correct{
+            color: #27ae60;
+        }
+
+        .incorrect {
+            color: #e74c3c;
+        }
+
+         .option-letter {
+           background-color: #e0e0e0;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+             font-size: 0.9em;
+           font-weight: 500;
+           }
+        #timer {
+            font-size: 1.2em;
+            font-weight: bold;
+             color: #3498db;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+         #quiz-form {
+             display: none;
+        }
+        #result-table{
+            display: none;
+        }
+         .hidden{
+             display: none;
+        }
+         .multi-select-options label input[type="checkbox"]{
+            margin-right: 10px;
+            -webkit-appearance: none; /* Remove default checkbox styles */
+            -moz-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border: 2px solid #bdc3c7;
+            border-radius: 5px;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+         }
+          .multi-select-options label input[type="checkbox"]:checked {
+              background-color: #3498db;
+              border-color: #3498db;
+          }
+            .multi-select-options label input[type="checkbox"]:checked::before{
+            content: '\2713'; /* Unicode for checkmark */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+             font-size: 14px;
+           color: white;
+            transform: translate(-50%, -50%);
+            }
+
+    </style>
+</head>
+<body>
+    <div id="rules-container">
+        <h2>QUY CHẾ THI LUYỆN TẬP LỊCH SỬ</h2>
+        <p>Chào mừng bạn đến với bài thi luyện tập Lịch sử!</p>
+        <p>Bài thi gồm 30 câu hỏi, trong đó có các câu hỏi trắc nghiệm một lựa chọn, trắc nghiệm nhiều lựa chọn và điền từ vào chỗ trống.</p>
+         <p>Có 2 câu trắc nghiệm chọn nhiều đáp án.</p>
+        <p>Thời gian làm bài là 30 phút. Hệ thống sẽ tự động nộp bài khi hết thời gian.</p>
+         <p>Sau khi nộp bài, bạn sẽ nhận được kết quả chi tiết, bao gồm điểm số và bảng phân tích đáp án.</p>
+        <p>Hãy hoàn thành bài thi một cách trung thực nhất nhé.</p>
+        <button onclick="startQuiz()">Bắt đầu làm bài</button>
+    </div>
+    <div id="quiz-container" style="display: none">
+        <div id="timer">30:00</div>
+        <form id="quiz-form">
+
+            <div class="question-card">
+                <div class="question-number">1</div>
+                <h3>Điền vào chỗ trống: Bộ luật thành văn đầu tiên của nước ta là 
+                    <span class="fill-in-question">
+                       <span class="fill-in"><input type="text" name="fill1"></span>
+                   </span>
+                </h3>
+            </div>
+
+            <div class="question-card">
+               <div class="question-number">2</div>
+                 <h3>Nhân vật lịch sử nào được biết đến với câu nói "Ta thà làm ma nước Nam chứ không thèm làm vương đất Bắc"?</h3>
+                 <div class="options">
+                    <label><input type="radio" name="q2" value="A"> <span class="option-letter">A</span><span class="option-text">Lý Công Uẩn</span></label>
+                    <label><input type="radio" name="q2" value="B"> <span class="option-letter">B</span><span class="option-text">Nguyễn Trãi</span></label>
+                    <label><input type="radio" name="q2" value="C"> <span class="option-letter">C</span><span class="option-text">Trần Hưng Đạo</span></label>
+                    <label><input type="radio" name="q2" value="D"> <span class="option-letter">D</span><span class="option-text">Vua Hàm Nghi</span></label>
+                </div>
+            </div>
+
+             <div class="question-card">
+                <div class="question-number">3</div>
+                <h3>Phong trào Cần Vương bùng nổ khi vị vua nào bị bắt và đày đi?
+                   <span class="fill-in-question">
+                       <p>Vua <span class="fill-in"><input type="text" name="fill3"></span></p>
+                   </span>
+                </h3>
+             </div>
+
+              <div class="question-card">
+                 <div class="question-number">4</div>
+                 <h3>Cuộc kháng chiến chống quân Mông - Nguyên lần thứ hai diễn ra vào năm nào?</h3>
+                  <div class="options">
+                    <label><input type="radio" name="q4" value="A"> <span class="option-letter">A</span><span class="option-text">1257</span></label>
+                    <label><input type="radio" name="q4" value="B"> <span class="option-letter">B</span><span class="option-text">1285</span></label>
+                     <label><input type="radio" name="q4" value="C"> <span class="option-letter">C</span><span class="option-text">1288</span></label>
+                    <label><input type="radio" name="q4" value="D"> <span class="option-letter">D</span><span class="option-text">1279</span></label>
+                </div>
+              </div>
+
+               <div class="question-card">
+                 <div class="question-number">5</div>
+                  <h3>Điền vào chỗ trống: Triều đại nào đã thực hiện cuộc cải cách hành chính lớn nhất trong lịch sử phong kiến Việt Nam? Triều đại
+                       <span class="fill-in-question">
+                           <span class="fill-in"><input type="text" name="fill5"></span>
+                       </span>
+                  </h3>
+             </div>
+
+           <div class="question-card">
+                <div class="question-number">6</div>
+               <h3>Cuộc Cách mạng tháng Tám năm 1945 thành công đã khai sinh ra nhà nước nào?
+                  <span class="fill-in-question">
+                       <p>Nước <span class="fill-in"><input type="text" name="fill6"></span></p>
+                  </span>
+              </h3>
+          </div>
+
+            <div class="question-card">
+                <div class="question-number">7</div>
+                <h3>Địa danh nào gắn liền với chiến thắng lịch sử Điện Biên Phủ năm 1954?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="A"> <span class="option-letter">A</span><span class="option-text">Hà Nội</span></label>
+                    <label><input type="radio" name="q7" value="B"> <span class="option-letter">B</span><span class="option-text">Huế</span></label>
+                     <label><input type="radio" name="q7" value="C"> <span class="option-letter">C</span><span class="option-text">Điện Biên</span></label>
+                    <label><input type="radio" name="q7" value="D"> <span class="option-letter">D</span><span class="option-text">Sài Gòn</span></label>
+                </div>
+            </div>
+
+          <div class="question-card">
+                <div class="question-number">8</div>
+                <h3>Nhà Lý dời đô từ Hoa Lư về Thăng Long vào năm nào?
+                 <span class="fill-in-question">
+                    <p>Năm <span class="fill-in"><input type="text" name="fill8"></span></p>
+                 </span>
+               </h3>
+            </div>
+             <div class="question-card">
+                <div class="question-number">9</div>
+                 <h3>Ai là người lãnh đạo cuộc kháng chiến chống quân Thanh xâm lược nước ta năm 1789?
+                    <span class="fill-in-question">
+                     <p><span class="fill-in"><input type="text" name="fill9"></span></p>
+                    </span>
+                 </h3>
+             </div>
+           <div class="question-card">
+                 <div class="question-number">10</div>
+                <h3>Điền vào chỗ trống: Chiến dịch quân sự lớn nhất của quân dân Việt Nam trong kháng chiến chống Mỹ là chiến dịch
+                     <span class="fill-in-question">
+                         <span class="fill-in"><input type="text" name="fill10"></span>
+                     </span>
+                </h3>
+            </div>
+             <div class="question-card">
+                <div class="question-number">11</div>
+                  <h3>Kim tự tháp Giza thuộc về nền văn minh nào?</h3>
+                  <div class="options">
+                     <label><input type="radio" name="q11" value="A"> <span class="option-letter">A</span><span class="option-text">Văn minh Lưỡng Hà</span></label>
+                     <label><input type="radio" name="q11" value="B"> <span class="option-letter">B</span><span class="option-text">Văn minh Hy Lạp</span></label>
+                     <label><input type="radio" name="q11" value="C"> <span class="option-letter">C</span><span class="option-text">Văn minh La Mã</span></label>
+                     <label><input type="radio" name="q11" value="D"> <span class="option-letter">D</span><span class="option-text">Văn minh Ai Cập</span></label>
+                 </div>
+             </div>
+          <div class="question-card">
+                <div class="question-number">12</div>
+               <h3>Ai là người có công lớn trong việc phát kiến ra châu Mỹ?
+                   <span class="fill-in-question">
+                       <p> <span class="fill-in"><input type="text" name="fill12"></span></p>
+                    </span>
+              </h3>
+          </div>
+             <div class="question-card">
+                <div class="question-number">13</div>
+                   <h3>Cuộc cách mạng công nghiệp lần thứ nhất bắt đầu ở quốc gia nào?</h3>
+                     <div class="options">
+                        <label><input type="radio" name="q13" value="A"> <span class="option-letter">A</span><span class="option-text">Pháp</span></label>
+                        <label><input type="radio" name="q13" value="B"> <span class="option-letter">B</span><span class="option-text">Anh</span></label>
+                        <label><input type="radio" name="q13" value="C"> <span class="option-letter">C</span><span class="option-text">Đức</span></label>
+                        <label><input type="radio" name="q13" value="D"> <span class="option-letter">D</span><span class="option-text">Mỹ</span></label>
+                    </div>
+              </div>
+         <div class="question-card">
+                <div class="question-number">14</div>
+                  <h3>Cuộc cách mạng tháng Mười Nga năm 1917 đã lật đổ chế độ nào?</h3>
+                  <div class="options">
+                     <label><input type="radio" name="q14" value="A"> <span class="option-letter">A</span><span class="option-text">Chế độ quân chủ chuyên chế</span></label>
+                    <label><input type="radio" name="q14" value="B"> <span class="option-letter">B</span><span class="option-text">Chế độ cộng hòa tư sản</span></label>
+                    <label><input type="radio" name="q14" value="C"> <span class="option-letter">C</span><span class="option-text">Chế độ phát xít</span></label>
+                    <label><input type="radio" name="q14" value="D"> <span class="option-letter">D</span><span class="option-text">Chế độ phong kiến</span></label>
+                </div>
+           </div>
+
+         <div class="question-card">
+                <div class="question-number">15</div>
+                   <h3>Hiệp ước Versailles là kết quả của cuộc chiến tranh nào?
+                      <span class="fill-in-question">
+                          <p>Chiến tranh <span class="fill-in"><input type="text" name="fill15"></span></p>
+                      </span>
+                </h3>
+           </div>
+             <div class="question-card">
+                <div class="question-number">16</div>
+                 <h3>Tổ chức nào được thành lập sau Chiến tranh thế giới thứ nhất nhằm duy trì hòa bình?
+                    <span class="fill-in-question">
+                    <p> <span class="fill-in"><input type="text" name="fill16"></span></p>
+                    </span>
+                </h3>
+            </div>
+         <div class="question-card">
+                <div class="question-number">17</div>
+                <h3>Phe Trục trong Chiến tranh thế giới thứ hai bao gồm các nước nào?</h3>
+                  <div class="multi-select-options options">
+                     <label><input type="checkbox" name="q17" value="A"> <span class="option-letter">A</span><span class="option-text">Đức</span></label>
+                     <label><input type="checkbox" name="q17" value="B"> <span class="option-letter">B</span><span class="option-text">Ý</span></label>
+                     <label><input type="checkbox" name="q17" value="C"> <span class="option-letter">C</span><span class="option-text">Nhật Bản</span></label>
+                     <label><input type="checkbox" name="q17" value="D"> <span class="option-letter">D</span><span class="option-text">Pháp</span></label>
+                </div>
+         </div>
+           <div class="question-card">
+                <div class="question-number">18</div>
+                <h3>Hội nghị Yalta diễn ra năm bao nhiêu và gồm các nước nào tham gia?
+                     <span class="fill-in-question">
+                     <p>Năm <span class="fill-in"><input type="text" name="fill18_year"></span>, Các nước <span class="fill-in"><input type="text" name="fill18_country"></span></p>
+                     </span>
+                </h3>
+          </div>
+         <div class="question-card">
+                <div class="question-number">19</div>
+                 <h3>Chiến tranh Lạnh là cuộc đối đầu giữa hai phe nào?
+                   <span class="fill-in-question">
+                    <p>Phe <span class="fill-in"><input type="text" name="fill19"></span></p>
+                    </span>
+                </h3>
+         </div>
+           <div class="question-card">
+                <div class="question-number">20</div>
+                <h3>Thủ đô của nước Nga là thành phố nào?
+                 <span class="fill-in-question">
+                     <p> <span class="fill-in"><input type="text" name="fill20"></span></p>
+                 </span>
+               </h3>
+         </div>
+           <div class="question-card">
+                 <div class="question-number">21</div>
+                <h3>Ai là người phát minh ra bóng đèn điện?
+                 <span class="fill-in-question">
+                      <p><span class="fill-in"><input type="text" name="fill21"></span></p>
+                 </span>
+                  </h3>
+         </div>
+              <div class="question-card">
+                 <div class="question-number">22</div>
+                  <h3>Nhà khoa học nào nổi tiếng với thuyết tương đối?</h3>
+                   <div class="options">
+                       <label><input type="radio" name="q22" value="A"> <span class="option-letter">A</span><span class="option-text">Isaac Newton</span></label>
+                       <label><input type="radio" name="q22" value="B"> <span class="option-letter">B</span><span class="option-text">Albert Einstein</span></label>
+                        <label><input type="radio" name="q22" value="C"> <span class="option-letter">C</span><span class="option-text">Galileo Galilei</span></label>
+                       <label><input type="radio" name="q22" value="D"> <span class="option-letter">D</span><span class="option-text">Marie Curie</span></label>
+                   </div>
+              </div>
+             <div class="question-card">
+                <div class="question-number">23</div>
+                 <h3>Nhà lãnh đạo nào đã dẫn dắt phong trào bất bạo động ở Ấn Độ?
+                     <span class="fill-in-question">
+                         <p><span class="fill-in"><input type="text" name="fill23"></span></p>
+                   </span>
+                 </h3>
+           </div>
+            <div class="question-card">
+                <div class="question-number">24</div>
+                <h3>Vị vua cuối cùng của triều Nguyễn là ai?
+                    <span class="fill-in-question">
+                         <p>Vua <span class="fill-in"><input type="text" name="fill24"></span></p>
+                    </span>
+              </h3>
+            </div>
+           <div class="question-card">
+                <div class="question-number">25</div>
+                <h3>Athens là một thành bang nổi tiếng của nền văn minh nào?</h3>
+                <div class="options">
+                    <label><input type="radio" name="q25" value="A"> <span class="option-letter">A</span><span class="option-text">La Mã</span></label>
+                     <label><input type="radio" name="q25" value="B"> <span class="option-letter">B</span><span class="option-text">Hy Lạp</span></label>
+                    <label><input type="radio" name="q25" value="C"> <span class="option-letter">C</span><span class="option-text">Ai Cập</span></label>
+                    <label><input type="radio" name="q25" value="D"> <span class="option-letter">D</span><span class="option-text">Lưỡng Hà</span></label>
+                </div>
+           </div>
+              <div class="question-card">
+                 <div class="question-number">26</div>
+                <h3>Hãy kể tên các chiến dịch lớn của Việt Nam trong kháng chiến chống Mỹ?
+                 <span class="fill-in-question">
+                    <p>Chiến dịch  <span class="fill-in"><input type="text" name="fill26_1"></span>, <span class="fill-in"><input type="text" name="fill26_2"></span>,<span class="fill-in"><input type="text" name="fill26_3"></span></p>
+                 </span>
+               </h3>
+             </div>
+          <div class="question-card">
+                <div class="question-number">27</div>
+               <h3>Trong lịch sử Việt Nam, triều đại nào phát triển mạnh về Phật giáo?
+                 <span class="fill-in-question">
+                    <p>Triều đại <span class="fill-in"><input type="text" name="fill27"></span></p>
+                 </span>
+                </h3>
+            </div>
+             <div class="question-card">
+                <div class="question-number">28</div>
+                <h3>Hãy chọn các đáp án đúng về các vị vua của nhà Lý</h3>
+                 <div class="multi-select-options options">
+                     <label><input type="checkbox" name="q28" value="A"> <span class="option-letter">A</span><span class="option-text">Lý Thái Tổ</span></label>
+                     <label><input type="checkbox" name="q28" value="B"> <span class="option-letter">B</span><span class="option-text">Lý Thánh Tông</span></label>
+                     <label><input type="checkbox" name="q28" value="C"> <span class="option-letter">C</span><span class="option-text">Lý Thường Kiệt</span></label>
+                     <label><input type="checkbox" name="q28" value="D"> <span class="option-letter">D</span><span class="option-text">Lý Nhân Tông</span></label>
+                </div>
+            </div>
+              <div class="question-card">
+                 <div class="question-number">29</div>
+                 <h3>Năm 1077, quân dân ta đã chiến thắng quân Tống trên dòng sông nào?
+                     <span class="fill-in-question">
+                        <p>Sông <span class="fill-in"><input type="text" name="fill29"></span></p>
+                     </span>
+                 </h3>
+            </div>
+            <div class="question-card">
+                <div class="question-number">30</div>
+                  <h3>Fidel Castro là lãnh tụ của cuộc cách mạng nào?
+                     <span class="fill-in-question">
+                        <p>Cách mạng <span class="fill-in"><input type="text" name="fill30"></span></p>
+                    </span>
+                </h3>
+           </div>
+           <button type="button" onclick="checkAnswers()">Nộp bài</button>
+        </form>
+    </div>
+    <div id="result-container" class="hidden">
+        <h2>Kết quả bài thi</h2>
+         <div id="total-score-display">
+           <span id="total-score"></span>/300 điểm
+        </div>
+
+        <button onclick="showReview()">Xem lại đáp án</button>
+         <table id="result-table">
+            <thead>
+                <tr>
+                  <th>Câu hỏi</th>
+                   <th>Đáp án của bạn</th>
+                   <th>Đáp án đúng</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+             <tbody id="result-table-body">
+
+             </tbody>
+        </table>
+    </div>
+    <script>
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        let timerInterval;
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const timerDisplay = document.getElementById('timer');
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(function(){
+                timeLeft--;
+                updateTimerDisplay();
+                if(timeLeft < 0){
+                    clearInterval(timerInterval);
+                    checkAnswers();
+                    alert("Hết giờ làm bài!")
+                }
+            }, 1000)
+        }
+
+       function startQuiz() {
+            document.getElementById('rules-container').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('quiz-form').style.display = 'block';
+             startTimer();
+             updateTimerDisplay();
+        }
+
+         let userAnswers = {};
+          function checkAnswers() {
+             clearInterval(timerInterval);
+             const form = document.getElementById('quiz-form');
+             const quizContainer = document.getElementById('quiz-container');
+             const resultContainer = document.getElementById('result-container');
+             const totalScoreSpan = document.getElementById('total-score');
+            const resultTableBody = document.getElementById('result-table-body');
+
+             const answers = {
+                fill1: 'hình thư',
+                 q2: 'C',
+                fill3: 'Hàm Nghi',
+                q4: 'B',
+                 fill5: 'Lê sơ',
+                fill6: 'Việt Nam Dân chủ Cộng hòa',
+                 q7: 'C',
+               fill8: '1010',
+               fill9: 'Quang Trung',
+               fill10: 'Hồ Chí Minh',
+                q11: 'D',
+               fill12: 'Columbus',
+                q13: 'B',
+                q14: 'A',
+               fill15: 'thế giới thứ nhất',
+               fill16: 'Hội Quốc Liên',
+               q17: ['A', 'B', 'C'],
+               fill18_year: '1945',
+              fill18_country: 'Mỹ, Anh, Liên Xô',
+              fill19: 'tư bản và cộng sản',
+                fill20: 'Moscow',
+              fill21: 'Thomas Edison',
+                q22: 'B',
+                fill23: 'Mahatma Gandhi',
+                fill24: 'Bảo Đại',
+                 q25: 'B',
+                fill26_1: 'Đông Xuân',
+                fill26_2: 'Tết Mậu Thân',
+                fill26_3: 'Hà Nội - Điện Biên Phủ trên không',
+                fill27: 'Lý',
+                q28: ['A', 'B','D'],
+               fill29: 'Như Nguyệt',
+                 fill30: 'Cuba'
+             };
+             let score = 0;
+
+             // Lưu trữ câu trả lời của người dùng
+             userAnswers['fill1'] = form.querySelector(`input[name="fill1"]`).value;
+             const selectedQ2 = form.querySelector(`input[name="q2"]:checked`);
+            if (selectedQ2){
+               userAnswers['q2'] = selectedQ2.value;
+            }
+
+           userAnswers['fill3'] = form.querySelector(`input[name="fill3"]`).value;
+            const selectedQ4 = form.querySelector(`input[name="q4"]:checked`);
+            if (selectedQ4){
+              userAnswers['q4'] = selectedQ4.value;
+            }
+            userAnswers['fill5'] = form.querySelector(`input[name="fill5"]`).value;
+            userAnswers['fill6'] = form.querySelector(`input[name="fill6"]`).value;
+            const selectedQ7 = form.querySelector(`input[name="q7"]:checked`);
+            if (selectedQ7){
+              userAnswers['q7'] = selectedQ7.value;
+            }
+            userAnswers['fill8'] = form.querySelector(`input[name="fill8"]`).value;
+            userAnswers['fill9'] = form.querySelector(`input[name="fill9"]`).value;
+            userAnswers['fill10'] = form.querySelector(`input[name="fill10"]`).value;
+            const selectedQ11 = form.querySelector(`input[name="q11"]:checked`);
+            if (selectedQ11){
+              userAnswers['q11'] = selectedQ11.value;
+            }
+            userAnswers['fill12'] = form.querySelector(`input[name="fill12"]`).value;
+           const selectedQ13 = form.querySelector(`input[name="q13"]:checked`);
+           if (selectedQ13){
+             userAnswers['q13'] = selectedQ13.value;
+           }
+           const selectedQ14 = form.querySelector(`input[name="q14"]:checked`);
+           if (selectedQ14){
+             userAnswers['q14'] = selectedQ14.value;
+           }
+            userAnswers['fill15'] = form.querySelector(`input[name="fill15"]`).value;
+            userAnswers['fill16'] = form.querySelector(`input[name="fill16"]`).value;
+             const selectedQ17 = Array.from(form.querySelectorAll(`input[name="q17"]:checked`)).map(checkbox => checkbox.value);
+            userAnswers['q17'] = selectedQ17;
+            userAnswers['fill18_year'] = form.querySelector(`input[name="fill18_year"]`).value;
+            userAnswers['fill18_country'] = form.querySelector(`input[name="fill18_country"]`).value;
+            userAnswers['fill19'] = form.querySelector(`input[name="fill19"]`).value;
+            userAnswers['fill20'] = form.querySelector(`input[name="fill20"]`).value;
+            userAnswers['fill21'] = form.querySelector(`input[name="fill21"]`).value;
+           const selectedQ22 = form.querySelector(`input[name="q22"]:checked`);
+           if (selectedQ22){
+             userAnswers['q22'] = selectedQ22.value;
+           }
+           userAnswers['fill23'] = form.querySelector(`input[name="fill23"]`).value;
+            userAnswers['fill24'] = form.querySelector(`input[name="fill24"]`).value;
+            const selectedQ25 = form.querySelector(`input[name="q25"]:checked`);
+            if (selectedQ25){
+              userAnswers['q25'] = selectedQ25.value;
+            }
+
+           userAnswers['fill26_1'] = form.querySelector(`input[name="fill26_1"]`).value;
+           userAnswers['fill26_2'] = form.querySelector(`input[name="fill26_2"]`).value;
+            userAnswers['fill26_3'] = form.querySelector(`input[name="fill26_3"]`).value;
+
+           userAnswers['fill27'] = form.querySelector(`input[name="fill27"]`).value;
+             const selectedQ28 = Array.from(form.querySelectorAll(`input[name="q28"]:checked`)).map(checkbox => checkbox.value);
+           userAnswers['q28'] = selectedQ28;
+            userAnswers['fill29'] = form.querySelector(`input[name="fill29"]`).value;
+            userAnswers['fill30'] = form.querySelector(`input[name="fill30"]`).value;
+
+        // Kiểm tra câu trả lời và tính điểm
+        if (userAnswers['fill1'].trim().toLowerCase() === answers[`fill1`].toLowerCase()) {
+            score += 10;
+        }
+         if (userAnswers['q2'] === answers[`q2`]) {
+            score += 10;
+        }
+          if (userAnswers['fill3'].trim().toLowerCase() === answers[`fill3`].toLowerCase()) {
+            score += 10;
+        }
+          if (userAnswers['q4'] === answers[`q4`]) {
+            score += 10;
+        }
+          if (userAnswers['fill5'].trim().toLowerCase() === answers[`fill5`].toLowerCase()) {
+            score += 10;
+        }
+         if (userAnswers['fill6'].trim().toLowerCase() === answers[`fill6`].toLowerCase()) {
+            score += 10;
+        }
+          if (userAnswers['q7'] === answers[`q7`]) {
+            score += 10;
+        }
+          if (userAnswers['fill8'].trim() === answers[`fill8`]) {
+            score += 10;
+        }
+           if (userAnswers['fill9'].trim().toLowerCase() === answers[`fill9`].toLowerCase()) {
+            score += 10;
+        }
+        if (userAnswers['fill10'].trim().toLowerCase() === answers[`fill10`].toLowerCase()) {
+            score += 10;
+        }
+          if (userAnswers['q11'] === answers[`q11`]) {
+            score += 10;
+        }
+        if (userAnswers['fill12'].trim().toLowerCase() === answers[`fill12`].toLowerCase()) {
+            score += 10;
+        }
+         if (userAnswers['q13'] === answers[`q13`]) {
+            score += 10;
+        }
+       if (userAnswers['q14'] === answers[`q14`]) {
+            score += 10;
+        }
+          if (userAnswers['fill15'].trim().toLowerCase() === answers[`fill15`].toLowerCase()) {
+            score += 10;
+        }
+        if (userAnswers['fill16'].trim().toLowerCase() === answers[`fill16`].toLowerCase()) {
+            score += 10;
+        }
+
+        const q17Correct = answers[`q17`].every(val => userAnswers['q17'].includes(val)) && userAnswers['q17'].length === answers[`q17`].length;
+        if (q17Correct) {
+          score += 10;
+        }
+
+           if (userAnswers['fill18_year'].trim() === answers[`fill18_year`] && userAnswers['fill18_country'].trim().toLowerCase() === answers[`fill18_country`].toLowerCase()) {
+            score += 10;
+        }
+         if (userAnswers['fill19'].trim().toLowerCase() === answers[`fill19`].toLowerCase()) {
+            score += 10;
+        }
+          if (userAnswers['fill20'].trim().toLowerCase() === answers[`fill20`].toLowerCase()) {
+            score += 10;
+        }
+          if (userAnswers['fill21'].trim().toLowerCase() === answers[`fill21`].toLowerCase()) {
+            score += 10;
+        }
+          if (userAnswers['q22'] === answers[`q22`]) {
+            score += 10;
+        }
+         if (userAnswers['fill23'].trim().toLowerCase() === answers[`fill23`].toLowerCase()) {
+            score += 10;
+        }
+        if (userAnswers['fill24'].trim().toLowerCase() === answers[`fill24`].toLowerCase()) {
+            score += 10;
+        }
+        if (userAnswers['q25'] === answers[`q25`]) {
+            score += 10;
+        }
+        if (userAnswers['fill26_1'].trim().toLowerCase() === answers[`fill26_1`].toLowerCase() && userAnswers['fill26_2'].trim().toLowerCase() === answers[`fill26_2`].toLowerCase() && userAnswers['fill26_3'].trim().toLowerCase() === answers[`fill26_3`].toLowerCase()) {
+            score += 10;
+        }
+         if (userAnswers['fill27'].trim().toLowerCase() === answers[`fill27`].toLowerCase()) {
+            score += 10;
+        }
+         const q28Correct = answers[`q28`].every(val => userAnswers['q28'].includes(val)) && userAnswers['q28'].length === answers[`q28`].length;
+        if (q28Correct) {
+          score += 10;
+        }
+         if (userAnswers['fill29'].trim().toLowerCase() === answers[`fill29`].toLowerCase()) {
+            score += 10;
+        }
+           if (userAnswers['fill30'].trim().toLowerCase() === answers[`fill30`].toLowerCase()) {
+            score += 10;
+        }
+      // tính điểm trên tổng số 300
+        score = (score/10)*300
+         totalScoreSpan.textContent = Math.round(score);
+
+         quizContainer.style.display = 'none';
+         resultContainer.style.display = 'flex';
+         resultContainer.style.flexDirection = 'column';
+         resultTableBody.innerHTML = '';
+         }
+
+    function showReview(){
+       const resultTable = document.getElementById('result-table');
+       resultTable.style.display = 'block';
+        const resultTableBody = document.getElementById('result-table-body');
+          const answers = {
+               fill1: 'hình thư',
+             q2: 'C',
+            fill3: 'Hàm Nghi',
+            q4: 'B',
+             fill5: 'Lê sơ',
+            fill6: 'Việt Nam Dân chủ Cộng hòa',
+             q7: 'C',
+           fill8: '1010',
+           fill9: 'Quang Trung',
+           fill10: 'Hồ Chí Minh',
+            q11: 'D',
+           fill12: 'Columbus',
+            q13: 'B',
+            q14: 'A',
+           fill15: 'thế giới thứ nhất',
+           fill16: 'Hội Quốc Liên',
+           q17: ['A', 'B', 'C'],
+            fill18_year: '1945',
+          fill18_country: 'Mỹ, Anh, Liên Xô',
+            fill19: 'tư bản và cộng sản',
+           fill20: 'Moscow',
+            fill21: 'Thomas Edison',
+            q22: 'B',
+            fill23: 'Mahatma Gandhi',
+             fill24: 'Bảo Đại',
+             q25: 'B',
+             fill26_1: 'Đông Xuân',
+             fill26_2: 'Tết Mậu Thân',
+              fill26_3: 'Hà Nội - Điện Biên Phủ trên không',
+             fill27: 'Lý',
+               q28: ['A', 'B','D'],
+            fill29: 'Như Nguyệt',
+            fill30: 'Cuba'
+        };
+    let reviewHTML = '';
+    reviewHTML +=  `<tr>
+        <td>Điền vào chỗ trống: Bộ luật thành văn đầu tiên của nước ta là ...</td>
+         <td>${userAnswers['fill1']}</td>
+           <td>${answers['fill1']}</td>
+           <td class="${userAnswers['fill1'].trim().toLowerCase() === answers['fill1'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill1'].trim().toLowerCase() === answers['fill1'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+      reviewHTML += `<tr>
+            <td>Nhân vật lịch sử nào được biết đến với câu nói "Ta thà làm ma nước Nam chứ không thèm làm vương đất Bắc"?</td>
+            <td>${userAnswers['q2'] ?  userAnswers['q2']: 'Không chọn'}</td>
+           <td>${answers['q2']}</td>
+             <td class="${userAnswers['q2'] === answers['q2'] ? 'correct' : 'incorrect'}">
+               ${userAnswers['q2'] === answers['q2'] ? 'Đúng' : 'Sai'}
+              </td>
+        </tr>`;
+       reviewHTML +=  `<tr>
+        <td>Phong trào Cần Vương bùng nổ khi vị vua nào bị bắt và đày đi?</td>
+         <td>${userAnswers['fill3']}</td>
+           <td>${answers['fill3']}</td>
+           <td class="${userAnswers['fill3'].trim().toLowerCase() === answers['fill3'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill3'].trim().toLowerCase() === answers['fill3'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+       reviewHTML += `<tr>
+            <td>Cuộc kháng chiến chống quân Mông - Nguyên lần thứ hai diễn ra vào năm nào?</td>
+            <td>${userAnswers['q4'] ?  userAnswers['q4']: 'Không chọn'}</td>
+           <td>${answers['q4']}</td>
+             <td class="${userAnswers['q4'] === answers['q4'] ? 'correct' : 'incorrect'}">
+               ${userAnswers['q4'] === answers['q4'] ? 'Đúng' : 'Sai'}
+              </td>
+        </tr>`;
+       reviewHTML +=  `<tr>
+        <td>Điền vào chỗ trống: Triều đại nào đã thực hiện cuộc cải cách hành chính lớn nhất trong lịch sử phong kiến Việt Nam? Triều đại ...</td>
+         <td>${userAnswers['fill5']}</td>
+           <td>${answers['fill5']}</td>
+           <td class="${userAnswers['fill5'].trim().toLowerCase() === answers['fill5'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill5'].trim().toLowerCase() === answers['fill5'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+
+      reviewHTML +=  `<tr>
+        <td>Cuộc Cách mạng tháng Tám năm 1945 thành công đã khai sinh ra nhà nước nào?</td>
+         <td>${userAnswers['fill6']}</td>
+           <td>${answers['fill6']}</td>
+           <td class="${userAnswers['fill6'].trim().toLowerCase() === answers['fill6'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill6'].trim().toLowerCase() === answers['fill6'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+
+      reviewHTML += `<tr>
+            <td>Địa danh nào gắn liền với chiến thắng lịch sử Điện Biên Phủ năm 1954?</td>
+            <td>${userAnswers['q7'] ?  userAnswers['q7']: 'Không chọn'}</td>
+           <td>${answers['q7']}</td>
+             <td class="${userAnswers['q7'] === answers['q7'] ? 'correct' : 'incorrect'}">
+               ${userAnswers['q7'] === answers['q7'] ? 'Đúng' : 'Sai'}
+              </td>
+        </tr>`;
+       reviewHTML +=  `<tr>
+        <td>Nhà Lý dời đô từ Hoa Lư về Thăng Long vào năm nào?</td>
+         <td>${userAnswers['fill8']}</td>
+           <td>${answers['fill8']}</td>
+           <td class="${userAnswers['fill8'].trim() === answers['fill8'] ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill8'].trim() === answers['fill8'] ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+    reviewHTML +=  `<tr>
+        <td>Ai là người lãnh đạo cuộc kháng chiến chống quân Thanh xâm lược nước ta năm 1789?</td>
+         <td>${userAnswers['fill9']}</td>
+           <td>${answers['fill9']}</td>
+           <td class="${userAnswers['fill9'].trim().toLowerCase() === answers['fill9'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill9'].trim().toLowerCase() === answers['fill9'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+     reviewHTML +=  `<tr>
+        <td>Điền vào chỗ trống: Chiến dịch quân sự lớn nhất của quân dân Việt Nam trong kháng chiến chống Mỹ là chiến dịch ...</td>
+         <td>${userAnswers['fill10']}</td>
+           <td>${answers['fill10']}</td>
+            <td class="${userAnswers['fill10'].trim().toLowerCase() === answers['fill10'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill10'].trim().toLowerCase() === answers['fill10'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+      reviewHTML += `<tr>
+            <td>Kim tự tháp Giza thuộc về nền văn minh nào?</td>
+             <td>${userAnswers['q11'] ?  userAnswers['q11']: 'Không chọn'}</td>
+           <td>${answers['q11']}</td>
+             <td class="${userAnswers['q11'] === answers['q11'] ? 'correct' : 'incorrect'}">
+               ${userAnswers['q11'] === answers['q11'] ? 'Đúng' : 'Sai'}
+              </td>
+        </tr>`;
+        reviewHTML +=  `<tr>
+        <td>Ai là người có công lớn trong việc phát kiến ra châu Mỹ?</td>
+         <td>${userAnswers['fill12']}</td>
+           <td>${answers['fill12']}</td>
+             <td class="${userAnswers['fill12'].trim().toLowerCase() === answers['fill12'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill12'].trim().toLowerCase() === answers['fill12'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+        reviewHTML += `<tr>
+            <td>Cuộc cách mạng công nghiệp lần thứ nhất bắt đầu ở quốc gia nào?</td>
+            <td>${userAnswers['q13'] ?  userAnswers['q13']: 'Không chọn'}</td>
+           <td>${answers['q13']}</td>
+             <td class="${userAnswers['q13'] === answers['q13'] ? 'correct' : 'incorrect'}">
+               ${userAnswers['q13'] === answers['q13'] ? 'Đúng' : 'Sai'}
+              </td>
+        </tr>`;
+          reviewHTML += `<tr>
+            <td>Cuộc cách mạng tháng Mười Nga năm 1917 đã lật đổ chế độ nào?</td>
+            <td>${userAnswers['q14'] ?  userAnswers['q14']: 'Không chọn'}</td>
+           <td>${answers['q14']}</td>
+             <td class="${userAnswers['q14'] === answers['q14'] ? 'correct' : 'incorrect'}">
+               ${userAnswers['q14'] === answers['q14'] ? 'Đúng' : 'Sai'}
+              </td>
+        </tr>`;
+        reviewHTML +=  `<tr>
+         <td>Hiệp ước Versailles là kết quả của cuộc chiến tranh nào?</td>
+         <td>${userAnswers['fill15']}</td>
+           <td>${answers['fill15']}</td>
+           <td class="${userAnswers['fill15'].trim().toLowerCase() === answers['fill15'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill15'].trim().toLowerCase() === answers['fill15'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+       reviewHTML +=  `<tr>
+       <td>Tổ chức nào được thành lập sau Chiến tranh thế giới thứ nhất nhằm duy trì hòa bình?</td>
+         <td>${userAnswers['fill16']}</td>
+           <td>${answers['fill16']}</td>
+           <td class="${userAnswers['fill16'].trim().toLowerCase() === answers['fill16'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill16'].trim().toLowerCase() === answers['fill16'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+        const q17UserAnswer = userAnswers['q17'].join(', ');
+        const q17CorrectAnswer = answers['q17'].join(', ');
+       reviewHTML += `<tr>
+            <td>Phe Trục trong Chiến tranh thế giới thứ hai bao gồm các nước nào?</td>
+            <td>${q17UserAnswer ? q17UserAnswer : 'Không chọn'}</td>
+            <td>${q17CorrectAnswer}</td>
+             <td class="${answers['q17'].every(val => userAnswers['q17'].includes(val)) && userAnswers['q17'].length === answers['q17'].length ? 'correct' : 'incorrect'}">
+               ${answers['q17'].every(val => userAnswers['q17'].includes(val)) && userAnswers['q17'].length === answers['q17'].length ? 'Đúng' : 'Sai'}
+              </td>
+        </tr>`;
+       reviewHTML +=  `<tr>
+       <td>Hội nghị Yalta diễn ra năm bao nhiêu và gồm các nước nào tham gia?</td>
+         <td>Năm: ${userAnswers['fill18_year']} , Các nước: ${userAnswers['fill18_country']}</td>
+           <td>Năm: ${answers['fill18_year']}, Các nước: ${answers['fill18_country']}</td>
+           <td class="${userAnswers['fill18_year'].trim() === answers['fill18_year'] && userAnswers['fill18_country'].trim().toLowerCase() === answers['fill18_country'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill18_year'].trim() === answers['fill18_year'] && userAnswers['fill18_country'].trim().toLowerCase() === answers['fill18_country'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+      reviewHTML +=  `<tr>
+        <td>Chiến tranh Lạnh là cuộc đối đầu giữa hai phe nào?</td>
+         <td>${userAnswers['fill19']}</td>
+           <td>${answers['fill19']}</td>
+           <td class="${userAnswers['fill19'].trim().toLowerCase() === answers['fill19'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill19'].trim().toLowerCase() === answers['fill19'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+        reviewHTML +=  `<tr>
+        <td>Thủ đô của nước Nga là thành phố nào?</td>
+         <td>${userAnswers['fill20']}</td>
+           <td>${answers['fill20']}</td>
+            <td class="${userAnswers['fill20'].trim().toLowerCase() === answers['fill20'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill20'].trim().toLowerCase() === answers['fill20'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+      reviewHTML +=  `<tr>
+         <td>Ai là người phát minh ra bóng đèn điện?</td>
+         <td>${userAnswers['fill21']}</td>
+           <td>${answers['fill21']}</td>
+            <td class="${userAnswers['fill21'].trim().toLowerCase() === answers['fill21'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill21'].trim().toLowerCase() === answers['fill21'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+        reviewHTML += `<tr>
+            <td>Nhà khoa học nào nổi tiếng với thuyết tương đối?</td>
+            <td>${userAnswers['q22'] ?  userAnswers['q22']: 'Không chọn'}</td>
+           <td>${answers['q22']}</td>
+             <td class="${userAnswers['q22'] === answers['q22'] ? 'correct' : 'incorrect'}">
+               ${userAnswers['q22'] === answers['q22'] ? 'Đúng' : 'Sai'}
+              </td>
+        </tr>`;
+       reviewHTML +=  `<tr>
+         <td>Nhà lãnh đạo nào đã dẫn dắt phong trào bất bạo động ở Ấn Độ?</td>
+         <td>${userAnswers['fill23']}</td>
+           <td>${answers['fill23']}</td>
+             <td class="${userAnswers['fill23'].trim().toLowerCase() === answers['fill23'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill23'].trim().toLowerCase() === answers['fill23'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+        reviewHTML +=  `<tr>
+        <td>Vị vua cuối cùng của triều Nguyễn là ai?</td>
+         <td>${userAnswers['fill24']}</td>
+           <td>${answers['fill24']}</td>
+            <td class="${userAnswers['fill24'].trim().toLowerCase() === answers['fill24'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill24'].trim().toLowerCase() === answers['fill24'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+       reviewHTML += `<tr>
+            <td>Athens là một thành bang nổi tiếng của nền văn minh nào?</td>
+             <td>${userAnswers['q25'] ?  userAnswers['q25']: 'Không chọn'}</td>
+           <td>${answers['q25']}</td>
+            <td class="${userAnswers['q25'] === answers['q25'] ? 'correct' : 'incorrect'}">
+               ${userAnswers['q25'] === answers['q25'] ? 'Đúng' : 'Sai'}
+              </td>
+        </tr>`;
+          reviewHTML +=  `<tr>
+        <td>Hãy kể tên các chiến dịch lớn của Việt Nam trong kháng chiến chống Mỹ?</td>
+         <td>${userAnswers['fill26_1']}, ${userAnswers['fill26_2']}, ${userAnswers['fill26_3']}</td>
+           <td>${answers['fill26_1']}, ${answers['fill26_2']}, ${answers['fill26_3']}</td>
+            <td class="${userAnswers['fill26_1'].trim().toLowerCase() === answers['fill26_1'].toLowerCase() && userAnswers['fill26_2'].trim().toLowerCase() === answers['fill26_2'].toLowerCase() && userAnswers['fill26_3'].trim().toLowerCase() === answers['fill26_3'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill26_1'].trim().toLowerCase() === answers['fill26_1'].toLowerCase() && userAnswers['fill26_2'].trim().toLowerCase() === answers['fill26_2'].toLowerCase() && userAnswers['fill26_3'].trim().toLowerCase() === answers['fill26_3'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+    reviewHTML +=  `<tr>
+        <td>Trong lịch sử Việt Nam, triều đại nào phát triển mạnh về Phật giáo?</td>
+         <td>${userAnswers['fill27']}</td>
+           <td>${answers['fill27']}</td>
+           <td class="${userAnswers['fill27'].trim().toLowerCase() === answers['fill27'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill27'].trim().toLowerCase() === answers['fill27'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+       const q28UserAnswer = userAnswers['q28'].join(', ');
+        const q28CorrectAnswer = answers['q28'].join(', ');
+      reviewHTML += `<tr>
+            <td>Hãy chọn các đáp án đúng về các vị vua của nhà Lý</td>
+            <td>${q28UserAnswer ? q28UserAnswer : 'Không chọn'}</td>
+            <td>${q28CorrectAnswer}</td>
+             <td class="${answers['q28'].every(val => userAnswers['q28'].includes(val)) && userAnswers['q28'].length === answers['q28'].length ? 'correct' : 'incorrect'}">
+               ${answers['q28'].every(val => userAnswers['q28'].includes(val)) && userAnswers['q28'].length === answers['q28'].length ? 'Đúng' : 'Sai'}
+              </td>
+        </tr>`;
+      reviewHTML +=  `<tr>
+         <td>Năm 1077, quân dân ta đã chiến thắng quân Tống trên dòng sông nào?</td>
+         <td>${userAnswers['fill29']}</td>
+           <td>${answers['fill29']}</td>
+           <td class="${userAnswers['fill29'].trim().toLowerCase() === answers['fill29'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill29'].trim().toLowerCase() === answers['fill29'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+     reviewHTML +=  `<tr>
+          <td>Fidel Castro là lãnh tụ của cuộc cách mạng nào?</td>
+           <td>${userAnswers['fill30']}</td>
+            <td>${answers['fill30']}</td>
+            <td class="${userAnswers['fill30'].trim().toLowerCase() === answers['fill30'].toLowerCase() ? 'correct' : 'incorrect'}">
+            ${userAnswers['fill30'].trim().toLowerCase() === answers['fill30'].toLowerCase() ? 'Đúng' : 'Sai'}
+            </td>
+      </tr>`;
+
+      resultTableBody.innerHTML = reviewHTML;
+     }
+</script>
+</body>
+</html>
