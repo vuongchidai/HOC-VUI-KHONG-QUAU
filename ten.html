@@ -80,7 +80,12 @@
     .info-section {
       margin-bottom: 28px;
       text-align: left;
-      max-width: 500px;
+      width: 100%;
+      max-width: 100%;
+      /* Đảm bảo phần nhập thông tin rộng hết 900px */
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
 
     label {
@@ -234,6 +239,10 @@
         width: 98vw;
         padding: 24px 8vw 18px 8vw;
       }
+      .info-section {
+        width: 100%;
+        max-width: 100%;
+      }
       .popup-icon {
         left: 70%;
         font-size: 3em;
@@ -245,6 +254,7 @@
         padding: 12px 2vw 12px 2vw;
       }
       .info-section {
+        width: 100%;
         max-width: 100%;
       }
     }
@@ -261,21 +271,8 @@
       <input type="text" id="ngaySinh" autocomplete="off" placeholder="VD: 26/07/2010">
 
       <div class="admin-login-link">
-        <a href="#" onclick="showAdminLogin(event)"><i class="fas fa-user-shield"></i> Đăng nhập quản trị</a>
+        <a href="quantri.html"><i class="fas fa-user-shield"></i> Đăng nhập quản trị</a>
       </div>
-    </div>
-
-    <div id="adminLogin" style="display:none; margin-bottom:18px;">
-      <form onsubmit="return adminLogin(event)">
-        <label for="adminUser">Tài khoản quản trị:</label>
-        <input type="text" id="adminUser" autocomplete="off" placeholder="Tên đăng nhập">
-
-        <label for="adminPass">Mật khẩu:</label>
-        <input type="password" id="adminPass" autocomplete="off" placeholder="Mật khẩu">
-
-        <button class="btn btn-secondary" type="submit">Đăng nhập</button>
-        <button class="btn" type="button" onclick="hideAdminLogin()">Hủy</button>
-      </form>
     </div>
 
     <button class="btn" id="kiemTraButton" onclick="kiemTraThongTin()">Kiểm tra</button>
@@ -345,31 +342,6 @@
       if (lanKhong > 7) {
         window.location.href = "nhannhu.html";
       }
-    }
-
-    // Admin login logic
-    function showAdminLogin(e) {
-      e.preventDefault();
-      document.getElementById("adminLogin").style.display = "block";
-      document.getElementById("thongTin").style.display = "none";
-      document.getElementById("kiemTraButton").style.display = "none";
-    }
-    function hideAdminLogin() {
-      document.getElementById("adminLogin").style.display = "none";
-      document.getElementById("thongTin").style.display = "block";
-      document.getElementById("kiemTraButton").style.display = "inline-block";
-    }
-    function adminLogin(e) {
-      e.preventDefault();
-      // Đơn giản: tài khoản admin/admin123
-      const user = document.getElementById("adminUser").value.trim();
-      const pass = document.getElementById("adminPass").value;
-      if (user === "admin" && pass === "admin123") {
-        window.location.href = "quantri.html";
-      } else {
-        alert("Tài khoản hoặc mật khẩu không đúng!");
-      }
-      return false;
     }
   </script>
 </body>
